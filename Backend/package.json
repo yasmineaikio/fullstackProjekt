@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yasmineaikio/fullstackProjekt#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "sqlite": "^3.0.2"
   }
 }
