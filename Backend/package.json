@@ -19,5 +19,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "sqlite": "^3.0.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
   }
 }
