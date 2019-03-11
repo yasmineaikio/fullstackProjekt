@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/yasmineaikio/fullstackProjekt/issues"
   },
-  "homepage": "https://github.com/yasmineaikio/fullstackProjekt#readme"
+  "homepage": "https://github.com/yasmineaikio/fullstackProjekt#readme",
+  "dependencies": {
+    "sqlite": "^3.0.2"
+  }
 }
