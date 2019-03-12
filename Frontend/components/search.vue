@@ -1,5 +1,6 @@
 <template>
-  <input type="text" name="" value="Text">
+  <input type="text" name="" value="">
+  <input type="button" value="Sök" v-on:click="onClick">
 
 </template>
 <script>
@@ -11,10 +12,12 @@
       }
     },
     methods: {
+      onClick(){
 
+      }
     }
   }
 </script>
 <style scoped>
-  
+
 </style>
