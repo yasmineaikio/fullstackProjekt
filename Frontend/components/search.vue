@@ -1,7 +1,8 @@
 <template>
-  <input type="text" name="" value="">
-  <input type="button" value="Sök" v-on:click="onClick">
-
+  <div>
+    <input type="text" name="" value="">
+    <input type="button" value="Sök" v-on:click="onClick">
+  </div>
 </template>
 <script>
 
