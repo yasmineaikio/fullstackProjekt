@@ -19,7 +19,7 @@ db.open('./db.db').then(database_ => {
 })
 
 
-// Kommentera bort för att hämta samtliga users från databasen (Alex)
+// hämtar samtliga users från databasen (Alex)
 app.get('/users', (request,response) => {
     database.all('SELECT * FROM users').then(books => {
         response.send(books);
@@ -37,7 +37,7 @@ app.post('/users', (request,response) => {
 
 
 
-// Kommentera bort för att hämta samtliga böcker från databasen (Alex)
+// hämtar samtliga böcker från databasen (Alex)
 app.get('/books', (request,response) => {
     database.all('SELECT * FROM books').then(books => {
         response.send(books);
