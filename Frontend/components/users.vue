@@ -13,10 +13,10 @@ export default {
     data() {
       return {
           userLog: {
-              name: 'alex',
-              password: 'test',
+              name: '',
+              password: '',
               id: null,
-              type: 'vistitor',
+              type: '',
           }
       }
     },
