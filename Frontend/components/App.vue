@@ -1,8 +1,7 @@
 <template>
 <div>
     <counter-button />
-    <counter-button />
-    <counter-button />
+
   </div>
 </template>
 
@@ -17,5 +16,5 @@
 </script>
 
 <style>
-  
+
 </style>
