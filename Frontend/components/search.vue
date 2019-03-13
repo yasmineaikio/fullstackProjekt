@@ -18,12 +18,20 @@
       return {
         searchText: '',
         result: false,
-        books: ['Bok1', 'Bok2']
+        books: []
       }
     },
     methods: {
       searchBooks(){
         this.result = true;
+        fetch('http://localhost:3000/books')
+        .then (function(response){
+          return response.json()
+        })
+        .then (function(books){
+          console.log(books[1].title)
+        })
+        //this.books = []
       }
     }
   }
