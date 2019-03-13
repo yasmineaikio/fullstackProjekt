@@ -12,10 +12,15 @@ app.use(function (request, result, next) {
   next();
 });
 
+app.use((request, response, next) => {
+  response.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+
 app.use(bodyParser.json());
 
 db.open('./db.db').then(database_ => {
-  database = database_ 
+  database = database_
 })
 
 
@@ -43,7 +48,7 @@ app.get('/books', (request,response) => {
         response.send(books);
     })
 })
-  
+
   app.listen(3000, function () {
     console.log('The server is running!');
 });

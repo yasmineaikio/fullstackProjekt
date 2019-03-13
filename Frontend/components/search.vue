@@ -28,10 +28,10 @@
         .then (function(response){
           return response.json()
         })
-        .then (function(books){
-          console.log(books[1].title)
+        .then (function(result){
+          console.log(result[1].title)
+          this.books = [result]
         })
-        //this.books = []
       }
     }
   }
