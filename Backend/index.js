@@ -49,6 +49,26 @@ app.get('/books', (request,response) => {
     })
 })
 
+// hämtar böcker utifrån ett sökord (Sara)
+app.get('/books/:word', (request, response) => {
+  response.send('Hej ' + request.params.word)
+  // database.all('SELECT * FROM books').then(books => {
+  //     response.send(books);
+  // })
+
+  // let book = books.find(value => value.title === request.params.word);
+  //
+  // if (book) {
+  //   response.send(book);
+  // } else {
+  //   response.status(404)
+  //   response.send('Ingen matchning');
+  // }
+  // database.all('select * from books WHERE ').then(books => {
+  //   response.send(books);
+  // })
+})
+
   app.listen(3000, function () {
     console.log('The server is running!');
 });

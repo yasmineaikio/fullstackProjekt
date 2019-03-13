@@ -7,7 +7,7 @@
 
     <div class="search-result" v-if="result">
       <p>Visar resultat för "{{ searchText }}" </p>
-      <li v-for="book in books"> {{book}}</li>
+      <li v-for="book in books"> {{ book }}</li>
     </div>
 
   </div>
@@ -18,19 +18,33 @@
       return {
         searchText: '',
         result: false,
-        books: []
+        books: ['Bok1', 'Bok2']
       }
     },
     methods: {
       searchBooks(){
+        this.books = [{
+          title: 'Ett',
+          author: 'Marua'
+        }, {
+          title: 'Två'
+        }]
+        console.log(this.books);
         this.result = true;
-        fetch('http://localhost:3000/books')
+        let word = this.searchText
+        console.log(word);
+        console.log('http://localhost:3000/books/' + word)
+        fetch('http://localhost:3000/books/')
         .then (function(response){
           return response.json()
         })
         .then (function(result){
-          console.log(result[1].title)
-          this.books = [result]
+          //console.log(result)
+          let allBooks = result
+          console.log(allBooks)
+          //console.log(allBooks[2].author);
+
+
         })
       }
     }
