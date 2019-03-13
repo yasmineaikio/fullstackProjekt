@@ -1,8 +1,7 @@
 <template>
-<div>
+  <div>
     <counter-button />
     <search-field></search-field>
-
   </div>
 </template>
 
