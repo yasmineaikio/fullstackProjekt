@@ -51,6 +51,7 @@ app.get('/books', (request,response) => {
 
 // hämtar böcker utifrån ett sökord (Sara)
 app.get('/books/:word', (request, response) => {
+  console.log('Hej');
   response.send('Hej ' + request.params.word)
   // database.all('SELECT * FROM books').then(books => {
   //     response.send(books);
