@@ -19,6 +19,14 @@ module.exports = {
     filename: 'bundle.js',
     path: __dirname
   },
+  devServer: {
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        disableHostCheck: true
+    }
+},
   plugins: [
     new VueLoaderPlugin()
   ],
