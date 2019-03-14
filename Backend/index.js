@@ -35,7 +35,7 @@ app.get('/users', (request,response) => {
 app.post('/users', (request,response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?)', [newUser.name, newUser.password, newUser.email, newID, newUser.type]).then(books => {
       response.status(201).send(books);
   })
 })

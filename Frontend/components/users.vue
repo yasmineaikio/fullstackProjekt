@@ -1,10 +1,11 @@
 <template>
   <div>
-      <form>
+      <form @submit.prevent="addUser()">
           <h4>Skapa konto</h4>
-          <input type="text" placeholder="Namn" v-bind:value="name"><br>
-          <input type="password" placeholder="Lösenord" v-bind:value="password"><br>
-          <input type="submit" value="skapa" v-on:click="addUser"><br>
+          <input type="text" placeholder="Namn" v-model="name"><br>
+          <input type="password" placeholder="Lösenord" v-model="password"><br>
+          <input type="e-mail" placeholder="e-postadress" v-model="email"><br>
+          <button type="submit">Skapa</button>
       </form>
   </div>
 </template>
@@ -12,27 +13,29 @@
 export default {
     data() {
       return {
-          userLog: {
-              name: '',
-              password: '',
-              id: null,
-              type: '',
-          }
+          name: '',
+          password: '',
+          email: '',
+          id: null,
+          type: 'user'
       }
     },
     methods: {
         addUser() { 
-            
+            var newUser = {'name': this.name, 'password': this.password, 'email': this.email, "id": this.id, "type": this.type }
             fetch('http://localhost:3000/users', {
                 method: 'POST',
-                body: JSON.stringify({name: "alexTest", password:"sec", type:"user"}),
-                mode: 'no-cors',
+                body: JSON.stringify(newUser),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response){
                 return response.json()
             })
             .then(function(result){
                 console.log(result)
+            })
+            .catch(e => {
+                console.log(e);
+                
             })
         }
     }
