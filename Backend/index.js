@@ -23,6 +23,7 @@ db.open('./db.db').then(database_ => {
   database = database_
 })
 
+var inloggade =[] 
 
 // hämtar samtliga users från databasen (Alex)
 app.get('/users', (request,response) => {
@@ -35,12 +36,35 @@ app.get('/users', (request,response) => {
 app.post('/users', (request,response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?)', [newUser.name, newUser.password, newUser.email, newID, newUser.type]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?)', 
+  [newUser.name, newUser.password, newID, newUser.type, newUser.email]).then(books => {
       response.status(201).send(books);
   })
 })
 
+//login validator (Alex)
+app.post('/login', (request, response) => {
+  let regUser = request.body
+  database.all('SELECT * FROM users WHERE name =? AND password =?', [regUser.name, regUser.password]).then(books => {
+    response.status(201).send(books);
+    if(regUser) {
+      inloggade.push(regUser)
+      console.log(inloggade);
+    }
+  })
+})
 
+app.get('/login', (request, response) => {
+  async function checker() {
+     for (let i = 0; i < inloggade.length; i++) {
+      var user = inloggade[i]
+      database.all('SELECT * FROM users WHERE name =? AND password =?', [user.name, user.password]).then(inloggade => {
+      response.status(201).send(inloggade);
+    })
+  }
+ }
+  checker()
+})
 
 // hämtar samtliga böcker från databasen (Alex)
 app.get('/books', (request,response) => {
@@ -48,6 +72,7 @@ app.get('/books', (request,response) => {
         response.send(books);
     })
 })
+
 
 // hämtar böcker utifrån ett sökord (Sara)
 app.get('/books/:word', (request, response) => {

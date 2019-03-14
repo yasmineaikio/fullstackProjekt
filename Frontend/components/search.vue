@@ -7,7 +7,7 @@
 
     <div class="search-result" v-if="result">
       <p>Visar resultat för "{{ searchText }}" </p>
-      <li v-for="book in books"> {{ book }}</li>
+      <!-- <li v-for="book in books"> {{ book }}</li> -->
     </div>
 
   </div>

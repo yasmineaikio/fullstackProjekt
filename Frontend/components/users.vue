@@ -1,8 +1,8 @@
 <template>
   <div>
       <form @submit.prevent="addUser()">
-          <h4>Skapa konto</h4>
-          <input type="text" placeholder="Namn" v-model="name"><br>
+          <h4>Skapa konto (Klart)</h4>
+          <input type="text" placeholder="Användernamn" v-model="name"><br>
           <input type="password" placeholder="Lösenord" v-model="password"><br>
           <input type="e-mail" placeholder="e-postadress" v-model="email"><br>
           <button type="submit">Skapa</button>
@@ -22,7 +22,7 @@ export default {
     },
     methods: {
         addUser() { 
-            var newUser = {'name': this.name, 'password': this.password, 'email': this.email, "id": this.id, "type": this.type }
+            var newUser = {'name': this.name, 'password': this.password, "id": this.id, "type": this.type,'email': this.email}
             fetch('http://localhost:3000/users', {
                 method: 'POST',
                 body: JSON.stringify(newUser),
@@ -34,8 +34,7 @@ export default {
                 console.log(result)
             })
             .catch(e => {
-                console.log(e);
-                
+                console.log(e);  
             })
         }
     }
