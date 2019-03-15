@@ -1,6 +1,6 @@
 <template>
   <div>
-  <h1>Böcker</h1>
+  <h3>Böcker</h3>
   <table>
   <tr>
     <th>Titel</th>
@@ -23,21 +23,27 @@
   export default {
     data() {
       return {
-
+        ????
       }
     },
     methods: {
-      onClick(){
+      ?????(){
 
       }
     }
   }
 </script>
 <style>
+h3 {
+  width: 80%;
+  margin: auto;
+  padding: 20px
+}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 50%;
+  width: 80%;
+  margin: auto;
 }
 
 td, th {
