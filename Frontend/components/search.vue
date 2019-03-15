@@ -26,16 +26,7 @@
     },
     methods: {
       searchBooks(){
-        this.books = [{
-          title: 'Ett',
-          author: 'Maria'
-        }, {
-          title: 'Två'
-        }]
-        this.result = true;
         let word = this.searchText
-        console.log(word);
-        console.log('http://localhost:3000/books/' + word)
         fetch('http://localhost:3000/books/' + word)
         .then (function(response){
           return response.json()
