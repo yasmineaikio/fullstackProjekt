@@ -51,8 +51,9 @@ app.get('/books', (request, response) => {
 
 // hämtar böcker utifrån ett sökord (Sara)
 app.get('/books/:word', (request, response) => {
-  console.log(request.params.word);
-  database.all('select * from books where title = ?', [request.params.word]).then(books => {
+  database.all('select * from books where title like ? or title like ? OR author like ? or author like ? order by year desc',
+  ['% '+ request.params.word +' %', request.params.word + ' %', request.params.word +', %', '% '+ request.params.word]
+  ).then(books => {
     response.send(books)
   })
 })
