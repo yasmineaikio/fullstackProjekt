@@ -1,6 +1,8 @@
 <template>
   <div>
-  <h1>Böcker</h1>
+  <add-book></add-book>
+  <search-field></search-field>
+  <h3>Böcker</h3>
   <table>
   <tr>
     <th>Titel</th>
@@ -20,24 +22,35 @@
   </div>
 </template>
 <script>
+  import Search from './search.vue'
+  import AddBook from './addBook.vue'
   export default {
     data() {
       return {
-
+        //????
       }
     },
     methods: {
-      onClick(){
-
-      }
-    }
+      //?????(){
+      //}
+    },
+    components: {
+      'search-field': Search,
+      'add-book': AddBook,
+    },
   }
 </script>
 <style>
+h3 {
+  width: 80%;
+  margin: auto;
+  padding: 20px
+}
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 50%;
+  width: 80%;
+  margin: auto;
 }
 
 td, th {

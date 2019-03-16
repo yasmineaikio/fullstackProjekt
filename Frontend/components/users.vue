@@ -49,8 +49,5 @@ export default {
      width: 230px;
      text-align: center;
      margin: 2em auto;
-     position: absolute;
-     top: 1px;
-     right: 11%;
  }
 </style>

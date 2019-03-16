@@ -36,8 +36,7 @@ app.get('/users', (request,response) => {
 app.post('/users', (request,response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?)', 
-  [newUser.name, newUser.password, newID, newUser.type, newUser.email]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email]).then(books => {
       response.status(201).send(books);
   })
 })
@@ -55,7 +54,7 @@ app.post('/login', (request, response) => {
 })
 
 app.get('/login', (request, response) => {
-  async function checker() {
+   function checker() {
      for (let i = 0; i < inloggade.length; i++) {
       var user = inloggade[i]
       database.all('SELECT * FROM users WHERE name =? AND password =?', [user.name, user.password]).then(inloggade => {
@@ -66,32 +65,21 @@ app.get('/login', (request, response) => {
   checker()
 })
 
+
+
 // hämtar samtliga böcker från databasen (Alex)
-app.get('/books', (request,response) => {
+app.get('/books', (request, response) => {
     database.all('SELECT * FROM books').then(books => {
         response.send(books);
     })
 })
 
-
 // hämtar böcker utifrån ett sökord (Sara)
 app.get('/books/:word', (request, response) => {
-  response.send('Hej ' + request.params.word)
-  // database.all('SELECT * FROM books').then(books => {
-  //     response.send(books);
-  // })
-
-  // let book = books.find(value => value.title === request.params.word);
-  //
-  // if (book) {
-  //   response.send(book);
-  // } else {
-  //   response.status(404)
-  //   response.send('Ingen matchning');
-  // }
-  // database.all('select * from books WHERE ').then(books => {
-  //   response.send(books);
-  // })
+  console.log(request.params.word);
+  database.all('select * from books where title = ?', [request.params.word]).then(books => {
+    response.send(books)
+  })
 })
 
   app.listen(3000, function () {

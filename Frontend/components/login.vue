@@ -28,6 +28,8 @@ export default {
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response){
+                console.log("Logged in")    
+                router.push("/Userprofile")
                 return response.json()
             })
             .then(function(result){
@@ -50,8 +52,5 @@ export default {
      width: 230px;
      text-align: center;
      margin: 2em auto;
-     position: absolute;
-     top: 1px;
-     right: 25%;
  }
 </style>
