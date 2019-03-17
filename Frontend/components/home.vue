@@ -26,8 +26,8 @@
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
 }
 #cog {
-  font-size: 4.5em;
-  color: black;
+  font-size: 120px; 
+  color: #666;
   animation: spin 5s linear infinite;
 }
 @keyframes spin {

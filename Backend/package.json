@@ -15,7 +15,10 @@
   },
   "homepage": "https://github.com/yasmineaikio/fullstackProjekt#readme",
   "dependencies": {
+    "cookie-session": "^1.3.3",
     "express": "^4.16.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "sqlite": "^3.0.2"
   },
   "devDependencies": {

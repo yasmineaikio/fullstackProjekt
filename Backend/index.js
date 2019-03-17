@@ -1,9 +1,10 @@
 const express = require('express');
 const db = require('sqlite');
-var bodyParser = require('body-parser');
-var uuidv4 = require('uuid/v4');
-
+const bodyParser = require('body-parser');
+const uuidv4 = require('uuid/v4');
 const app = express();
+
+
 
 app.use(function (request, result, next) {
   result.header('Access-Control-Allow-Origin', '*');
@@ -44,6 +45,7 @@ app.post('/users', (request,response) => {
 //login validator (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
+
   database.all('SELECT * FROM users WHERE name =? AND password =?', [regUser.name, regUser.password]).then(books => {
     response.status(201).send(books);
     if(regUser) {
@@ -65,6 +67,13 @@ app.get('/login', (request, response) => {
   checker()
 })
 
+app.get("/logout", function(req, res) {  
+  req.logout();
+
+  console.log("logged out")
+
+  return res.send();
+});
 
 
 // hämtar samtliga böcker från databasen (Alex)
