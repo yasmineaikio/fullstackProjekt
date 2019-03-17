@@ -2,7 +2,7 @@
     <div>
         <form @submit.prevent="login()">
             <h4>Logga in</h4>
-            <p>Fungerar sådär än så länge inloggad user hämtas från /login</p>
+            <p>Fungerar sådär än så länge. Inloggad user hämtas från /login</p>
             <input type="text" placeholder="Användernamn" v-model="name"><br>
             <input type="password" placeholder="Lösenord" v-model="password"><br>
             <button type="submit">Logga in</button>
@@ -10,6 +10,7 @@
     </div>
 </template>
 <script>
+import router from "../router" 
 export default {
     data(){
         return {
@@ -28,7 +29,8 @@ export default {
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response){
-                return response.json()
+                console.log("inloggad")    
+                router.push("/profil")
             })
             .then(function(result){
                 console.log(result)
@@ -43,15 +45,38 @@ export default {
 </script>
 <style scoped>
  h4 {
-     color:red;
+     color:#666;
+     font-family: cursive;
+     font-weight: 900;
+     font-size: 1.5em;
+     text-align: center;
+     margin: 0;
  }
  form {
-     border: 2px solid grey;
-     width: 230px;
-     text-align: center;
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
      margin: 2em auto;
-     position: absolute;
-     top: 1px;
-     right: 25%;
+     width: 50%;
  }
+ input[type=text],input[type=password], input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type=submit] {
+    width: 100%;
+    background-color: #666;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 </style>

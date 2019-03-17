@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="container">
+  <add-book></add-book>
+  <search-field></search-field>
   <h3>Böcker</h3>
   <table>
   <tr>
@@ -20,6 +22,8 @@
   </div>
 </template>
 <script>
+  import Search from './search.vue'
+  import AddBook from './addBook.vue'
   export default {
     data() {
       return {
@@ -29,10 +33,17 @@
     methods: {
       //?????(){
       //}
-    }
+    },
+    components: {
+      'search-field': Search,
+      'add-book': AddBook,
+    },
   }
 </script>
-<style>
+<style scoped>
+.container {
+  margin: 2em;
+}
 h3 {
   width: 80%;
   margin: auto;
