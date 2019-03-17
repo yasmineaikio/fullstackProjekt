@@ -1,6 +1,7 @@
 <template>
 <div>
   <header>
+    <br>
     <a id="homelink"><router-link to="/">Startsida</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
@@ -14,6 +15,7 @@
 </template>
 
 <script>
+    import Home from './home.vue'
     import router from '../router';
     import Users from './users.vue'
     import Login from './login.vue'
@@ -30,25 +32,27 @@
       'users': Users,
       'get-books': GetBooks,
       'login': Login,
+      'home': Home,
     },
     router,
   }
 </script>
 
-<style>
+<style scoped>
 #homelink a {
   text-decoration: none;
   color:#666;
   padding: 10px 20px;
-  margin-top: 3em;
+  margin: 2em 0;
   font: 1.6em cursive;
+  border: inset #999 3px;
 }
 #homelink:active {
   color: #fff;
 }
 ul {
   list-style: none;
-  margin: 2em;
+  margin: 5px;
   float: right;
 }
 li { 

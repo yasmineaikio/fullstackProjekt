@@ -1,40 +1,37 @@
 <template>
 <div>
-  <a><router-link to="/home">Hem</router-link></a>
-  <ul>
-    <li><router-link to="/users">skapa konto</router-link></li>
-    <li><router-link to="/login">Logga in</router-link></li>
-    <li><router-link to="/books">Böcker</router-link></li>
-  </ul>
-  <search-field></search-field>
-  <add-book></add-book>
-  <user-profile></user-profile>
-  <router-view></router-view>
+  <div id="title">
+    <h1>Under Construction</h1>
+    <font-awesome-icon icon="cog" id="cog" />
+  </div>
 </div>
 </template>
 
 <script>
-    import router from '../router';
-    import Users from './users.vue'
-    import Login from './login.vue'
-    import Search from './search.vue'
-    import AddBook from './addBook.vue'
-    import Userprofile from './Userprofile.vue'
-    import GetBooks from './GetBooks.vue'
-
   export default {
-    components: {
-      'search-field': Search,
-      'add-book': AddBook,
-      'user-profile': Userprofile,
-      'users': Users,
-      'get-books': GetBooks,
-      'login': Login,
-    },
-    router,
+    
   }
 </script>
 
-<style>
-
+<style scoped>
+  #title {
+    position: relative;
+    text-align: center;
+  }
+  #title h1 {
+  color: black;
+  font-family: cursive;
+  font-size: 4em;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+#cog {
+  font-size: 4.5em;
+  color: black;
+  animation: spin 5s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>

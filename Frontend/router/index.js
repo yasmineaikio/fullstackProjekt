@@ -4,6 +4,7 @@ import Login from "../components/login.vue"
 import Users from "../components/users.vue"  
 import Books from '../components/GetBooks.vue'
 import Profile from '../components/Userprofile.vue'
+import Home from '../components/home.vue'
 Vue.use(Router)  
 export default new Router({  
   routes: [
@@ -26,6 +27,11 @@ export default new Router({
     component: Profile,
     name: "Profile",
     path: '/profil'   
+    },
+    {
+    component: Home,
+    name: "Home",
+    path: '/'   
     },
   ]
 })
