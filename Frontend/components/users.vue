@@ -10,6 +10,7 @@
   </div>
 </template>
 <script>
+import router from "../router" 
 export default {
     data() {
       return {
@@ -27,10 +28,10 @@ export default {
                 method: 'POST',
                 body: JSON.stringify(newUser),
                 headers: {'Content-type': 'application/json'},
-            }).then(function(response){
-                return response.json()
+            }).then(response => {
+                router.push('/login')
             })
-            .then(function(result){
+            .then(result => {
                 console.log(result)
             })
             .catch(e => {

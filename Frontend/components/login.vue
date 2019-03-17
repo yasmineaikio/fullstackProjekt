@@ -10,6 +10,7 @@
     </div>
 </template>
 <script>
+import router from "../router" 
 export default {
     data(){
         return {
@@ -28,8 +29,8 @@ export default {
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response){
-                console.log("Logged in")    
-                router.push("/Userprofile")
+                console.log("inloggad")    
+                router.push("/profil")
                 return response.json()
             })
             .then(function(result){
