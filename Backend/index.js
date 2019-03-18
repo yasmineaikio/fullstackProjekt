@@ -67,6 +67,7 @@ app.get('/login', (request, response) => {
   checker()
 })
 
+// kör delete istället
 app.get("/logout", function(req, res) {  
   req.logout();
 

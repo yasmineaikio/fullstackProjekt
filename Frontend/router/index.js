@@ -9,14 +9,14 @@ Vue.use(Router)
 export default new Router({  
   routes: [
     {
-      path: "/users",
-      name: "Users",
-      component: Users
+    path: "/users",
+    name: "Users",
+    component: Users
     },
     {
-      path: "/login",
-      name: "login",
-      component: Login
+    path: "/login",
+    name: "login",
+    component: Login
     },
     {
     component: Books,
