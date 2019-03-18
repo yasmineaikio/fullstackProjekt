@@ -97,8 +97,8 @@ app.get('/login', (request, response) => {
 
       // hämtar lånade böcker (loans) från databasen (Maija)
       app.get('/loans', (request, response) => {
-        database.all('SELECT * FROM loans').then(loans => {
-          response.send(loans);
+        database.all('SELECT * FROM loans').then(books => {
+          response.send(books);
         })
       })
 
