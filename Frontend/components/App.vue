@@ -1,15 +1,22 @@
 <template>
 <div>
-    <search-field></search-field>
-    <add-book></add-book>
-    <user-profile></user-profile>
-    <users/>
-    <get-books></get-books>
-    <login/>
+  <header>
+    <br>
+    <a id="homelink"><router-link to="/">Startsida</router-link></a>
+    <ul>
+      <li><router-link to="/books">Böcker</router-link></li>
+      <li><router-link to="/profil">Mina sidor</router-link></li>
+      <li><router-link to="/users">skapa konto</router-link></li>
+      <li><router-link to="/login">Logga in</router-link></li>
+    </ul>
+  </header>
+  <router-view></router-view>
 </div>
 </template>
 
 <script>
+    import Home from './home.vue'
+    import router from '../router';
     import Users from './users.vue'
     import Login from './login.vue'
     import Search from './search.vue'
@@ -25,10 +32,38 @@
       'users': Users,
       'get-books': GetBooks,
       'login': Login,
-    }
+      'home': Home,
+    },
+    router,
   }
 </script>
 
-<style>
+<style scoped>
+#homelink a {
+  text-decoration: none;
+  color:#666;
+  padding: 10px 20px;
+  margin: 2em 0;
+  font: 1.6em cursive;
+  border: inset #999 3px;
+}
+#homelink:active {
+  color: #fff;
+}
+ul {
+  list-style: none;
+  margin: 5px;
+  float: right;
+}
+li { 
+  display: inline;;
+  padding: 1px;
+}
+li a {
+  text-decoration: none;
+  color:#fff;
+  padding: 10px 20px;
+  background: #666;
 
+}
 </style>

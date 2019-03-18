@@ -1,15 +1,16 @@
 <template>
   <div>
       <form @submit.prevent="addUser()">
-          <h4>Skapa konto (Klart)</h4>
+          <h4>Skapa konto</h4>
           <input type="text" placeholder="Användernamn" v-model="name"><br>
           <input type="password" placeholder="Lösenord" v-model="password"><br>
-          <input type="e-mail" placeholder="e-postadress" v-model="email"><br>
+          <input type="email" placeholder="e-postadress" v-model="email"><br>
           <button type="submit">Skapa</button>
       </form>
   </div>
 </template>
 <script>
+import router from "../router" 
 export default {
     data() {
       return {
@@ -27,10 +28,10 @@ export default {
                 method: 'POST',
                 body: JSON.stringify(newUser),
                 headers: {'Content-type': 'application/json'},
-            }).then(function(response){
-                return response.json()
+            }).then(response => {
+                router.push('/login')
             })
-            .then(function(result){
+            .then(result => {
                 console.log(result)
             })
             .catch(e => {
@@ -42,15 +43,43 @@ export default {
 </script>
 <style scoped>
  h4 {
-     color:darkblue;
+     color:#666;
+     font-family: cursive;
+     font-weight: 900;
+     font-size: 1.5em;
+     text-align: center;
+     margin: 0;
  }
  form {
-     border: 2px solid navy;
-     width: 230px;
-     text-align: center;
+     border-radius: 5px;
+     background-color: #f2f2f2;
+     padding: 20px;
      margin: 2em auto;
-     position: absolute;
-     top: 1px;
-     right: 11%;
+     width: 50%;
  }
+ input[type=text],input[type=password], input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type=submit] {
+    width: 100%;
+    background-color: #666;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #000;
+}
+
 </style>
