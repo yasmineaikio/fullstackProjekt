@@ -1,8 +1,8 @@
 <template>
   <div id="search">
+
     <div class="search-input">
       <input type="text" placeholder="Tove Jansson" v-model="searchText" v-on:keyup.enter="searchBooks">
-      <!-- <input type="button" value="Sök" v-on:click="searchBooks"> -->
       <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
     </div>
 
@@ -45,24 +45,23 @@
 </script>
 <style scoped>
   #search {
-    width: 50%
-  }
-  input {
-    style: ;
-    width: 100%;
-    height: 30px;
-    display: inline;
   }
   .search-input {
     padding: 20px;
+    width: 100%;
   }
-  .search-input * {
+  input {
+    width: 60%;
+    height: 30px;
+    /* display: inline; */
   }
-  
   #search-icon {
+    width: 5%;
+    height: 30px;
     font-size: 20px;
     cursor: pointer;
-    display: inline;
+    position: relative;
+    top: 7px;
   }
   .search-result {
     padding: 20px;
