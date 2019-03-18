@@ -42,7 +42,6 @@
           //console.log(result)
           let allBooks = result
           console.log(allBooks)
-          //console.log(allBooks[2].author);
 
 
         })
