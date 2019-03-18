@@ -44,24 +44,16 @@
               console.log(result)
         })
       }
-    }
-  }
-</script>
-
-<style>
-        //????
-      }
-    },
-    methods: {
-      //?????(){
-      //}
     },
     components: {
       'search-field': Search,
       'add-book': AddBook,
-    },
+    }
+
   }
 </script>
+
+
 <style scoped>
 .container {
  margin: 2em;
