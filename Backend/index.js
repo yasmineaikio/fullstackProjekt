@@ -24,7 +24,7 @@ db.open('./db.db').then(database_ => {
   database = database_
 })
 
-var inloggade =[] 
+var inloggade =[]
 
 // hämtar samtliga users från databasen (Alex)
 app.get('/users', (request,response) => {
@@ -67,7 +67,7 @@ app.get('/login', (request, response) => {
   checker()
 })
 
-app.get("/logout", function(req, res) {  
+app.get("/logout", function(req, res) {
   req.logout();
 
   console.log("logged out")
@@ -88,6 +88,7 @@ app.get('/books/:word', (request, response) => {
   database.all('select * from books where title like ? or title like ? OR author like ? or author like ? order by year desc',
   ['% '+ request.params.word +' %', request.params.word + ' %', request.params.word +', %', '% '+ request.params.word]
   ).then(books => {
+    response.status(201)
     response.send(books)
   })
 })
