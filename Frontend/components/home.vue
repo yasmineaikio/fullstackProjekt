@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    
+
   }
 </script>
 
@@ -26,7 +26,7 @@
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
 }
 #cog {
-  font-size: 120px; 
+  font-size: 120px;
   color: #666;
   animation: spin 5s linear infinite;
 }
