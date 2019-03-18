@@ -23,16 +23,27 @@
   export default {
     data() {
       return {
-        ????
+        titel: '',
+        author: '',
+        category: '',
+        year: '',
+        language: '',
       }
     },
-    methods: {
-      ?????(){
-
+        methods: {
+          getBooks(){
+            fetch('http://localhost:3000/books')
+            .then(function(response) {
+              return response.json()
+            })
+            .then(function(result){
+              console.log(result)
+        })
       }
     }
   }
 </script>
+
 <style>
 h3 {
   width: 80%;
