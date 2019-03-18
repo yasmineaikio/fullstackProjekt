@@ -24,7 +24,7 @@ db.open('./db.db').then(database_ => {
   database = database_
 })
 
-var inloggade =[] 
+var inloggade =[]
 
 // hämtar samtliga users från databasen (Alex)
 app.get('/users', (request,response) => {
@@ -67,7 +67,12 @@ app.get('/login', (request, response) => {
   checker()
 })
 
+<<<<<<< HEAD
+// kör delete istället
 app.get("/logout", function(req, res) {  
+=======
+app.get("/logout", function(req, res) {
+>>>>>>> bf3b0f6306393add447305bddc31c6f61a24a9a5
   req.logout();
 
   console.log("logged out")
@@ -85,8 +90,10 @@ app.get('/books', (request, response) => {
 
 // hämtar böcker utifrån ett sökord (Sara)
 app.get('/books/:word', (request, response) => {
-  console.log(request.params.word);
-  database.all('select * from books where title = ?', [request.params.word]).then(books => {
+  database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
+  ['% '+ request.params.word +' %', request.params.word + ' %', '% '+ request.params.word, request.params.word +', %', '% '+ request.params.word]
+  ).then(books => {
+    response.status(201)
     response.send(books)
   })
 })

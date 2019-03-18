@@ -1,8 +1,9 @@
 <template>
   <div id="search">
     <div class="search-input">
-      <input type="text" placeholder="Tove Jansson" v-model="searchText">
-      <input type="button" value="Sök" v-on:click="searchBooks">
+      <input type="text" placeholder="Tove Jansson" v-model="searchText" v-on:keyup.enter="searchBooks">
+      <!-- <input type="button" value="Sök" v-on:click="searchBooks"> -->
+      <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
     </div>
 
     <div class="search-result" v-if="result">
@@ -10,6 +11,9 @@
       <li v-for="book in books">
         {{book.title}}
         {{book.author}}
+        {{book.category}}
+        {{book.year}}
+        {{book.language}}
       </li>
     </div>
 
@@ -26,27 +30,15 @@
     },
     methods: {
       searchBooks(){
-        this.books = [{
-          title: 'Ett',
-          author: 'Maria'
-        }, {
-          title: 'Två'
-        }]
         this.result = true;
         let word = this.searchText
         fetch('http://localhost:3000/books/' + word)
-        .then (function(response){
-          return response.json()
-        })
-        .then (function(result){
-          //console.log(result)
+        .then (response => response.json())
+        .then (result => {
           let allBooks = result
+          this.books = allBooks
           console.log(allBooks)
-          //console.log(allBooks[2].author);
-
-
         })
-        //this.books = allBooks
       }
     }
   }
@@ -56,11 +48,21 @@
     width: 50%
   }
   input {
+    style: ;
     width: 100%;
     height: 30px;
+    display: inline;
   }
   .search-input {
     padding: 20px;
+  }
+  .search-input * {
+  }
+  
+  #search-icon {
+    font-size: 20px;
+    cursor: pointer;
+    display: inline;
   }
   .search-result {
     padding: 20px;
