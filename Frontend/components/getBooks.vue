@@ -44,30 +44,19 @@
               console.log(result)
         })
       }
-    }
-  }
-</script>
-
-<style>
-        //????
-      }
-    },
-    methods: {
-      //?????(){
-      //}
     },
     components: {
       'search-field': Search,
       'add-book': AddBook,
-    },
+    }
   }
 </script>
+
 <style scoped>
 .container {
  margin: 2em;
 }
-<style>
-h3 {
+h3  {
   width: 80%;
   margin: auto;
   padding: 20px
@@ -78,7 +67,6 @@ table {
   width: 80%;
   margin: auto;
 }
-
 td, th {
   border: 1px solid #dddddd;
   text-align: left;
