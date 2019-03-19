@@ -2,12 +2,13 @@
   <div id="search">
 
     <div class="search-input">
-      <input type="text" placeholder="Tove Jansson" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
+      <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
       <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
 
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
-      <font-awesome-icon v-if="!advanced" icon="angle-down"/>
-      <font-awesome-icon v-if="advanced" icon="angle-up"/></p>
+        <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
+        <span v-else><font-awesome-icon icon="angle-up"/></span>
+      </p>
       <div v-show="advanced">
         <div class="">
           <h2>Kategori</h2>
@@ -22,8 +23,6 @@
             <input type="radio" value="engelska" v-model="pickedLang">Engelska
             <input type="radio" value="finska" v-model="pickedLang">Finska
         </div>
-        <p>Du har valt {{ pickedCat }}, {{pickedLang}}</p>
-        <input type="button" value="Avancerad sökning" v-on:click="advancedSearchBooks">
       </div>
 
     </div>
@@ -56,17 +55,6 @@
       }
     },
     methods: {
-      searchBooks(){
-        this.result = true;
-        let word = this.searchText
-        fetch('http://localhost:3000/books/' + word)
-        .then (response => response.json())
-        .then (result => {
-          let allBooks = result
-          this.books = allBooks
-          console.log(allBooks)
-        })
-      },
       isEven(value){
         if (value%2 == 0){
           return true;
@@ -80,24 +68,37 @@
         console.log(this.counter);
         if (this.isEven(this.counter) ){
           this.advanced = false;
+          this.pickedCat = ''
+          this.pickedLang = ''
         }
         else {
           this.advanced = true;
         }
       },
-      advancedSearchBooks(){
+      searchBooks(){
         this.result = true;
         let word = this.searchText
         let cat = this.pickedCat
         let lang = this.pickedLang
-        fetch('http://localhost:3000/books/' + word + '?cat=' + cat + '&lang=' + lang)
-        .then (response => response.json())
-        .then (result => {
-          let allBooks = result
-          this.books = allBooks
-          console.log(allBooks)
-        })
-      }
+        if (cat === '' && lang === ''){
+          fetch('http://localhost:3000/books/' + word)
+          .then (response => response.json())
+          .then (result => {
+            let allBooks = result
+            this.books = allBooks
+            console.log(allBooks)
+          })
+        }
+        else {
+          fetch('http://localhost:3000/books/' + word + '?cat=' + cat + '&lang=' + lang)
+          .then (response => response.json())
+          .then (result => {
+            let allBooks = result
+            this.books = allBooks
+            console.log(allBooks)
+          })
+        }
+      },
     }
   }
 </script>
