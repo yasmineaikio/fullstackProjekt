@@ -2,7 +2,7 @@
   <div id="search">
 
     <div class="search-input">
-      <input type="text" placeholder="Tove Jansson" v-model="searchText" v-on:keyup.enter="searchBooks">
+      <input type="text" placeholder="Tove Jansson" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
       <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
 
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
@@ -44,6 +44,7 @@
       return {
         searchText: '',
         advanced: false,
+        counter: 0,
         result: false,
         books: []
       }
@@ -60,8 +61,23 @@
           console.log(allBooks)
         })
       },
+      isEven(value){
+        if (value%2 == 0){
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
       showAdvanced (){
-        this.advanced = true;
+        this.counter = this.counter +1
+        console.log(this.counter);
+        if (this.isEven(this.counter) ){
+          this.advanced = false;
+        }
+        else {
+          this.advanced = true;
+        }
       }
     }
   }
@@ -73,7 +89,7 @@
     padding: 20px;
     width: 100%;
   }
-  input {
+  #search-textfield {
     width: 60%;
     height: 30px;
     /* display: inline; */
@@ -88,6 +104,9 @@
   }
   #advanced-search {
     cursor: pointer;
+  }
+  h2 {
+    font-size: 18px;
   }
   .search-result {
     padding: 20px;
