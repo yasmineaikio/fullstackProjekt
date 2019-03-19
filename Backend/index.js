@@ -50,7 +50,7 @@ app.post('/login', (request, response) => {
   let newID = uuidv4();
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-     if(row[0].name === regUser.name && row[0].password === regUser.password) {
+     if(row[0]) { 
       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
         response.status(201).send(user);
       })
