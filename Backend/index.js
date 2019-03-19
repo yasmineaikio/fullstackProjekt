@@ -20,17 +20,20 @@ app.use((request, response, next) => {
 
 app.use(bodyParser.json());
 
+var database;
 db.open('./db.db').then(database_ => {
   database = database_
+  // database.all('SELECT * FROM users').then(users => {
+  //    allUsers = users 
+  //   console.log(allUsers);
+  // })
 })
 
-var inloggade = []
-
 // hämtar samtliga users från databasen (Alex)
-app.get('/users', (request, response) => {
-  database.all('SELECT * FROM users').then(books => {
-    response.send(books);
-  })
+app.get('/users', (request,response) => {
+    database.all('SELECT * FROM users').then(users => {
+      response.send(users);
+    })
 })
 
 // lägger till users (Alex)
@@ -42,40 +45,31 @@ app.post('/users', (request, response) => {
   })
 })
 
-//login validator (Alex)
+// logga in (Alex)
 app.post('/login', (request, response) => {
+  let newID = uuidv4();
   let regUser = request.body
+   database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
+     if(row[0]) { 
+      database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
+        response.status(201).send(user);
+      })
+     } else {
+      response.status(404).send('')
+      console.log('Fel användernamn eller lösenord, försök igen!');
+     }
+   })
+  })
 
-  database.all('SELECT * FROM users WHERE name =? AND password =?', [regUser.name, regUser.password]).then(books => {
-    response.status(201).send(books);
-    if (regUser) {
-      inloggade.push(regUser)
-      console.log(inloggade);
-    }
+
+ // Hämtar inloggade (Alex) 
+app.get('/login', (request, response) => {
+    database.all('SELECT user FROM tokens').then(inloggade => {
+     response.status(201).send(inloggade);
   })
 })
 
-app.get('/login', (request, response) => {
-    function checker() {
-      for (let i = 0; i < inloggade.length; i++) {
-        var user = inloggade[i]
-        database.all('SELECT * FROM users WHERE name =? AND password =?', [user.name, user.password]).then(inloggade => {
-          response.status(201).send(inloggade);
-        })
-      }
-    }
-    checker()
-  })
-
-// kör delete istället
-      app.get("/logout", function(req, res) {
-        req.logout();
-
-        console.log("logged out")
-
-        return res.send();
-      });
-
+// Logga ut (Alex) NEXT
 
       // hämtar samtliga böcker från databasen (Alex)
       app.get('/books', (request, response) => {
@@ -94,6 +88,15 @@ app.get('/login', (request, response) => {
         })
       })
 
+
+      // hämtar lånade böcker (loans) från databasen (Maija)
+      app.get('/loans', (request, response) => {
+        database.all('SELECT * FROM loans').then(books => {
+          response.send(books);
+        })
+      })
+
+
       app.listen(3000, function() {
-        console.log('The server is running!');
-      });
+        console.log('The server is running!')
+      })
