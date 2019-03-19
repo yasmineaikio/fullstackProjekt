@@ -24,7 +24,7 @@ var database;
 db.open('./db.db').then(database_ => {
   database = database_
   // database.all('SELECT * FROM users').then(users => {
-  //    allUsers = users 
+  //    allUsers = users
   //   console.log(allUsers);
   // })
 })
@@ -50,7 +50,7 @@ app.post('/login', (request, response) => {
   let newID = uuidv4();
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-     if(row[0]) { 
+     if(row[0]) {
       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
         response.status(201).send(user);
       })
@@ -62,7 +62,7 @@ app.post('/login', (request, response) => {
   })
 
 
- // Hämtar inloggade (Alex) 
+ // Hämtar inloggade (Alex)
 app.get('/login', (request, response) => {
     database.all('SELECT user FROM tokens').then(inloggade => {
      response.status(201).send(inloggade);
@@ -72,22 +72,37 @@ app.get('/login', (request, response) => {
 // Logga ut (Alex) NEXT
 
       // hämtar samtliga böcker från databasen (Alex)
-      app.get('/books', (request, response) => {
-        database.all('SELECT * FROM books').then(books => {
-          response.send(books);
-        })
-      })
+      // app.get('/books', (request, response) => {
+      //   database.all('SELECT * FROM books').then(books => {
+      //     response.send(books);
+      //   })
+      // })
 
-      // hämtar böcker utifrån ett sökord (Sara)
+      // hämtar böcker utifrån ett sökord titel eller författare (Sara)
       app.get('/books/:word', (request, response) => {
-        database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
+        if (request.query.cat && request.query.lang){
+            database.all('select * from books where category = ? and language = ?', [request.query.cat, request.query.lang]).then (books => {
+              response.status(201)
+              response.send (books)
+            })
+            // database.all('select * from books where category = ?', [request.query.cat]).then (books => {
+              //   response.status(201)
+              //   response.send (books)
+              // })
+              // database.all('select * from books where language = ?', [request.query.lang]).then (books => {
+                //   response.status(201)
+                //   response.send (books)
+                // })
+            }
+        else {
+          database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
           ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
-        ).then(books => {
-          response.status(201)
-          response.send(books)
-        })
+          ).then(books => {
+            response.status(201)
+            response.send(books)
+          })
+        }
       })
-
 
       // hämtar lånade böcker (loans) från databasen (Maija)
       app.get('/loans', (request, response) => {
