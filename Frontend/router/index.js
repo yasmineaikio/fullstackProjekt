@@ -1,12 +1,12 @@
 import Vue from "vue"  
-import Router from "vue-router"  
-import Login from "../components/login.vue"  
-import Users from "../components/users.vue"  
+import Router from "vue-router"
+import Login from "../components/login.vue"
+import Users from "../components/users.vue"
 import Books from '../components/GetBooks.vue'
 import Profile from '../components/Userprofile.vue'
 import Home from '../components/home.vue'
-Vue.use(Router)  
-export default new Router({  
+Vue.use(Router)
+export default new Router({
   routes: [
     {
     path: "/users",
@@ -21,17 +21,17 @@ export default new Router({
     {
     component: Books,
     name: "Books",
-    path: '/books'   
+    path: '/books'
     },
     {
     component: Profile,
     name: "Profile",
-    path: '/profil'   
+    path: '/profil'
     },
     {
     component: Home,
     name: "Home",
-    path: '/'   
+    path: '/'
     },
   ]
 })

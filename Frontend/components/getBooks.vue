@@ -27,23 +27,38 @@
   export default {
     data() {
       return {
-        //????
+        titel: '',
+        author: '',
+        category: '',
+        year: '',
+        language: '',
       }
     },
-    methods: {
-      //?????(){
-      //}
+        methods: {
+          getBooks(){
+            fetch('http://localhost:3000/books')
+            .then(function(response) {
+              return response.json()
+            })
+            .then(function(result){
+              console.log(result)
+        })
+      }
     },
     components: {
       'search-field': Search,
       'add-book': AddBook,
-    },
+    }
+
   }
 </script>
+
+
 <style scoped>
 .container {
-  margin: 2em;
+ margin: 2em;
 }
+<style>
 h3 {
   width: 80%;
   margin: auto;
