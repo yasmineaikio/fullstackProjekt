@@ -13,14 +13,12 @@
       <div v-show="advanced">
         <div class="">
           <h2>Kategori</h2>
-          {{cats}}
-          {{langs}}
-            <input v-for="cat in cats" type="radio" value=""> 
+            <input v-for="cat in cats" type="radio" v-bind:value="cat" v-model="pickedCat">
 
-            <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
+            <!-- <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
             <input type="radio" value="fakta" v-model="pickedCat">Fakta
             <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
-            <input type="radio" value="barn" v-model="pickedCat">Barn
+            <input type="radio" value="barn" v-model="pickedCat">Barn -->
         </div>
         <div class="">
           <h2>Språk</h2>
@@ -52,16 +50,18 @@
         fetch('http://localhost:3000/books/')
         .then (response => response.json())
         .then (result => {
-          let allCats = []
-          let allLangs = []
-          for (let i = 0; i < result.length; i++){
-            allCats[i] = result[i].category
-            allLangs[i] = result[i].language
-          }
-          let uniqueCats = [...new Set(allCats)]
-          let uniqueLangs = [...new Set(allLangs)]
-          this.cats = uniqueCats
-          this.langs = uniqueLangs
+          console.log(result[0], result[1]);
+          console.log(result)
+          // let allCats = []
+          // let allLangs = []
+          // for (let i = 0; i < result.length; i++){
+          //   allCats[i] = result[i].category
+          //   allLangs[i] = result[i].language
+          // }
+          // let uniqueCats = [...new Set(allCats)]
+          // let uniqueLangs = [...new Set(allLangs)]
+          // this.cats = uniqueCats
+          // this.langs = uniqueLangs
         })
     },
     data() {

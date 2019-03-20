@@ -87,7 +87,7 @@ app.get('/login', (request, response) => {
         //   }
         //   let uniqueCats = [...new Set(allCats)]
         //   let uniqueLangs = [...new Set(allLangs)]
-        //   response.send(uniqueCats)
+        //   response.send(uniqueCats && uniqueLangs)
         // })
 
       })
