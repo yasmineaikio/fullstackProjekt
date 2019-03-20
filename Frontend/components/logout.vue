@@ -16,12 +16,13 @@ export default {
                 body: JSON.stringify(info),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response) {
-                // alert("Du har loggat ut")    
-                // router.push("/")
+                alert("Du har loggat ut")    
+                router.push("/")
             })
             .then(function(result){
                 console.log(result)
             })
+            this.$cookie.delete('Cookie')
         }
     }
 }

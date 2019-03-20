@@ -73,7 +73,6 @@ app.post('/login', (request, response) => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
       })
-      
      } else {
       response.status(404).send('')
       console.log('Fel användernamn eller lösenord, försök igen!');
@@ -94,7 +93,7 @@ app.post('/logout', (request, response) => {
    let token = request.body.Cookie
    database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
      response.send('Utloggad');
-    console.log(token);
+     console.log(token);
    })
 })
 

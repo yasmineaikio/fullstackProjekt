@@ -5,7 +5,7 @@
     <a id="homelink"><router-link to="/">Startsida</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
-      <li><router-link to="/profil">Mina sidor</router-link></li>
+      <li v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
       <li><router-link to="/users">skapa konto</router-link></li>
       <li><router-link to="/login">Logga in</router-link></li>
     </ul>
@@ -25,6 +25,11 @@
     import GetBooks from './GetBooks.vue'
 
   export default {
+    data () {
+      return {
+            link:'/'
+      }
+    },
     components: {
       'search-field': Search,
       'add-book': AddBook,
@@ -35,6 +40,21 @@
       'home': Home,
     },
     router,
+    methods: {
+      auth() {
+        //Kollar om user är inloggad (alex)
+        if (this.$cookie.get('Cookie')) {
+          this.link = '/profil'
+          router.push("/profil")
+          console.log(this.$cookie.get('Cookie'));
+          
+        } else {
+          alert('Du måste logga in först!')
+          this.link = '/login'
+          router.push("/login")
+        }
+      }
+    },
   }
 </script>
 

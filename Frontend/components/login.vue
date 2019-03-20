@@ -2,7 +2,6 @@
     <div>
         <form @submit.prevent="login()">
             <h4>Logga in</h4>
-            <p>Fungerar sådär än så länge. Inloggad user hämtas från /login</p>
             <input type="text" placeholder="Användernamn" v-model="name"><br>
             <input type="password" placeholder="Lösenord" v-model="password"><br>
             <button type="submit">Logga in</button>
