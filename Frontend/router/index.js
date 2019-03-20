@@ -1,6 +1,7 @@
 import Vue from "vue"  
 import Router from "vue-router"
 import Login from "../components/login.vue"
+import Logout from "../components/logout.vue"
 import Users from "../components/users.vue"
 import Books from '../components/GetBooks.vue'
 import Profile from '../components/Userprofile.vue'
@@ -32,6 +33,11 @@ export default new Router({
     component: Home,
     name: "Home",
     path: '/'
+    },
+    {
+    component: Logout,
+    name: "Logout",
+    path: '/logout'
     },
   ]
 })

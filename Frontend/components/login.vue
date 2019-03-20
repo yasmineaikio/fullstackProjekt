@@ -2,7 +2,6 @@
     <div>
         <form @submit.prevent="login()">
             <h4>Logga in</h4>
-            <p>Fungerar sådär än så länge. Inloggad user hämtas från /login</p>
             <input type="text" placeholder="Användernamn" v-model="name"><br>
             <input type="password" placeholder="Lösenord" v-model="password"><br>
             <button type="submit">Logga in</button>
@@ -11,6 +10,7 @@
 </template>
 <script>
 import router from "../router" 
+import  uuid  from 'vue-uuid';
 export default {
     data(){
         return {
@@ -23,20 +23,20 @@ export default {
     },
     methods: {
         login() {
-            var userinfo = {'name': this.name, 'password': this.password} 
+            var cookie = this.$cookie.set('Cookie', this.$uuid.v1(), '10m')
+            console.log(cookie);
+            
+            var userinfo = {'name': this.name, 'password': this.password, 'ID':this.$uuid.v1()} 
             fetch('http://localhost:3000/login', {
                 method: 'POST',
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
-            }).then(function(response){
+            }).then(function(response) {
                 console.log("inloggad")    
                 router.push("/profil")
             })
             .then(function(result){
                 console.log(result)
-            })
-            .catch(e => {
-                console.log(e) 
             })
         }
     },
