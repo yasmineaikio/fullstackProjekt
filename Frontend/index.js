@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import UUID from 'vue-uuid';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
@@ -10,7 +11,9 @@ Vue.config.productionTip = false
 library.add(faCog)
 library.add(faSearch)
 library.add(faAngleDown)
-
+var VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
+Vue.use(UUID);
 import App from './components/App.vue'
 
 new Vue({

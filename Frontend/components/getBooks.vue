@@ -58,7 +58,7 @@
 .container {
  margin: 2em;
 }
-<style>
+
 h3 {
   width: 80%;
   margin: auto;

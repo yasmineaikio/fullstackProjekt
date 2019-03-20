@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('sqlite');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 const uuidv4 = require('uuid/v4');
 const app = express();
 
@@ -19,6 +20,7 @@ app.use((request, response, next) => {
 })
 
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 var database;
 db.open('./db.db').then(database_ => {
@@ -46,14 +48,32 @@ app.post('/users', (request, response) => {
 })
 
 // logga in (Alex)
+// app.post('/login', (request, response) => {
+//   let newID = uuidv4();
+//   let regUser = request.body
+//    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
+//      if(row[0]) { 
+//       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
+//         response.set('Cookie', newID)
+//         response.status(201).send(user)
+//       })
+      
+//      } else {
+//       response.status(404).send('')
+//       console.log('Fel användernamn eller lösenord, försök igen!');
+//      }
+//    })
+//   })
+
 app.post('/login', (request, response) => {
-  let newID = uuidv4();
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) { 
-      database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
-        response.status(201).send(user);
+      database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, regUser.ID]).then(user => {
+        response.set('Cookie', regUser.ID)
+        response.status(201).send(user)
       })
+      
      } else {
       response.status(404).send('')
       console.log('Fel användernamn eller lösenord, försök igen!');
@@ -64,39 +84,48 @@ app.post('/login', (request, response) => {
 
  // Hämtar inloggade (Alex) 
 app.get('/login', (request, response) => {
-    database.all('SELECT user FROM tokens').then(inloggade => {
+    database.all('SELECT * FROM tokens').then(inloggade => {
      response.status(201).send(inloggade);
   })
 })
 
-// Logga ut (Alex) NEXT
+// Logga ut (Alex) 
+app.post('/logout', (request, response) => {
+   let token = request.body.Cookie
+   database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
+     response.send('Utloggad');
+    console.log(token);
+   })
+})
 
-      // hämtar samtliga böcker från databasen (Alex)
-      app.get('/books', (request, response) => {
-        database.all('SELECT * FROM books').then(books => {
-          response.send(books);
-        })
-      })
-
-      // hämtar böcker utifrån ett sökord (Sara)
-      app.get('/books/:word', (request, response) => {
-        database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
-          ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
-        ).then(books => {
-          response.status(201)
-          response.send(books)
-        })
-      })
+// hämtar samtliga böcker från databasen (Alex)
+app.get('/books', (request, response) => {
+  database.all('SELECT * FROM books').then(books => {
+    response.send(books);
+  })
+})
 
 
-      // hämtar lånade böcker (loans) från databasen (Maija)
-      app.get('/loans', (request, response) => {
-        database.all('SELECT * FROM loans').then(books => {
-          response.send(books);
-        })
-      })
+
+// hämtar böcker utifrån ett sökord (Sara)
+app.get('/books/:word', (request, response) => {
+  database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
+    ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
+  ).then(books => {
+    response.status(201)
+    response.send(books)
+  })
+})
 
 
-      app.listen(3000, function() {
-        console.log('The server is running!')
-      })
+// hämtar lånade böcker (loans) från databasen (Maija)
+app.get('/loans', (request, response) => {
+  database.all('SELECT * FROM loans').then(books => {
+    response.send(books);
+  })
+})
+
+
+app.listen(3000, function() {
+  console.log('The server is running!')
+})
