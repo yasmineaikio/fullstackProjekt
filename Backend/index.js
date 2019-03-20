@@ -74,8 +74,22 @@ app.get('/login', (request, response) => {
       // hämtar samtliga böcker från databasen (Alex)
       app.get('/books', (request, response) => {
         database.all('SELECT * FROM books').then(books => {
-          response.send(books);
-        })
+            response.send(books);
+          })
+
+        //Saras - ta ej bort!
+        // database.all('select category, language from books order by category, language').then(books => {
+        //   let allCats = []
+        //   let allLangs = []
+        //   for (let i = 0; i < books.length; i++){
+        //     allCats[i] = books[i].category
+        //     allLangs[i] = books[i].language
+        //   }
+        //   let uniqueCats = [...new Set(allCats)]
+        //   let uniqueLangs = [...new Set(allLangs)]
+        //   response.send(uniqueCats)
+        // })
+
       })
 
       // hämtar böcker utifrån sökord (Sara)
@@ -125,10 +139,10 @@ app.get('/login', (request, response) => {
         let available = request.body.available
         let returndate = request.body.returndate
         let id = request.body.id
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [title, author, category, year, language, available, returndate, id]).then(books => {
         response.send(books)
-        }) 
+        })
       })
 
 
