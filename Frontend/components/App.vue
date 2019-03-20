@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
   <header>
     <br>
     <a id="homelink"><router-link to="/">Startsida</router-link></a>
@@ -91,5 +91,8 @@ li a {
 .login-btn {
   border-top: 4px solid darkseagreen;
   border-radius: 2px;
+}
+.container {
+  position: relative;
 }
 </style>
