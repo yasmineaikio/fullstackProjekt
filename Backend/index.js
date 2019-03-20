@@ -52,12 +52,12 @@ app.post('/users', (request, response) => {
 //   let newID = uuidv4();
 //   let regUser = request.body
 //    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-//      if(row[0]) { 
+//      if(row[0]) {
 //       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
 //         response.set('Cookie', newID)
 //         response.status(201).send(user)
 //       })
-      
+
 //      } else {
 //       response.status(404).send('')
 //       console.log('Fel användernamn eller lösenord, försök igen!');
@@ -68,7 +68,7 @@ app.post('/users', (request, response) => {
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-     if(row[0]) { 
+     if(row[0]) {
       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, regUser.ID]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
@@ -88,7 +88,7 @@ app.get('/login', (request, response) => {
   })
 })
 
-// Logga ut (Alex) 
+// Logga ut (Alex)
 app.post('/logout', (request, response) => {
    let token = request.body.Cookie
    database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
@@ -104,6 +104,26 @@ app.get('/books', (request, response) => {
   })
 })
 
+      // hämtar samtliga böcker från databasen (Alex)
+      app.get('/books', (request, response) => {
+        database.all('SELECT * FROM books').then(books => {
+            response.send(books);
+          })
+
+        //Saras - ta ej bort!
+        // database.all('select category, language from books order by category, language').then(books => {
+        //   let allCats = []
+        //   let allLangs = []
+        //   for (let i = 0; i < books.length; i++){
+        //     allCats[i] = books[i].category
+        //     allLangs[i] = books[i].language
+        //   }
+        //   let uniqueCats = [...new Set(allCats)]
+        //   let uniqueLangs = [...new Set(allLangs)]
+        //   response.send(uniqueCats && uniqueLangs)
+        // })
+
+      })
 
 
 // hämtar böcker utifrån ett sökord (Sara)
@@ -162,10 +182,10 @@ app.get('/books/:word', (request, response) => {
         let available = request.body.available
         let returndate = request.body.returndate
         let id = request.body.id
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [title, author, category, year, language, available, returndate, id]).then(books => {
         response.send(books)
-        }) 
+        })
       })
 
 

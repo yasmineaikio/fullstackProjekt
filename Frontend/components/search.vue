@@ -1,5 +1,5 @@
 <template>
-  <div id="search">
+  <div class="search">
 
     <div class="search-input">
       <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
@@ -9,13 +9,16 @@
         <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
         <span v-else><font-awesome-icon icon="angle-up"/></span>
       </p>
+
       <div v-show="advanced">
         <div class="">
           <h2>Kategori</h2>
-            <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
+            <input v-for="cat in cats" type="radio" v-bind:value="cat" v-model="pickedCat">
+
+            <!-- <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
             <input type="radio" value="fakta" v-model="pickedCat">Fakta
             <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
-            <input type="radio" value="barn" v-model="pickedCat">Barn
+            <input type="radio" value="barn" v-model="pickedCat">Barn -->
         </div>
         <div class="">
           <h2>Språk</h2>
@@ -43,11 +46,31 @@
 </template>
 <script>
   export default {
+    created(){
+        fetch('http://localhost:3000/books/')
+        .then (response => response.json())
+        .then (result => {
+          console.log(result[0], result[1]);
+          console.log(result)
+          // let allCats = []
+          // let allLangs = []
+          // for (let i = 0; i < result.length; i++){
+          //   allCats[i] = result[i].category
+          //   allLangs[i] = result[i].language
+          // }
+          // let uniqueCats = [...new Set(allCats)]
+          // let uniqueLangs = [...new Set(allLangs)]
+          // this.cats = uniqueCats
+          // this.langs = uniqueLangs
+        })
+    },
     data() {
       return {
         searchText: '',
         advanced: false,
         counter: 0,
+        cats: [],
+        langs: [],
         pickedCat: '',
         pickedLang: '',
         result: false,
@@ -103,7 +126,8 @@
   }
 </script>
 <style scoped>
-  #search {
+  .search {
+    background-color: lightgrey;
   }
   .search-input {
     padding: 20px;
