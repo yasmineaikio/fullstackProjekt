@@ -26,7 +26,7 @@ var database;
 db.open('./db.db').then(database_ => {
   database = database_
   // database.all('SELECT * FROM users').then(users => {
-  //    allUsers = users 
+  //    allUsers = users
   //   console.log(allUsers);
   // })
 })
@@ -82,7 +82,7 @@ app.post('/login', (request, response) => {
   })
 
 
- // Hämtar inloggade (Alex) 
+ // Hämtar inloggade (Alex)
 app.get('/login', (request, response) => {
     database.all('SELECT * FROM tokens').then(inloggade => {
      response.status(201).send(inloggade);
@@ -116,6 +116,58 @@ app.get('/books/:word', (request, response) => {
     response.send(books)
   })
 })
+      // hämtar böcker utifrån sökord (Sara)
+      app.get('/books/:word', (request, response) => {
+        if (request.query.cat && request.query.lang){
+            database.all('select * from books where title like ? OR author like ? AND category = ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat, request.query.lang]).then (books => {
+              response.status(201)
+              response.send (books)
+            })
+        }
+        else if (request.query.cat){
+          database.all('select * from books where title like ? OR author like ? AND category = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat]).then (books => {
+            response.status(201)
+            response.send (books)
+          })
+        }
+        else if (request.query.lang){
+          database.all('select * from books where title like ? OR author like ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.lang]).then (books => {
+            response.status(201)
+            response.send (books)
+          })
+        }
+        else {
+          database.all('select * from books where title like ? OR author like ? order by year desc',
+          ['%' + request.params.word + '%', '%' + request.params.word + '%']
+          ).then(books => {
+            response.status(201)
+            response.send(books)
+          })
+        }
+      })
+
+      // hämtar lånade böcker (loans) från databasen (Maija)
+      app.get('/loans', (request, response) => {
+        database.all('SELECT * FROM loans').then(books => {
+          response.send(books);
+        })
+      })
+
+      //Lägger till bok (Annika)
+      app.post('/books', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let available = request.body.available
+        let returndate = request.body.returndate
+        let id = request.body.id
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        [title, author, category, year, language, available, returndate, id]).then(books => {
+        response.send(books)
+        }) 
+      })
 
 
 // hämtar lånade böcker (loans) från databasen (Maija)
