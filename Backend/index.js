@@ -115,6 +115,22 @@ app.get('/login', (request, response) => {
         })
       })
 
+      //Lägger till bok (Annika)
+      app.post('/books', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let available = request.body.available
+        let returndate = request.body.returndate
+        let id = request.body.id
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        [title, author, category, year, language, available, returndate, id]).then(books => {
+        response.send(books)
+        }) 
+      })
+
 
       app.listen(3000, function() {
         console.log('The server is running!')
