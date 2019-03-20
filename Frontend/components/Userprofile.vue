@@ -7,7 +7,7 @@
     Namn Namn | <a href="">mail@mail.mail</a> | Adress
   </div>
 
-  <div id="profilepage_books" style=""><logout></logout>
+  <div id="profilepage_books" style="">
     <h2>Lånade böcker</h2>
 
     <table style="border:1px solid; 000; width: 100%; margin:auto;">
@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import Logout from './logout.vue'
+
   export default {
     
     data() {
@@ -43,7 +43,7 @@ import Logout from './logout.vue'
       }
     },
     components: {
-      'logout': Logout
+     
     }
   }
 </script>
