@@ -1,5 +1,5 @@
 <template>
-  <div id="profilepagemain" v-if="inloggad">
+  <div id="profilepagemain" v-if="this.$cookie.get('Cookie')">
   <h1>Hej {{ this.name }}!</h1>
 
   <div id="profilepageuserinfo">
@@ -41,7 +41,7 @@
   },
     data() {
       return {
-        name: 'Test',
+        name: '',
         users: null,
         books: null,
         inloggad: true,
@@ -54,6 +54,13 @@
           .then (result => {
             this.users = result
           })
+
+        fetch('http://localhost:3000/login')
+        .then(response => response.json())
+          .then (result => {
+            //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
+            this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
+          })  
 
         fetch('http://localhost:3000/books')
           .then(response => response.json())
