@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         login() {
-            var cookie = this.$cookie.set('Cookie', this.$uuid.v1(), '10m')
+            var cookie = this.$cookie.set('Cookie', this.$uuid.v1(), 1)
             console.log(cookie);
             
             var userinfo = {'name': this.name, 'password': this.password, 'ID':this.$uuid.v1()} 
@@ -79,4 +79,6 @@ button[type=submit] {
     border-radius: 4px;
     cursor: pointer;
 }
+
+
 </style>
