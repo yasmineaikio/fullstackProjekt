@@ -40,6 +40,7 @@ background-color: #F3C954;
 border: 2px solid transparent;
 padding: 10px 40px;
 border-radius: 2px;
+font-family: 'Work Sans', sans-serif;
 }
 
 button:hover {
