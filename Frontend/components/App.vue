@@ -25,6 +25,7 @@
     import AddBook from './addBook.vue'
     import Userprofile from './Userprofile.vue'
     import GetBooks from './GetBooks.vue'
+    import LoanButton from './loanButton.vue'
 
   export default {
     data () {
@@ -41,6 +42,7 @@
       'login': Login,
       'logout': Logout,
       'home': Home,
+      'loan-button': LoanButton,
     },
     router,
     methods: {
@@ -50,7 +52,7 @@
           this.link = '/profil'
           router.push("/profil")
           console.log(this.$cookie.get('Cookie'));
-          
+
         } else {
           alert('Du måste logga in först!')
           this.link = '/login'
@@ -78,7 +80,7 @@ ul {
   margin: 5px;
   float: right;
 }
-li { 
+li {
   display: inline;;
   padding: 1px;
 }
