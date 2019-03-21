@@ -18,7 +18,7 @@ export default {
   methods: {
       addLoan() {
           fetch('http://localhost:3000/loans', {
-              body: '{ "available":"hallå", "returnDate":"hej", "ID":"jaha"}',
+              body: '{"available":"hallå", "returnDate":"hej", "ID":"jaha"}',
               headers: {
                   'Content-Type': 'application/json'
               },
