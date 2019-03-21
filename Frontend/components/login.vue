@@ -31,8 +31,7 @@ export default {
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response) {
-                if (response.status === 201) {
-                    console.log("inloggad")    
+                if (response.status === 201) {  
                     router.push("/profil")
                 } else {
                     alert("Fel användernamn eller lösenord! Försök igen!")    

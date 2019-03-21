@@ -113,7 +113,7 @@ app.get('/books', (request, response) => {
   database.all('SELECT * FROM books').then(books => {
       response.send(books);
     })
-
+  })
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
@@ -193,4 +193,5 @@ app.get('/loans', (request, response) => {
 
 app.listen(3000, function() {
   console.log('The server is running!')
-})
+});
+
