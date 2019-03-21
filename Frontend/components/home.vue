@@ -16,6 +16,7 @@
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=Work+Sans');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
   #title {
     position: relative;
     text-align: center;
