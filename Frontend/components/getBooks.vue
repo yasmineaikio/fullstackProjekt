@@ -2,6 +2,7 @@
   <div class="container">
   <add-book></add-book>
   <search-field></search-field>
+
   <h3>Böcker</h3>
   <table>
   <tr>
@@ -11,12 +12,12 @@
     <th>Utgivningår</th>
     <th>Språk</th>
   </tr>
-  <tr>
-    <td>HÄMTA</td>
-    <td>HÄMTA</td>
-    <td>HÄMTA</td>
-    <td>HÄMTA</td>
-    <td>HÄMTA</td>
+  <tr v-for='book in books'>
+    <td>{{book.title}}</td>
+    <td>{{book.author}}</td>
+    <td>{{book.category}}</td>
+    <td>{{book.year}}</td>
+    <td>{{book.language}}</td>
   </tr>
   </table>
   </div>
@@ -27,24 +28,16 @@
   export default {
     data() {
       return {
-        titel: '',
-        author: '',
-        category: '',
-        year: '',
-        language: '',
+        books: []
       }
     },
-        methods: {
-          getBooks(){
+        created() {
             fetch('http://localhost:3000/books')
-            .then(function(response) {
-              return response.json()
-            })
-            .then(function(result){
-              console.log(result)
+            .then(response => response.json())
+            .then(result => {
+            this.books = result
         })
-      }
-    },
+      },
     components: {
       'search-field': Search,
       'add-book': AddBook,
