@@ -182,8 +182,8 @@ app.get('/books/:word', (request, response) => {
         let id = uuidv4()
         let image = request.body.image
         let amount = request.body.amount
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)', 
-        [title, author, category, year, language, image, amount]).then(books => {
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        [title, author, category, year, language, amount, image, id]).then(books => {
         response.send(books)
         }) 
       })
