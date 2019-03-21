@@ -179,13 +179,13 @@ app.get('/books/:word', (request, response) => {
         let category = request.body.category
         let year = request.body.year
         let language = request.body.language
-        let available = request.body.available
-        let returndate = request.body.returndate
-        let id = request.body.id
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [title, author, category, year, language, available, returndate, id]).then(books => {
+        let id = uuidv4()
+        let image = request.body.image
+        let amount = request.body.amount
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [title, author, category, year, language, image, amount]).then(books => {
         response.send(books)
-        })
+        }) 
       })
 
 

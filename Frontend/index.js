@@ -6,6 +6,7 @@ import { faBook } from '@fortawesome/free-solid-svg-icons'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -18,6 +19,7 @@ var VueCookie = require('vue-cookie');
 Vue.use(VueCookie);
 Vue.use(UUID);
 library.add(faAngleUp)
+library.add(faCheck)
 
 import App from './components/App.vue'
 
