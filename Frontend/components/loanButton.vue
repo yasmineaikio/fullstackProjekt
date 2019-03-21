@@ -18,7 +18,7 @@ export default {
   methods: {
       addLoan() {
           fetch('http://localhost:3000/loans', {
-              body: '{"available":"hallå", "returnDate":"hej", "ID":"jaha"}',
+              body: JSON.stringify({available:'hallå', returnDate:'hej', ID:'ha'}),
               headers: {
                   'Content-Type': 'application/json'
               },
@@ -26,7 +26,7 @@ export default {
           })
           .then(response => response.json())
           .then(result => {
-          console.log('tillagt')
+          console.log(result)
           })
       }
   }
@@ -34,4 +34,15 @@ export default {
 </script>
 
 <style scoped>
+button{
+font-size:15px;
+background-color: #F3C954;
+border: 2px solid transparent;
+padding: 10px 40px;
+border-radius: 2px;
+}
+
+button:hover {
+  border: 2px solid grey;
+}
 </style>
