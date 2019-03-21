@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-  <add-book></add-book>
+  <add-book v-if="admin"></add-book>
   <search-field></search-field>
   <h3>Böcker</h3>
   <table>
@@ -32,23 +32,47 @@
         category: '',
         year: '',
         language: '',
+        admin: false,
+        adminName: '',
+        inlogedUser: '',
       }
     },
-        methods: {
-          getBooks(){
-            fetch('http://localhost:3000/books')
-            .then(function(response) {
-              return response.json()
-            })
-            .then(function(result){
-              console.log(result)
+    methods: {
+      getBooks() {
+        fetch('http://localhost:3000/books')
+        .then(function(response) {
+          return response.json()
         })
-      }
+        .then(function(result){
+          console.log(result)
+      })
+    }
     },
     components: {
       'search-field': Search,
       'add-book': AddBook,
-    }
+    },
+    mounted() {
+     let id = this.$cookie.get('Cookie')
+      fetch ('http://localhost:3000/admin')
+      .then(response => {
+          return response.json()
+      })
+      .then(result => {
+          this.adminName =result[0].name
+      })
+
+      fetch('http://localhost:3000/login')
+      .then(response => {
+          return response.json()
+      })
+      .then(result => {
+          let test = result.find(value => value.user === 'ADMIN')
+          if(test.user === 'ADMIN' ) { //kolla test.token också
+            this.admin = true
+          }     
+      })
+    },
   }
 </script>
 
