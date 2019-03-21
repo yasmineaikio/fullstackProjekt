@@ -97,7 +97,6 @@ app.post('/logout', (request, response) => {
    })
 })
 
-
       // hämtar samtliga böcker från databasen (Alex)
       app.get('/books', (request, response) => {
         database.all('SELECT * FROM books').then(books => {
@@ -106,22 +105,15 @@ app.post('/logout', (request, response) => {
         })
 
       //hämtar kategorier och språk (Sara)
-      app.get('/books/categories', (request, response) => {
+      app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
           let categories = books.map(row => row.category)
-
-          // let allCats = []
-          // // let allLangs = []
-          // for (let i = 0; i < books.length; i++){
-          //   allCats[i] = books[i].category
-          //   // allLangs[i] = books[i].language
-          // }
-          // let uniqueCats = [...new Set(allCats)]
-          // let uniqueLangs = [...new Set(allLangs)]
-          // let all = [uniqueCats]
-          response.send(categories)
+            database.all('select distinct language from books order by language').then(books => {
+              let languages = books.map(row => row.language)
+              let all = [categories, languages]
+              response.send(all)
+            })
         })
-
       })
 
 

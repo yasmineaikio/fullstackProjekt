@@ -53,23 +53,11 @@
 <script>
   export default {
     created(){
-        fetch('http://localhost:3000/books/categories')
+        fetch('http://localhost:3000/books/catsandlangs')
         .then (response => response.json())
         .then (result => {
-          console.log(result)
-          this.cats = result
-          // console.log(result)
-          // let allCats = []
-          // let allLangs = []
-          // for (let i = 0; i < result.length; i++){
-          //   allCats[i] = result[i].category
-          //   allLangs[i] = result[i].language
-          // }
-          // let uniqueCats = [...new Set(allCats)]
-          // let uniqueLangs = [...new Set(allLangs)]
-          // this.cats = uniqueCats
-          // this.langs = uniqueLangs
-
+          this.cats = result[0]
+          this.langs = result[1]
         })
     },
     data() {
@@ -141,7 +129,7 @@
     background-color: #7A7A7A;
   }
   #search-textfield {
-    width: 92%;
+    width: 98%;
     height: 30px;
     padding: 6px;
     font-family: 'Work sans', sans-serif;
@@ -156,7 +144,7 @@
     cursor: pointer;
     position: absolute;
     top: 7px;
-    left: 89%;
+    left: 95%;
     color: #F3C954;
   }
   #advanced-search {
