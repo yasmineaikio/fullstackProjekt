@@ -125,16 +125,6 @@ app.get('/books', (request, response) => {
 
       })
 
-
-// hämtar böcker utifrån ett sökord (Sara)
-app.get('/books/:word', (request, response) => {
-  database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
-    ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
-  ).then(books => {
-    response.status(201)
-    response.send(books)
-  })
-})
       // hämtar böcker utifrån sökord (Sara)
       app.get('/books/:word', (request, response) => {
         if (request.query.cat && request.query.lang){
@@ -182,10 +172,10 @@ app.get('/books/:word', (request, response) => {
         let id = uuidv4()
         let image = request.body.image
         let amount = request.body.amount
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)',
         [title, author, category, year, language, image, amount]).then(books => {
         response.send(books)
-        }) 
+        })
       })
 
 

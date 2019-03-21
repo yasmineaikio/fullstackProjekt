@@ -13,12 +13,12 @@
       <div v-show="advanced">
         <div class="">
           <h2>Kategori</h2>
-            <input v-for="cat in cats" type="radio" v-bind:value="cat" v-model="pickedCat">
+            <input v-for="cat in cats" type="radio" v-bind:name="cat" v-bind:value="cat" v-model="pickedCat">
 
-            <!-- <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
+            <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
             <input type="radio" value="fakta" v-model="pickedCat">Fakta
             <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
-            <input type="radio" value="barn" v-model="pickedCat">Barn -->
+            <input type="radio" value="barn" v-model="pickedCat">Barn
         </div>
         <div class="">
           <h2>Språk</h2>
