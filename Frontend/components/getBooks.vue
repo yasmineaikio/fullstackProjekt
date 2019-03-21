@@ -2,8 +2,6 @@
   <div class="container">
   <add-book></add-book>
 
-  <search-field></search-field>
-
   <h3>Böcker</h3>
   <table>
   <tr>
@@ -26,7 +24,6 @@
   </div>
 </template>
 <script>
-  import Search from './search.vue'
   import AddBook from './addBook.vue'
   import LoanButton from './loanbutton.vue'
   export default {
@@ -43,7 +40,6 @@
         })
       },
     components: {
-      'search-field': Search,
       'add-book': AddBook,
       'loan-button': LoanButton,
     }

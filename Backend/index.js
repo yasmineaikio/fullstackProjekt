@@ -97,35 +97,39 @@ app.post('/logout', (request, response) => {
    })
 })
 
-// hämtar samtliga böcker från databasen (Alex)
-app.get('/books', (request, response) => {
-  database.all('SELECT * FROM books').then(books => {
-    response.send(books);
-  })
-})
 
       // hämtar samtliga böcker från databasen (Alex)
       app.get('/books', (request, response) => {
         database.all('SELECT * FROM books').then(books => {
             response.send(books);
           })
+        })
 
-        //Saras - ta ej bort!
-        // database.all('select category, language from books order by category, language').then(books => {
-        //   let allCats = []
-        //   let allLangs = []
-        //   for (let i = 0; i < books.length; i++){
-        //     allCats[i] = books[i].category
-        //     allLangs[i] = books[i].language
-        //   }
-        //   let uniqueCats = [...new Set(allCats)]
-        //   let uniqueLangs = [...new Set(allLangs)]
-        //   response.send(uniqueCats && uniqueLangs)
-        // })
+      //hämtar kategorier och språk (Sara)
+      app.get('/books/categories', (request, response) => {
+        database.all('select distinct category from books order by category').then(books => {
+          let categories = books.map(row => row.category)
+
+          // let allCats = []
+          // // let allLangs = []
+          // for (let i = 0; i < books.length; i++){
+          //   allCats[i] = books[i].category
+          //   // allLangs[i] = books[i].language
+          // }
+          // let uniqueCats = [...new Set(allCats)]
+          // let uniqueLangs = [...new Set(allLangs)]
+          // let all = [uniqueCats]
+          response.send(categories)
+        })
 
       })
 
-      // hämtar böcker utifrån sökord (Sara)
+
+// om söker på två ord,
+// split så det blir två strängar s.split('') -tar bort mellanslag och ger array
+// where name like ... and name like ...
+
+// hämtar böcker utifrån sökord (Sara)
       app.get('/books/:word', (request, response) => {
         if (request.query.cat && request.query.lang){
             database.all('select * from books where title like ? OR author like ? AND category = ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat, request.query.lang]).then (books => {
@@ -172,7 +176,7 @@ app.get('/books', (request, response) => {
         let id = uuidv4()
         let image = request.body.image
         let amount = request.body.amount
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)', 
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [title, author, category, year, language, amount, image, id]).then(books => {
         response.send(books)
         })
