@@ -116,12 +116,10 @@ app.post('/logout', (request, response) => {
         })
       })
 
-
+// hämtar böcker utifrån sökord (Sara)
 // om söker på två ord,
 // split så det blir två strängar s.split('') -tar bort mellanslag och ger array
 // where name like ... and name like ...
-
-// hämtar böcker utifrån sökord (Sara)
       app.get('/books/:word', (request, response) => {
         if (request.query.cat && request.query.lang){
             database.all('select * from books where title like ? OR author like ? AND category = ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat, request.query.lang]).then (books => {
