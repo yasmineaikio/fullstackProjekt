@@ -140,7 +140,7 @@
   #search-textfield {
     width: 92%;
     height: 30px;
-    /* display: inline; */
+    padding: 6px;
   }
   #search {
     position: relative;
@@ -151,8 +151,8 @@
     font-size: 16px;
     cursor: pointer;
     position: absolute;
-    top: 3px;
-    left: 88%;
+    top: 7px;
+    left: 89%;
     color: #F3C954;
   }
   #advanced-search {
