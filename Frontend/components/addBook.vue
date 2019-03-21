@@ -5,14 +5,14 @@
     Samtliga fält är obligatoriska.
   </div>
 <form>
-    <input required class="addBookTextfields" v-model="title" placeholder="Titel">
-    <input required class="addBookTextfields" v-model="author" placeholder="Författare">
-    <input required class="addBookTextfields" v-model="category" placeholder="Kategori">
-    <input required class="addBookTextfields" v-model="year" placeholder="Utgivningsår">
-    <input required class="addBookTextfields" v-model="language" placeholder="Språk">
-    <input required class="addBookTextfields" v-model="image" placeholder="Bild">
-    <input required class="addBookTextfields" v-model="amount" placeholder="Antal">
-    <input required class="addBookButton" v-on:click="addBook" type="submit" value="Lägg till">
+    <input class="addBookTextfields" v-model="title" placeholder="Titel" required>
+    <input class="addBookTextfields" v-model="author" placeholder="Författare" required>
+    <input class="addBookTextfields" v-model="category" placeholder="Kategori" required>
+    <input class="addBookTextfields" v-model="year" placeholder="Utgivningsår" required>
+    <input class="addBookTextfields" v-model="language" placeholder="Språk" required>
+    <input class="addBookTextfields" v-model="image" placeholder="Bild" required>
+    <input class="addBookTextfields" v-model="amount" placeholder="Antal" required>
+    <input class="addBookButton" :disabled="isDisabled" v-on:click="addBook" type="submit" value="Lägg till">
   </form>
   <p id="addedText" v-if="message"><font-awesome-icon icon="check" id="check"/> Du har lagt till 
   <span id="addedTitle">{{ addedTitle }}</span></p>
@@ -31,9 +31,15 @@ export default {
           image: null,
           amount: null,
           message: false,
-          addedTitle: null,
+          addedTitle: null
       }
     },
+  computed: {
+  	  isDisabled() {
+    	  return !this.title || !this.author || !this.category || !this.year || !this.language || !this.image || !this.amount
+      }
+  },
+
   methods: {
       addBook() {
           fetch('http://localhost:3000/books', {
