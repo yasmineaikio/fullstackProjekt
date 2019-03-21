@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('sqlite');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 const uuidv4 = require('uuid/v4');
 const app = express();
 
@@ -19,18 +20,22 @@ app.use((request, response, next) => {
 })
 
 app.use(bodyParser.json());
+app.use(cookieParser())
 
+var database;
 db.open('./db.db').then(database_ => {
   database = database_
+  // database.all('SELECT * FROM users').then(users => {
+  //    allUsers = users
+  //   console.log(allUsers);
+  // })
 })
 
-var inloggade = []
-
 // hämtar samtliga users från databasen (Alex)
-app.get('/users', (request, response) => {
-  database.all('SELECT * FROM users').then(books => {
-    response.send(books);
-  })
+app.get('/users', (request,response) => {
+    database.all('SELECT * FROM users').then(users => {
+      response.send(users);
+    })
 })
 
 // lägger till users (Alex)
@@ -42,58 +47,123 @@ app.post('/users', (request, response) => {
   })
 })
 
-//login validator (Alex)
+// logga in (Alex)
+// app.post('/login', (request, response) => {
+//   let newID = uuidv4();
+//   let regUser = request.body
+//    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
+//      if(row[0]) {
+//       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
+//         response.set('Cookie', newID)
+//         response.status(201).send(user)
+//       })
+
+//      } else {
+//       response.status(404).send('')
+//       console.log('Fel användernamn eller lösenord, försök igen!');
+//      }
+//    })
+//   })
+
 app.post('/login', (request, response) => {
   let regUser = request.body
+   database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
+     if(row[0]) {
+      database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, regUser.ID]).then(user => {
+        response.set('Cookie', regUser.ID)
+        response.status(201).send(user)
+      })
+     } else {
+      response.status(404).send('')
+      console.log('Fel användernamn eller lösenord, försök igen!');
+     }
+   })
+  })
 
-  database.all('SELECT * FROM users WHERE name =? AND password =?', [regUser.name, regUser.password]).then(books => {
-    response.status(201).send(books);
-    if (regUser) {
-      inloggade.push(regUser)
-      console.log(inloggade);
-    }
+
+ // Hämtar inloggade (Alex)
+app.get('/login', (request, response) => {
+    database.all('SELECT * FROM tokens').then(inloggade => {
+     response.status(201).send(inloggade);
   })
 })
 
-app.get('/login', (request, response) => {
-    function checker() {
-      for (let i = 0; i < inloggade.length; i++) {
-        var user = inloggade[i]
-        database.all('SELECT * FROM users WHERE name =? AND password =?', [user.name, user.password]).then(inloggade => {
-          response.status(201).send(inloggade);
-        })
-      }
-    }
-    checker()
+// Logga ut (Alex)
+app.post('/logout', (request, response) => {
+   let token = request.body.Cookie
+   database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
+     response.send('Utloggad');
+     console.log(token);
+   })
+})
+
+// hämtar samtliga böcker från databasen (Alex)
+app.get('/books', (request, response) => {
+  database.all('SELECT * FROM books').then(books => {
+    response.send(books);
   })
-
-// kör delete istället
-      app.get("/logout", function(req, res) {
-        req.logout();
-
-        console.log("logged out")
-
-        return res.send();
-      });
-
+})
 
       // hämtar samtliga böcker från databasen (Alex)
       app.get('/books', (request, response) => {
         database.all('SELECT * FROM books').then(books => {
-          response.send(books);
-        })
+            response.send(books);
+          })
+
+        //Saras - ta ej bort!
+        // database.all('select category, language from books order by category, language').then(books => {
+        //   let allCats = []
+        //   let allLangs = []
+        //   for (let i = 0; i < books.length; i++){
+        //     allCats[i] = books[i].category
+        //     allLangs[i] = books[i].language
+        //   }
+        //   let uniqueCats = [...new Set(allCats)]
+        //   let uniqueLangs = [...new Set(allLangs)]
+        //   response.send(uniqueCats && uniqueLangs)
+        // })
+
       })
 
-      // hämtar böcker utifrån ett sökord (Sara)
+
+// hämtar böcker utifrån ett sökord (Sara)
+app.get('/books/:word', (request, response) => {
+  database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
+    ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
+  ).then(books => {
+    response.status(201)
+    response.send(books)
+  })
+})
+      // hämtar böcker utifrån sökord (Sara)
       app.get('/books/:word', (request, response) => {
-        database.all('select * from books where title like ? or title like ? or title like ? OR author like ? or author like ? order by year desc',
-          ['% ' + request.params.word + ' %', request.params.word + ' %', '% ' + request.params.word, request.params.word + ', %', '% ' + request.params.word]
-        ).then(books => {
-          response.status(201)
-          response.send(books)
-        })
+        if (request.query.cat && request.query.lang){
+            database.all('select * from books where title like ? OR author like ? AND category = ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat, request.query.lang]).then (books => {
+              response.status(201)
+              response.send (books)
+            })
+        }
+        else if (request.query.cat){
+          database.all('select * from books where title like ? OR author like ? AND category = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.cat]).then (books => {
+            response.status(201)
+            response.send (books)
+          })
+        }
+        else if (request.query.lang){
+          database.all('select * from books where title like ? OR author like ? AND language = ? order by year desc', ['%' + request.params.word + '%', '%' + request.params.word + '%', request.query.lang]).then (books => {
+            response.status(201)
+            response.send (books)
+          })
+        }
+        else {
+          database.all('select * from books where title like ? OR author like ? order by year desc',
+          ['%' + request.params.word + '%', '%' + request.params.word + '%']
+          ).then(books => {
+            response.status(201)
+            response.send(books)
+          })
+        }
       })
-
 
       // hämtar lånade böcker (loans) från databasen (Maija)
       app.get('/loans', (request, response) => {
@@ -102,7 +172,31 @@ app.get('/login', (request, response) => {
         })
       })
 
+      //Lägger till bok (Annika)
+      app.post('/books', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let id = uuidv4()
+        let image = request.body.image
+        let amount = request.body.amount
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)', 
+        [title, author, category, year, language, image, amount]).then(books => {
+        response.send(books)
+        }) 
+      })
 
-      app.listen(3000, function() {
-        console.log('The server is running!');
-      });
+
+// hämtar lånade böcker (loans) från databasen (Maija)
+app.get('/loans', (request, response) => {
+  database.all('SELECT * FROM loans').then(books => {
+    response.send(books);
+  })
+})
+
+
+app.listen(3000, function() {
+  console.log('The server is running!')
+})

@@ -1,32 +1,38 @@
 <template>
-  <div id="search">
+  <div class="search">
 
     <div class="search-input">
-      <input type="text" placeholder="Tove Jansson" v-model="searchText" v-on:keyup.enter="searchBooks">
+      <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
       <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
 
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
-      <font-awesome-icon icon="angle-down"/></p>
+        <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
+        <span v-else><font-awesome-icon icon="angle-up"/></span>
+      </p>
+
       <div v-show="advanced">
         <div class="">
           <h2>Kategori</h2>
-            <input type="checkbox" name="" value="">Fiktion
-            <input type="checkbox" name="" value="">Fakta
-            <input type="checkbox" name="" value="">Ungdom
-            <input type="checkbox" name="" value="">Barn
+            <input v-for="cat in cats" type="radio" v-bind:value="cat" v-model="pickedCat">
+
+            <!-- <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
+            <input type="radio" value="fakta" v-model="pickedCat">Fakta
+            <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
+            <input type="radio" value="barn" v-model="pickedCat">Barn -->
         </div>
         <div class="">
           <h2>Språk</h2>
-            <input type="checkbox" name="" value="">Svenska
-            <input type="checkbox" name="" value="">Engelska
-            <input type="checkbox" name="" value="">Finska
+            <input type="radio" value="svenska" v-model="pickedLang">Svenska
+            <input type="radio" value="engelska" v-model="pickedLang">Engelska
+            <input type="radio" value="finska" v-model="pickedLang">Finska
         </div>
       </div>
 
     </div>
 
     <div class="search-result" v-if="result">
-      <p>Visar resultat för "{{ searchText }}" </p>
+      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span></p>
+      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span> </p>
       <li v-for="book in books">
         {{book.title}}
         {{book.author}}
@@ -40,40 +46,94 @@
 </template>
 <script>
   export default {
+    created(){
+        fetch('http://localhost:3000/books/')
+        .then (response => response.json())
+        .then (result => {
+          console.log(result[0], result[1]);
+          console.log(result)
+          // let allCats = []
+          // let allLangs = []
+          // for (let i = 0; i < result.length; i++){
+          //   allCats[i] = result[i].category
+          //   allLangs[i] = result[i].language
+          // }
+          // let uniqueCats = [...new Set(allCats)]
+          // let uniqueLangs = [...new Set(allLangs)]
+          // this.cats = uniqueCats
+          // this.langs = uniqueLangs
+        })
+    },
     data() {
       return {
         searchText: '',
         advanced: false,
+        counter: 0,
+        cats: [],
+        langs: [],
+        pickedCat: '',
+        pickedLang: '',
         result: false,
         books: []
       }
     },
     methods: {
+      isEven(value){
+        if (value%2 == 0){
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+      showAdvanced (){
+        this.counter = this.counter +1
+        console.log(this.counter);
+        if (this.isEven(this.counter) ){
+          this.advanced = false;
+          this.pickedCat = ''
+          this.pickedLang = ''
+        }
+        else {
+          this.advanced = true;
+        }
+      },
       searchBooks(){
         this.result = true;
         let word = this.searchText
-        fetch('http://localhost:3000/books/' + word)
-        .then (response => response.json())
-        .then (result => {
-          let allBooks = result
-          this.books = allBooks
-          console.log(allBooks)
-        })
+        let cat = this.pickedCat
+        let lang = this.pickedLang
+        if (cat === '' && lang === ''){
+          fetch('http://localhost:3000/books/' + word)
+          .then (response => response.json())
+          .then (result => {
+            let allBooks = result
+            this.books = allBooks
+            console.log(allBooks)
+          })
+        }
+        else {
+          fetch('http://localhost:3000/books/' + word + '?cat=' + cat + '&lang=' + lang)
+          .then (response => response.json())
+          .then (result => {
+            let allBooks = result
+            this.books = allBooks
+            console.log(allBooks)
+          })
+        }
       },
-      showAdvanced (){
-        this.advanced = true;
-      }
     }
   }
 </script>
 <style scoped>
-  #search {
+  .search {
+    background-color: lightgrey;
   }
   .search-input {
     padding: 20px;
     width: 100%;
   }
-  input {
+  #search-textfield {
     width: 60%;
     height: 30px;
     /* display: inline; */
@@ -88,6 +148,9 @@
   }
   #advanced-search {
     cursor: pointer;
+  }
+  h2 {
+    font-size: 18px;
   }
   .search-result {
     padding: 20px;
