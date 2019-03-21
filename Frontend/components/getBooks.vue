@@ -1,6 +1,7 @@
 <template>
   <div class="container">
   <add-book></add-book>
+
   <search-field></search-field>
 
   <h3>Böcker</h3>
@@ -11,6 +12,7 @@
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
+    <th>Låna</th>
   </tr>
   <tr v-for='book in books'>
     <td>{{book.title}}</td>
@@ -18,6 +20,7 @@
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
+    <td><loan-button></loan-button></td>
   </tr>
   </table>
   </div>
@@ -25,6 +28,7 @@
 <script>
   import Search from './search.vue'
   import AddBook from './addBook.vue'
+  import LoanButton from './loanbutton.vue'
   export default {
     data() {
       return {
@@ -41,6 +45,7 @@
     components: {
       'search-field': Search,
       'add-book': AddBook,
+      'loan-button': LoanButton,
     }
   }
 </script>
