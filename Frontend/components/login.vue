@@ -23,16 +23,16 @@ export default {
     },
     methods: {
         login() {
-            var cookie = this.$cookie.set('Cookie', this.$uuid.v1(), 1)
+            let newID = this.$uuid.v1()
+            var cookie = this.$cookie.set('Cookie', newID , 1)
             console.log(cookie);
-            var userinfo = {'name': this.name, 'password': this.password, 'ID':this.$uuid.v1()} 
+            var userinfo = {'name': this.name, 'password': this.password, 'ID':newID} 
             fetch('http://localhost:3000/login', {
                 method: 'POST',
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response) {
-                if (response.status === 201) {
-                    console.log("inloggad")    
+                if (response.status === 201) {  
                     router.push("/profil")
                 } else {
                     alert("Fel användernamn eller lösenord! Försök igen!")    
