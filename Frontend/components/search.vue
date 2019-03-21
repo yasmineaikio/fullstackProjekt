@@ -2,16 +2,18 @@
   <div class="search">
 
     <div class="search-input">
+      <div id="search">
       <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
       <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
+    </div>
 
+      <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
         <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
         <span v-else><font-awesome-icon icon="angle-up"/></span>
       </p>
-
-      <div class="advanced" v-show="advanced">
-        <div >
+      <div v-show="advanced">
+        <div>
           <h2>Kategori</h2>
             <ul>
               <li v-for="cat in cats">
@@ -30,6 +32,7 @@
             </ul>
           </div>
         </div>
+      </div>
 
       </div>
 
@@ -132,21 +135,25 @@
   }
   .search-input {
     padding: 20px;
-    width: 100%;
-    background-color: lightgrey;
+    background-color: #7A7A7A;
   }
   #search-textfield {
-    width: 60%;
+    width: 92%;
     height: 30px;
     /* display: inline; */
+  }
+  #search {
+    position: relative;
   }
   #search-icon {
     width: 5%;
     height: 30px;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
-    position: relative;
-    top: 7px;
+    position: absolute;
+    top: 3px;
+    left: 88%;
+    color: #F3C954;
   }
   #advanced-search {
     cursor: pointer;
@@ -154,6 +161,11 @@
   h2 {
     font-size: 18px;
   }
+  .advanced * {
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+  }
+
   .advanced ul {
     padding-left: 0;
   }
