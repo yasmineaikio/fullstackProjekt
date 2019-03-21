@@ -2,7 +2,7 @@
 <div class="container">
   <header>
     <br>
-    <a id="homelink"><router-link to="/">Bibliotekets namn</router-link></a>
+    <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
       <li><router-link to="/users">Bli medlem</router-link></li>
@@ -75,7 +75,7 @@ header {
   color: white;
   /* padding: 10px 20px; */
   margin: 2em 0;
-  font-size: 1.6em;
+  font-size: 1.5em;
   font-family: 'Source Serif Pro', sans-serif;
   text-transform: uppercase;
   /* border: inset #999 3px; */
