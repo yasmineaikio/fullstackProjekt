@@ -10,6 +10,7 @@
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
+    <th>Låna</th>
   </tr>
   <tr v-for='book in books'>
     <td>{{book.title}}</td>
@@ -17,12 +18,14 @@
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
+    <td><loan-button></loan-button></td>
   </tr>
   </table>
   </div>
 </template>
 <script>
   import AddBook from './addBook.vue'
+  import LoanButton from './loanbutton.vue'
   export default {
     data() {
       return {
@@ -38,6 +41,7 @@
       },
     components: {
       'add-book': AddBook,
+      'loan-button': LoanButton,
     }
   }
 </script>

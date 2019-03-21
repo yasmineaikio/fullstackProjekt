@@ -1,16 +1,21 @@
 <template>
 <div>
+  <div id="startText">
+    När nya böcker kommit in kan dessa läggas in för utlåning genom att fylla i nedan formulär.
+    Samtliga fält är obligatoriska.
+  </div>
 <form>
-    <input v-model="title" placeholder="Titel">
-    <input v-model="author" placeholder="Författare">
-    <input v-model="category" placeholder="Kategori">
-    <input v-model="year" placeholder="Utgivningsår">
-    <input v-model="language" placeholder="Språk">
-    <input v-model="image" placeholder="Bild">
-    <input v-model="amount" placeholder="Antal">
-    <input v-on:click="addBook" type="submit" value="Lägg till">
+    <input required class="addBookTextfields" v-model="title" placeholder="Titel">
+    <input required class="addBookTextfields" v-model="author" placeholder="Författare">
+    <input required class="addBookTextfields" v-model="category" placeholder="Kategori">
+    <input required class="addBookTextfields" v-model="year" placeholder="Utgivningsår">
+    <input required class="addBookTextfields" v-model="language" placeholder="Språk">
+    <input required class="addBookTextfields" v-model="image" placeholder="Bild">
+    <input required class="addBookTextfields" v-model="amount" placeholder="Antal">
+    <input required class="addBookButton" v-on:click="addBook" type="submit" value="Lägg till">
   </form>
-  <p id="addedText" v-if="message"><font-awesome-icon icon="check" id="check"/> Du har lagt till <span id="addedTitle">{{ addedTitle }}</span></p>
+  <p id="addedText" v-if="message"><font-awesome-icon icon="check" id="check"/> Du har lagt till 
+  <span id="addedTitle">{{ addedTitle }}</span></p>
 </div>
 </template>
 <script>
@@ -61,13 +66,37 @@ export default {
 
 <style scoped>
 
+.addBookTextfields {
+  height: 20px;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.addBookButton {
+  height: 30px;
+  background-color: #F3C954;
+  border: none;
+  border-radius: 2px;
+  font-family: 'Work Sans', sans-serif;
+}
+
 #addedTitle {
   font-weight: bold;
+  font-family: 'Work Sans', sans-serif;
 }
 
 #addedText {
   animation-name: fadeIn;
   animation-duration: 1.5s;
+  font-family: 'Work Sans', sans-serif;
+}
+
+#check {
+  color: green;
+}
+
+#startText {
+  font-family: 'Work Sans', sans-serif;
+  margin-bottom: 20px;
 }
 
 @keyframes fadeIn {
@@ -78,10 +107,6 @@ export default {
   100% {
     opacity: 1;
   }
-}
-
-#check {
-  color: green;
 }
 
 </style>
