@@ -53,20 +53,23 @@
 <script>
   export default {
     created(){
-        fetch('http://localhost:3000/books/')
+        fetch('http://localhost:3000/books/categories')
         .then (response => response.json())
         .then (result => {
           console.log(result)
-          let allCats = []
-          let allLangs = []
-          for (let i = 0; i < result.length; i++){
-            allCats[i] = result[i].category
-            allLangs[i] = result[i].language
-          }
-          let uniqueCats = [...new Set(allCats)]
-          let uniqueLangs = [...new Set(allLangs)]
-          this.cats = uniqueCats
-          this.langs = uniqueLangs
+          this.cats = result
+          // console.log(result)
+          // let allCats = []
+          // let allLangs = []
+          // for (let i = 0; i < result.length; i++){
+          //   allCats[i] = result[i].category
+          //   allLangs[i] = result[i].language
+          // }
+          // let uniqueCats = [...new Set(allCats)]
+          // let uniqueLangs = [...new Set(allLangs)]
+          // this.cats = uniqueCats
+          // this.langs = uniqueLangs
+
         })
     },
     data() {
@@ -141,6 +144,7 @@
     width: 92%;
     height: 30px;
     padding: 6px;
+    font-family: 'Work sans', sans-serif;
   }
   #search {
     position: relative;

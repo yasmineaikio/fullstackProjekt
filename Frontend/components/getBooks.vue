@@ -1,7 +1,6 @@
 <template>
   <div class="container">
   <add-book></add-book>
-  <search-field></search-field>
 
   <h3>Böcker</h3>
   <table>
@@ -23,7 +22,6 @@
   </div>
 </template>
 <script>
-  import Search from './search.vue'
   import AddBook from './addBook.vue'
   export default {
     data() {
@@ -39,7 +37,6 @@
         })
       },
     components: {
-      'search-field': Search,
       'add-book': AddBook,
     }
   }

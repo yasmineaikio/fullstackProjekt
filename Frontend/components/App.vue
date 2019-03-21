@@ -11,6 +11,7 @@
       <li v-else><router-link class="login-btn" to="/login">Logga in</router-link></li>
     </ul>
   </header>
+  <search-field></search-field>
   <router-view></router-view>
 </div>
 </template>
