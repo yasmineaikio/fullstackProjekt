@@ -25,6 +25,7 @@
     import AddBook from './addBook.vue'
     import Userprofile from './Userprofile.vue'
     import GetBooks from './GetBooks.vue'
+    import LoanButton from './loanButton.vue'
 
   export default {
     data () {
@@ -41,6 +42,7 @@
       'login': Login,
       'logout': Logout,
       'home': Home,
+      'loan-button': LoanButton,
     },
     router,
     methods: {
