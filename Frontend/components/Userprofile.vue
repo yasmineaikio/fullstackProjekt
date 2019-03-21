@@ -3,7 +3,7 @@
   <h1>Hej {{ this.name }}!</h1>
 
   <div id="profilepageuserinfo">
-    Namn Namn | <a href="">mail@mail.mail</a> | Adress
+   {{ this.name }}| <a href="">mail@mail.mail</a> | Adress
   </div>
 
   <div id="profilepagebooks">
@@ -48,6 +48,7 @@
       }
     },
     methods: {
+      //Tips till MAJA! fetch users och sen users.find(value => value.name === this.name)
       fetchresult() {
         fetch('http://localhost:3000/users')
           .then(response => response.json())
