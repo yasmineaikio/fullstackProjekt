@@ -2,15 +2,16 @@
 <div class="container">
   <header>
     <br>
-    <a id="homelink"><router-link to="/">Startsida</router-link></a>
+    <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
-      <li v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
       <li><router-link to="/users">Bli medlem</router-link></li>
+      <li v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
       <li v-if="this.$cookie.get('Cookie')"><logout></logout></li>
       <li v-else><router-link class="login-btn" to="/login">Logga in</router-link></li>
     </ul>
   </header>
+  <search-field></search-field>
   <router-view></router-view>
 </div>
 </template>
@@ -25,6 +26,7 @@
     import AddBook from './addBook.vue'
     import Userprofile from './Userprofile.vue'
     import GetBooks from './GetBooks.vue'
+    import LoanButton from './loanButton.vue'
 
   export default {
     data () {
@@ -41,6 +43,7 @@
       'login': Login,
       'logout': Logout,
       'home': Home,
+      'loan-button': LoanButton,
     },
     router,
     methods: {
@@ -50,7 +53,7 @@
           this.link = '/profil'
           router.push("/profil")
           console.log(this.$cookie.get('Cookie'));
-          
+
         } else {
           alert('Du måste logga in först!')
           this.link = '/login'
@@ -62,13 +65,20 @@
 </script>
 
 <style scoped>
+header {
+  background-color: #7A7A7A;
+  color: white;
+  padding: 40px;
+}
 #homelink a {
   text-decoration: none;
-  color:#666;
-  padding: 10px 20px;
+  color: white;
+  /* padding: 10px 20px; */
   margin: 2em 0;
-  font: 1.6em cursive;
-  border: inset #999 3px;
+  font-size: 1.5em;
+  font-family: 'Source Serif Pro', sans-serif;
+  text-transform: uppercase;
+  /* border: inset #999 3px; */
 }
 #homelink:active {
   color: #fff;
@@ -78,18 +88,20 @@ ul {
   margin: 5px;
   float: right;
 }
-li { 
+li {
   display: inline;;
   padding: 1px;
+  font-family: 'Work sans', sans-serif;
 }
 li a {
   text-decoration: none;
-  color:#fff;
+  color: white;
   padding: 10px 20px;
-  background: #666;
 }
 .login-btn {
-  border-top: 4px solid darkseagreen;
+  background-color: #F3C954;
+  color: black;
+  /* border-top: 4px solid darkseagreen; */
   border-radius: 2px;
 }
 .container {

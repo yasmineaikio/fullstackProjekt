@@ -2,66 +2,75 @@
   <div class="search">
 
     <div class="search-input">
-      <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
-      <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
-
+      <div id="search">
+        <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
+        <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
+      </div>
+      <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
         <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
         <span v-else><font-awesome-icon icon="angle-up"/></span>
       </p>
-
       <div v-show="advanced">
-        <div class="">
+        <div>
           <h2>Kategori</h2>
-            <input v-for="cat in cats" type="radio" v-bind:value="cat" v-model="pickedCat">
-
-            <!-- <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
-            <input type="radio" value="fakta" v-model="pickedCat">Fakta
-            <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
-            <input type="radio" value="barn" v-model="pickedCat">Barn -->
+            <ul>
+              <li v-for="cat in cats">
+                <input type="radio" v-bind:value="cat" v-model="pickedCat">
+                {{cat}}
+              </li>
+            </ul>
         </div>
-        <div class="">
+        <div>
           <h2>Språk</h2>
-            <input type="radio" value="svenska" v-model="pickedLang">Svenska
-            <input type="radio" value="engelska" v-model="pickedLang">Engelska
-            <input type="radio" value="finska" v-model="pickedLang">Finska
+            <ul>
+              <li v-for="lang in langs">
+                <input type="radio" v-bind:value="lang" v-model="pickedLang">
+                {{lang}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
     </div>
 
     <div class="search-result" v-if="result">
-      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span></p>
-      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span> </p>
-      <li v-for="book in books">
-        {{book.title}}
-        {{book.author}}
-        {{book.category}}
-        {{book.year}}
-        {{book.language}}
-      </li>
+      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span></p>
+      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span> </p>
+      <table>
+        <tr>
+          <th>Titel</th>
+          <th>Författare</th>
+          <th>Kategori</th>
+          <th>Utgivningår</th>
+          <th>Språk</th>
+          <th>Låna</th>
+        </tr>
+        <tr v-for="book in books">
+          <td>{{book.title}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.category}}</td>
+          <td>{{book.year}}</td>
+          <td>{{book.language}}</td>
+          <td><loan-button></loan-button></td>
+        </tr>
+      </table>
     </div>
 
   </div>
 </template>
 <script>
+  import LoanButton from './loanbutton.vue'
   export default {
+    components: {
+      'loan-button': LoanButton,
+    },
     created(){
-        fetch('http://localhost:3000/books/')
+        fetch('http://localhost:3000/books/catsandlangs')
         .then (response => response.json())
         .then (result => {
-          console.log(result[0], result[1]);
-          console.log(result)
-          // let allCats = []
-          // let allLangs = []
-          // for (let i = 0; i < result.length; i++){
-          //   allCats[i] = result[i].category
-          //   allLangs[i] = result[i].language
-          // }
-          // let uniqueCats = [...new Set(allCats)]
-          // let uniqueLangs = [...new Set(allLangs)]
-          // this.cats = uniqueCats
-          // this.langs = uniqueLangs
+          this.cats = result[0]
+          this.langs = result[1]
         })
     },
     data() {
@@ -127,30 +136,48 @@
 </script>
 <style scoped>
   .search {
-    background-color: lightgrey;
   }
   .search-input {
     padding: 20px;
-    width: 100%;
+    background-color: #7A7A7A;
   }
   #search-textfield {
-    width: 60%;
+    width: 98%;
     height: 30px;
-    /* display: inline; */
+    padding: 6px;
+    font-family: 'Work sans', sans-serif;
+  }
+  #search {
+    position: relative;
   }
   #search-icon {
     width: 5%;
     height: 30px;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
-    position: relative;
+    position: absolute;
     top: 7px;
+    left: 95%;
+    color: #F3C954;
   }
   #advanced-search {
     cursor: pointer;
   }
   h2 {
     font-size: 18px;
+  }
+  .advanced * {
+    color: white;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  .advanced ul {
+    padding-left: 0;
+  }
+
+  .advanced li {
+    list-style: none;
+    display: inline;
   }
   .search-result {
     padding: 20px;
@@ -161,6 +188,17 @@
     padding: 40px;
     margin: 40px;
     width: 50%;
+  }
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
   }
 
 </style>
