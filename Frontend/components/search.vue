@@ -10,29 +10,32 @@
         <span v-else><font-awesome-icon icon="angle-up"/></span>
       </p>
 
-      <div v-show="advanced">
-        <div class="">
+      <div class="advanced" v-show="advanced">
+        <div >
           <h2>Kategori</h2>
-            <input v-for="cat in cats" type="radio" v-bind:name="cat" v-bind:value="cat" v-model="pickedCat">
-
-            <input type="radio" value="fiktion" v-model="pickedCat">Fiktion
-            <input type="radio" value="fakta" v-model="pickedCat">Fakta
-            <input type="radio" value="ungdom" v-model="pickedCat">Ungdom
-            <input type="radio" value="barn" v-model="pickedCat">Barn
+            <ul>
+              <li v-for="cat in cats">
+                <input type="radio" v-bind:value="cat" v-model="pickedCat">
+                {{cat}}
+              </li>
+            </ul>
         </div>
-        <div class="">
+        <div>
           <h2>Språk</h2>
-            <input type="radio" value="svenska" v-model="pickedLang">Svenska
-            <input type="radio" value="engelska" v-model="pickedLang">Engelska
-            <input type="radio" value="finska" v-model="pickedLang">Finska
+            <ul>
+              <li v-for="lang in langs">
+                <input type="radio" v-bind:value="lang" v-model="pickedLang">
+                {{lang}}
+              </li>
+            </ul>
+          </div>
         </div>
+
       </div>
 
-    </div>
-
     <div class="search-result" v-if="result">
-      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span></p>
-      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin {{pickedCat}} på {{pickedLang}}.</span> </p>
+      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span></p>
+      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span> </p>
       <li v-for="book in books">
         {{book.title}}
         {{book.author}}
@@ -50,18 +53,17 @@
         fetch('http://localhost:3000/books/')
         .then (response => response.json())
         .then (result => {
-          console.log(result[0], result[1]);
           console.log(result)
-          // let allCats = []
-          // let allLangs = []
-          // for (let i = 0; i < result.length; i++){
-          //   allCats[i] = result[i].category
-          //   allLangs[i] = result[i].language
-          // }
-          // let uniqueCats = [...new Set(allCats)]
-          // let uniqueLangs = [...new Set(allLangs)]
-          // this.cats = uniqueCats
-          // this.langs = uniqueLangs
+          let allCats = []
+          let allLangs = []
+          for (let i = 0; i < result.length; i++){
+            allCats[i] = result[i].category
+            allLangs[i] = result[i].language
+          }
+          let uniqueCats = [...new Set(allCats)]
+          let uniqueLangs = [...new Set(allLangs)]
+          this.cats = uniqueCats
+          this.langs = uniqueLangs
         })
     },
     data() {
@@ -127,11 +129,11 @@
 </script>
 <style scoped>
   .search {
-    background-color: lightgrey;
   }
   .search-input {
     padding: 20px;
     width: 100%;
+    background-color: lightgrey;
   }
   #search-textfield {
     width: 60%;
@@ -151,6 +153,14 @@
   }
   h2 {
     font-size: 18px;
+  }
+  .advanced ul {
+    padding-left: 0;
+  }
+
+  .advanced li {
+    list-style: none;
+    display: inline;
   }
   .search-result {
     padding: 20px;
