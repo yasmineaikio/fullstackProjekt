@@ -3,7 +3,7 @@
   <h1>Hej {{ this.name }}!</h1>
 
   <div id="profilepageuserinfo">
-   {{ this.name }}| <a href="">mail@mail.mail</a> | Adress
+   {{ this.name }} | <a href="">mail@mail.mail</a> | Adress
   </div>
 
   <div id="profilepagebooks">

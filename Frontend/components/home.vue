@@ -1,18 +1,16 @@
 <template>
 <div>
   <div id="title">
-    <h1>Topplista</h1>
+    <h1>Vi rekommenderar</h1>
   </div>
   <div class="books">
-   <div v-for='book in books.slice(0, 8)' class="book">
-  <img src="https://cdn.pixabay.com/photo/2017/03/27/13/03/book-2178586_960_720.jpg">
-  <div class="container">
-    <h3>{{book.title}}</h3>
-    <p>{{book.author}}</p>
-    <p><loan-button></loan-button></p>
+   <div v-for='book in books.slice(0, 3)' class="book">
+      <img src="https://cdn.pixabay.com/photo/2015/12/04/17/06/notebook-1076812_960_720.jpg">
+      <h3>{{book.title}}</h3>
+      <p>{{book.author}} | {{book.category}}</p>
+      <p><loan-button></loan-button></p>
+    </div>
   </div>
-</div>
-</div>
 </div>
 </template>
 
@@ -55,17 +53,21 @@ import LoanButton from './loanbutton.vue'
   .books {
   text-align: center;
   font-family: 'Work Sans', sans-serif;
+  width:90%;
+  margin:auto;
   }
 
   .book {
-    border: 1px solid #7A7A7A;
-    width: 20%;
+  line-height:0.5em;
+    width: 30%;
     display: inline-block;
     margin: 1%;
   }
 
   .book img {
     width:100%;
+    height:250px;
+    object-fit: cover;
   }
 
 </style>
