@@ -1,7 +1,5 @@
 <template>
-   <div>
-       <button @click="logout()">Logga ut</button>
-   </div> 
+    <a class="logout-btn" @click="logout()">Logga ut</a>
 </template>
 
 <script>
@@ -29,15 +27,14 @@ export default {
 </script>
 
 <style scoped>
-    button {
-        text-decoration: none;
-        color:#fff;
-        padding: 10px 10px;
-        background: #000;
-        border: 1px #999 solid;
-        font-size: medium;
-        float: right;
-        cursor: pointer;
+    .logout-btn {
+     text-decoration: none;
+     color:#fff;
+     border-top: #c00 4px solid;
+     padding: 10px 20px;
+     background: #666;
+     cursor: pointer;
+     display: inline;
     }
 </style>
 
