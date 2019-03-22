@@ -39,6 +39,15 @@
             this.books = result
         })
       },
+
+    //   created() {
+    //       fetch('http://localhost:3000/books?order-by=title')
+    //       .then(response => response.json())
+    //       .then(result => {
+    //       this.books = result
+    //   })
+    // },
+
     components: {
       'add-book': AddBook,
       'loan-button': LoanButton,

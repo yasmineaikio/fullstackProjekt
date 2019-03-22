@@ -104,6 +104,13 @@ app.post('/logout', (request, response) => {
           })
         })
 
+      // // sotering av böcker - ej klar, låt stå (Elin)
+      // app.get('/books', (request, response) => {
+      //   database.all('SELECT * FROM books ORDER BY title').then(books => {
+      //       response.send(books);
+      //     })
+      //   })
+
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
