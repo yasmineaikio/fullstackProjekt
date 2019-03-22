@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('sqlite');
 const bodyParser = require('body-parser');
 const uuidv4 = require('uuid/v4');
+const split = require('express-split')
 const app = express();
 
 
@@ -112,12 +113,10 @@ app.get('/books', (request, response) => {
         })
       })
 
-// hämtar böcker utifrån sökord (Sara)
-// om söker på två ord,
-// split så det blir två strängar s.split('') -tar bort mellanslag och ger array
-// where name like ... and name like ...
+      // hämtar böcker utifrån sökord (Sara)
       app.get('/books/:word', (request, response) => {
-        //funkar inte att söka med tom sträng
+        let searched = request.params.word.split(' ')
+        //funkar inte att söka på tom sträng
         // if (request.params.word === null && request.query.cat && request.query.lang){
         //   database.all('select * from books where category = ? AND language = ?', [request.query.cat, request.query.lang]).then (books => {
         //     response.status(201)
@@ -125,26 +124,26 @@ app.get('/books', (request, response) => {
         //   })
         // }
         if (request.query.cat && request.query.lang){
-            database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ?) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%']).then (books => {
+            database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
               response.status(201)
               response.send (books)
             })
         }
         else if (request.query.cat){
-          database.all('select * from books where category = ? AND (title like ? OR author like ?) order by year desc', [request.query.cat, '%' + request.params.word + '%', '%' + request.params.word + '%']).then (books => {
+          database.all('select * from books where category = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
             response.status(201)
             response.send (books)
           })
         }
         else if (request.query.lang){
-          database.all('select * from books where language = ? AND (title like ? OR author like ?) order by year desc', [request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%']).then (books => {
+          database.all('select * from books where language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
             response.status(201)
             response.send (books)
           })
         }
         else {
-          database.all('select * from books where title like ? OR author like ? order by year desc',
-          ['%' + request.params.word + '%', '%' + request.params.word + '%']
+          database.all('select * from books where title like ? OR author like ? OR (author like ? AND author like ?) order by year desc',
+          ['%' + request.params.word + '%', '%' + request.params.word + '%','%' + searched[0] + '%', '%' + searched[1] + '%']
           ).then(books => {
             response.status(201)
             response.send(books)
