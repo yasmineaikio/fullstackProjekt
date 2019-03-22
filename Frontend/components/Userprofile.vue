@@ -1,9 +1,9 @@
 <template>
-  <div id="profilepagemain" v-if="inloggad">
+  <div id="profilepagemain" v-if="this.$cookie.get('Cookie')">
   <h1>Hej {{ this.name }}!</h1>
 
   <div id="profilepageuserinfo">
-    Namn Namn | <a href="">mail@mail.mail</a> | Adress
+   {{ this.name }} | <a href="">mail@mail.mail</a> | Adress
   </div>
 
   <div id="profilepagebooks">
@@ -41,19 +41,27 @@
   },
     data() {
       return {
-        name: 'Test',
+        name: '',
         users: null,
         books: null,
         inloggad: true,
       }
     },
     methods: {
+      //Tips till MAJA! fetch users och sen users.find(value => value.name === this.name)
       fetchresult() {
         fetch('http://localhost:3000/users')
           .then(response => response.json())
           .then (result => {
             this.users = result
           })
+
+        fetch('http://localhost:3000/login')
+        .then(response => response.json())
+          .then (result => {
+            //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
+            this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
+          })  
 
         fetch('http://localhost:3000/books')
           .then(response => response.json())

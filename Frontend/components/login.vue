@@ -2,8 +2,8 @@
     <div>
         <form @submit.prevent="login()">
             <h4>Logga in</h4>
-            <input type="text" placeholder="Användernamn" v-model="name"><br>
-            <input type="password" placeholder="Lösenord" v-model="password"><br>
+            <input type="text" placeholder="Användernamn" v-model="name" required><br>
+            <input type="password" placeholder="Lösenord" v-model="password" required><br>
             <button type="submit">Logga in</button>
         </form>
     </div>
@@ -18,26 +18,30 @@ export default {
             password: '',
             email: '',
             id: null,
-            type: 'user'
+            type: 'user',
         }
     },
     methods: {
         login() {
-            var cookie = this.$cookie.set('Cookie', this.$uuid.v1(), 1)
-            console.log(cookie);
-            
-            var userinfo = {'name': this.name, 'password': this.password, 'ID':this.$uuid.v1()} 
+            let newID = this.$uuid.v1()
+            var cookie =  () => this.$cookie.set('Cookie', newID , 1)
+            var userinfo = {'name': this.name, 'password': this.password, 'ID':newID} 
             fetch('http://localhost:3000/login', {
                 method: 'POST',
                 body: JSON.stringify(userinfo),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response) {
-                console.log("inloggad")    
-                router.push("/profil")
+                if (response.status === 201) {  
+                    cookie()
+                    router.push("/profil")
+                } else {
+                    alert("Fel användernamn eller lösenord! Försök igen!")  //eller skapa nytt konto  
+                    router.push("/login")
+                }
             })
             .then(function(result){
                 console.log(result)
-            })
+            })     
         }
     },
 }

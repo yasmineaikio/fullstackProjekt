@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('sqlite');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
 const uuidv4 = require('uuid/v4');
 const app = express();
 
@@ -11,6 +10,7 @@ app.use(function(request, result, next) {
   result.header('Access-Control-Allow-Origin', '*');
   result.header('Access-Control-Allow-Headers', 'Content-Type');
   result.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  result.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
 
@@ -20,15 +20,11 @@ app.use((request, response, next) => {
 })
 
 app.use(bodyParser.json());
-app.use(cookieParser())
 
+//Deklarerar en databas variabel samt öpnnar databasen (Alex)
 var database;
 db.open('./db.db').then(database_ => {
   database = database_
-  // database.all('SELECT * FROM users').then(users => {
-  //    allUsers = users
-  //   console.log(allUsers);
-  // })
 })
 
 // hämtar samtliga users från databasen (Alex)
@@ -47,7 +43,7 @@ app.post('/users', (request, response) => {
   })
 })
 
-// logga in (Alex)
+// logga in (Alex) Ta ej bort!!!!
 // app.post('/login', (request, response) => {
 //   let newID = uuidv4();
 //   let regUser = request.body
@@ -80,7 +76,6 @@ app.post('/login', (request, response) => {
    })
   })
 
-
  // Hämtar inloggade (Alex)
 app.get('/login', (request, response) => {
     database.all('SELECT * FROM tokens').then(inloggade => {
@@ -88,22 +83,29 @@ app.get('/login', (request, response) => {
   })
 })
 
-// Logga ut (Alex)
+// Loggar ut (Alex)
 app.post('/logout', (request, response) => {
    let token = request.body.Cookie
    database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
      response.send('Utloggad');
-     console.log(token);
    })
 })
 
-      // hämtar samtliga böcker från databasen (Alex)
-      app.get('/books', (request, response) => {
-        database.all('SELECT * FROM books').then(books => {
-            response.send(books);
-          })
-        })
+// Kollar om user är admin (Alex)
+app.get('/admin', (request, response) => {
+  database.all('SELECT * FROM users WHERE type=?', ['ADMIN']).then(row => {
+    response.send(row)
+  })
+})
 
+// hämtar samtliga böcker från databasen (Alex)
+app.get('/books', (request, response) => {
+  database.all('SELECT * FROM books').then(books => {
+      response.send(books);
+    })
+  })
+
+  
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
@@ -183,4 +185,5 @@ app.get('/loans', (request, response) => {
 
 app.listen(3000, function() {
   console.log('The server is running!')
-})
+});
+
