@@ -95,9 +95,32 @@ app.post('/logout', (request, response) => {
 
 // hämtar samtliga böcker från databasen (Alex)
 app.get('/books', (request, response) => {
+
+  //kollar först om kategori och/eller språk är valt (Sara)
+  if (request.query.cat && request.query.lang){
+    database.all('select * from books where category = ? AND language = ?', [request.query.cat, request.query.lang]).then (books => {
+      response.status(201)
+      response.send (books)
+    })
+  }
+  else if (request.query.cat){
+    database.all('select * from books where category = ?', [request.query.cat]).then (books => {
+      response.status(201)
+      response.send (books)
+    })
+  }
+  else if (request.query.lang){
+    database.all('select * from books where language = ?', [request.query.lang]).then (books => {
+      response.status(201)
+      response.send (books)
+    })
+  }
+
+  else {
     database.all('SELECT * FROM books').then(books => {
       response.send(books);
     })
+  }
   })
 
 
@@ -117,12 +140,7 @@ app.get('/books', (request, response) => {
       app.get('/books/:word', (request, response) => {
         let searched = request.params.word.split(' ')
         //funkar inte att söka på tom sträng
-        // if (request.params.word === null && request.query.cat && request.query.lang){
-        //   database.all('select * from books where category = ? AND language = ?', [request.query.cat, request.query.lang]).then (books => {
-        //     response.status(201)
-        //     response.send (books)
-        //   })
-        // }
+
         if (request.query.cat && request.query.lang){
             database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
               response.status(201)

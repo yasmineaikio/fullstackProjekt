@@ -1,9 +1,9 @@
 <template>
   <div class="search">
 
-    <div class="search-input">
+    <div class="search-input" v-on:keyup.enter="searchBooks">
       <div id="search">
-        <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
+        <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
         <div class="">
         <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
         <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
