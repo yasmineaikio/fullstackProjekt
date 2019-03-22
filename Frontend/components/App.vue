@@ -108,6 +108,10 @@ li a {
   position: relative;
   width: 100%;
 }
+
+li a:active {
+  border: none;
+}
 ul li a:before {
   content: "";
   position: absolute;

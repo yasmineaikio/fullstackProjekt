@@ -2,8 +2,8 @@
     <div>
         <form @submit.prevent="login()">
             <h4>Logga in</h4>
-            <input type="text" placeholder="Användernamn" v-model="name"><br>
-            <input type="password" placeholder="Lösenord" v-model="password"><br>
+            <input type="text" placeholder="Användernamn" v-model="name" required><br>
+            <input type="password" placeholder="Lösenord" v-model="password" required><br>
             <button type="submit">Logga in</button>
         </form>
     </div>
