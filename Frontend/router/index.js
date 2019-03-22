@@ -1,4 +1,4 @@
-import Vue from "vue"  
+import Vue from "vue"
 import Router from "vue-router"
 import Login from "../components/login.vue"
 import Logout from "../components/logout.vue"
@@ -6,6 +6,7 @@ import Users from "../components/users.vue"
 import Books from '../components/GetBooks.vue'
 import Profile from '../components/Userprofile.vue'
 import Home from '../components/home.vue'
+import Result from '../components/result.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -38,6 +39,11 @@ export default new Router({
     component: Logout,
     name: "Logout",
     path: '/logout'
+    },
+    {
+    component: Result,
+    name: "result",
+    path: '/result'
     },
   ]
 })

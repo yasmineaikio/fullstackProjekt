@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-  <add-book></add-book>
-
+  <add-book v-if="admin"></add-book>
+  <search-field></search-field>
   <h3>Böcker</h3>
   <table>
   <tr>
@@ -29,9 +29,16 @@
   export default {
     data() {
       return {
-        books: []
+        titel: '',
+        author: '',
+        category: '',
+        year: '',
+        language: '',
+        admin: false,
+        books: [],
       }
     },
+
         created() {
             fetch('http://localhost:3000/books')
             .then(response => response.json())
@@ -49,10 +56,44 @@
     // },
 
     components: {
+      components: {
       'add-book': AddBook,
+    },
+    methods: {
+      getBooks() {
+        fetch('http://localhost:3000/books')
+        .then(function(response) {
+          return response.json()
+        })
+        .then(function(result){
+          console.log(result)
+      })
+    }
+    },
+
+    created() {
+        fetch('http://localhost:3000/books')
+        .then(response => response.json())
+        .then(result => {
+        this.books = result
+    })
+   },
+  
+    mounted() {
+      // Kollar om inloggad user är ADMIN eller inte (Alex)
+      fetch('http://localhost:3000/login')
+      .then(response => {
+          return response.json()
+      })
+      .then(result => {
+          let inloggad = result.find(value => value.user === 'ADMIN')
+          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) { 
+            this.admin = true
+          }     
+      })
+    },
       'loan-button': LoanButton,
     }
-  }
 </script>
 
 <style scoped>

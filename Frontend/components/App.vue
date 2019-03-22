@@ -13,6 +13,14 @@
   </header>
   <search-field></search-field>
   <router-view></router-view>
+  <footer>
+    <br><br>
+    <h3>©2019 Falkenbergs bibliotek</h3>
+    <div class="footer-social">
+       <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
+       <font-awesome-icon class="footer-icon facebook" :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
+    </div>
+  </footer>
 </div>
 </template>
 
@@ -27,6 +35,7 @@
     import Userprofile from './Userprofile.vue'
     import GetBooks from './GetBooks.vue'
     import LoanButton from './loanButton.vue'
+    import Result from './result.vue'
 
   export default {
     data () {
@@ -44,6 +53,7 @@
       'logout': Logout,
       'home': Home,
       'loan-button': LoanButton,
+      'result': Result,
     },
     router,
     methods: {
@@ -97,6 +107,31 @@ li a {
   text-decoration: none;
   color: white;
   padding: 10px 20px;
+  position: relative;
+  width: 100%;
+}
+
+li a:active {
+  border: none;
+}
+ul li a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #F3C954;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+ul li a:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 .login-btn {
   background-color: #F3C954;
@@ -104,7 +139,37 @@ li a {
   /* border-top: 4px solid darkseagreen; */
   border-radius: 2px;
 }
+.login-btn:hover:before {
+  visibility: hidden;
+}
 .container {
   position: relative;
+}
+footer {
+  position: relative;
+  background-image: url('http://greenish.haahe.net/wp-content/uploads/2018/12/footer1.png');
+  min-height:300px;
+  background-position: center;
+  background-size: cover;
+}
+footer h3 {
+  text-align: center;
+  margin: 2em auto 0 auto;
+  color:#7A7A7A;
+}
+.footer-social {
+  text-align: center;
+  padding: 10px;
+}
+.footer-icon {
+  padding: 0 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.footer-icon.twitter {
+  color: #55acee;
+}
+.footer-icon.facebook {
+  color:#3b5998;
 }
 </style>
