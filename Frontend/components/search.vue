@@ -4,7 +4,10 @@
     <div class="search-input">
       <div id="search">
         <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
+        <div class="">
         <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
+        <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
+      </div>
       </div>
       <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
@@ -35,24 +38,23 @@
     </div>
 
     <div class="search-result" v-if="result">
-      <search-result
+      <result
       v-bind:searchText="searchText"
       v-bind:pickedCat="pickedCat"
       v-bind:pickedLang="pickedLang"
       v-bind:books="books"
       >
-      </search-result>
+      </result>
     </div>
 
   </div>
 </template>
 <script>
-  // import LoanButton from './loanbutton.vue'
-  import SearchResult from './searchResult.vue'
+
+  import Result from './result.vue'
   export default {
     components: {
-      // 'loan-button': LoanButton,
-      'search-result': SearchResult,
+      'result': Result,
     },
     created(){
         fetch('http://localhost:3000/books/catsandlangs')
