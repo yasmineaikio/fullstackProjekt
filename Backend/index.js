@@ -21,7 +21,7 @@ app.use((request, response, next) => {
 
 app.use(bodyParser.json());
 
-//Deklarerar en databas variabel samt öpnnar databasen (Alex)
+//Deklarerar en databas variabel samt ansluter till databasen (Alex)
 var database;
 db.open('./db.db').then(database_ => {
   database = database_
@@ -42,24 +42,6 @@ app.post('/users', (request, response) => {
     response.status(201).send(books);
   })
 })
-
-// logga in (Alex) Ta ej bort!!!!
-// app.post('/login', (request, response) => {
-//   let newID = uuidv4();
-//   let regUser = request.body
-//    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-//      if(row[0]) {
-//       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
-//         response.set('Cookie', newID)
-//         response.status(201).send(user)
-//       })
-
-//      } else {
-//       response.status(404).send('')
-//       console.log('Fel användernamn eller lösenord, försök igen!');
-//      }
-//    })
-//   })
 
 app.post('/login', (request, response) => {
   let regUser = request.body

@@ -170,4 +170,13 @@ footer h3 {
 .footer-icon.facebook {
   color:#3b5998;
 }
+
+</style>
+
+
+<style >
+/* Ej scoped style (Alex) */
+  body {
+  margin: 0;
+}
 </style>
