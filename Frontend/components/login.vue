@@ -35,7 +35,7 @@ export default {
                     cookie()
                     router.push("/profil")
                 } else {
-                    alert("Fel användernamn eller lösenord! Försök igen!")    
+                    alert("Fel användernamn eller lösenord! Försök igen!")  //eller skapa nytt konto  
                     router.push("/login")
                 }
             })

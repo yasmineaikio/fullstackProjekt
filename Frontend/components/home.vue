@@ -2,6 +2,7 @@
 <div>
   <div id="title">
     <h1>Vi rekommenderar</h1>
+    <div class="arrow bounce"></div>
   </div>
   <div class="books">
    <div v-for='book in books.slice(0, 3)' class="book">
@@ -69,5 +70,30 @@ import LoanButton from './loanbutton.vue'
     height:250px;
     object-fit: cover;
   }
-
+  .arrow {
+    position: relative;
+    bottom: 1px;
+    left: 50%;
+    margin-left:-20px;
+    margin-top: -10px;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-image: url(http://greenish.haahe.net/wp-content/uploads/2018/12/index.png);
+    background-size: contain;
+  }
+  .bounce {
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-30px);
+    }
+    60% {
+      transform: translateY(-15px);
+    }
+  }
 </style>

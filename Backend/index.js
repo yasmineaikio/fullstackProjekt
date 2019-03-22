@@ -21,13 +21,10 @@ app.use((request, response, next) => {
 
 app.use(bodyParser.json());
 
+//Deklarerar en databas variabel samt öpnnar databasen (Alex)
 var database;
 db.open('./db.db').then(database_ => {
   database = database_
-  // database.all('SELECT * FROM users').then(users => {
-  //    allUsers = users
-  //   console.log(allUsers);
-  // })
 })
 
 // hämtar samtliga users från databasen (Alex)
@@ -86,7 +83,7 @@ app.get('/login', (request, response) => {
   })
 })
 
-// Logga ut (Alex)
+// Loggar ut (Alex)
 app.post('/logout', (request, response) => {
    let token = request.body.Cookie
    database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
@@ -104,16 +101,11 @@ app.get('/admin', (request, response) => {
 // hämtar samtliga böcker från databasen (Alex)
 app.get('/books', (request, response) => {
   database.all('SELECT * FROM books').then(books => {
-    response.send(books);
-  })
-})
-
-// hämtar samtliga böcker från databasen (Alex)
-app.get('/books', (request, response) => {
-  database.all('SELECT * FROM books').then(books => {
       response.send(books);
     })
   })
+
+  
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
