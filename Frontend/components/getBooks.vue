@@ -35,8 +35,6 @@
         year: '',
         language: '',
         admin: false,
-        adminName: '',
-        inlogedUser: '',
         books: [],
       }
     },
@@ -64,22 +62,14 @@
    },
   
     mounted() {
-     let id = this.$cookie.get('Cookie')
-      fetch ('http://localhost:3000/admin')
-      .then(response => {
-          return response.json()
-      })
-      .then(result => {
-          this.adminName =result[0].name
-      })
-
+      // Kollar om inloggad user är ADMIN eller inte (Alex)
       fetch('http://localhost:3000/login')
       .then(response => {
           return response.json()
       })
       .then(result => {
-          let test = result.find(value => value.user === 'ADMIN')
-          if(test.user === 'ADMIN' ) { //kolla test.token också
+          let inloggad = result.find(value => value.user === 'ADMIN')
+          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) { 
             this.admin = true
           }     
       })
