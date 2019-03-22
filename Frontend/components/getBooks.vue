@@ -25,7 +25,7 @@
 </template>
 <script>
   import AddBook from './addBook.vue'
-  import LoanButton from './loanbutton.vue'
+  import LoanButton from './loanButton.vue'
   export default {
     data() {
       return {
@@ -38,8 +38,26 @@
         books: [],
       }
     },
-      components: {
+
+        created() {
+            fetch('http://localhost:3000/books')
+            .then(response => response.json())
+            .then(result => {
+            this.books = result
+        })
+      },
+
+    //   created() {
+    //       fetch('http://localhost:3000/books?order-by=title')
+    //       .then(response => response.json())
+    //       .then(result => {
+    //       this.books = result
+    //   })
+    // },
+
+    components: {
       'add-book': AddBook,
+      'loan-button': LoanButton
     },
     methods: {
       getBooks() {
@@ -74,8 +92,7 @@
           }     
       })
     },
-      'loan-button': LoanButton,
-    }
+}
 </script>
 
 <style scoped>
