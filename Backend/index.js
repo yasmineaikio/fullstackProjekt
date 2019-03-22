@@ -65,7 +65,7 @@ app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) {
-      database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, regUser.ID]).then(user => {
+      database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
       })
@@ -91,12 +91,6 @@ app.post('/logout', (request, response) => {
    })
 })
 
-// Kollar om user är admin (Alex)
-app.get('/admin', (request, response) => {
-  database.all('SELECT * FROM users WHERE type=?', ['ADMIN']).then(row => {
-    response.send(row)
-  })
-})
 
 // hämtar samtliga böcker från databasen (Alex)
 app.get('/books', (request, response) => {
@@ -105,7 +99,7 @@ app.get('/books', (request, response) => {
     })
   })
 
-  
+
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
         database.all('select distinct category from books order by category').then(books => {
