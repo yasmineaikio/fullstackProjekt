@@ -5,7 +5,7 @@
 
   <div id="profilepageuserinfo">
   <h3>Kontaktinformation</h3>
-   {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
+   {{ this.realname }} |  | {{ this.address }}
    <update-user-button></update-user-button>
   </div>
 
@@ -58,7 +58,6 @@
         realname: '',
         address: '',
         inloggad: true,
-        emaillink: 'mailto:' + this.email,
       }
     },
     components: {
@@ -79,7 +78,6 @@
               this.realname = result.find(value => value.name === this.name ).realname
               this.email = result.find(value => value.name === this.name ).email
               this.address = result.find(value => value.name === this.name ).address
-
             })
 
 
