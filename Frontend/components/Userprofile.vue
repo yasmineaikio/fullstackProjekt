@@ -55,7 +55,6 @@
       }
     },
     methods: {
-      //Tips till MAIJA! fetch users och sen users.find(value => value.name === this.name)
       fetchresult() {
         fetch('http://localhost:3000/users')
           .then(response => response.json())
@@ -84,9 +83,6 @@
         }
     }
   }
-
-
-
 </script>
 
 
