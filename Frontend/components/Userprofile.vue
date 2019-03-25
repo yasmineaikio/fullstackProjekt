@@ -27,6 +27,7 @@
     </table>
   </div>
 
+
 <!--
 <p>Alla användare i databasen:</p>
 <ul v-for="user in users">
@@ -54,7 +55,7 @@
       }
     },
     methods: {
-      //Tips till MAJA! fetch users och sen users.find(value => value.name === this.name)
+      //Tips till MAIJA! fetch users och sen users.find(value => value.name === this.name)
       fetchresult() {
         fetch('http://localhost:3000/users')
           .then(response => response.json())
