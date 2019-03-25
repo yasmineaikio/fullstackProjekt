@@ -1,9 +1,9 @@
 <template>
-  <div id="profilepagemain" v-if="inloggad">
-  <h2>Hej {{ name }}!</h2>
+  <div id="profilepagemain" v-if="this.$cookie.get('Cookie')">
+  <h1>Hej {{ this.name }}!</h1>
 
-  <div id="profilepageuserinfo" class="container">
-    Namn Namn | <a href="">mail@mail.mail</a> | Adress
+  <div id="profilepageuserinfo">
+   {{ this.name }} | <a href="">mail@mail.mail</a> | Adress
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -27,10 +27,12 @@
     </table>
   </div>
 
+<!--
 <p>Alla användare i databasen:</p>
 <ul v-for="user in users">
   <li>{{ user }}</li>
 </ul>
+-->
 
 
   </div>
@@ -44,7 +46,7 @@
   },
     data() {
       return {
-        name: 'Test',
+        name: '',
         users: null,
         books: null,
         loans: null,
@@ -52,11 +54,19 @@
       }
     },
     methods: {
+      //Tips till MAJA! fetch users och sen users.find(value => value.name === this.name)
       fetchresult() {
         fetch('http://localhost:3000/users')
           .then(response => response.json())
           .then (result => {
             this.users = result
+          })
+
+        fetch('http://localhost:3000/login')
+        .then(response => response.json())
+          .then (result => {
+            //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
+            this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
           })
 
         fetch('http://localhost:3000/books')

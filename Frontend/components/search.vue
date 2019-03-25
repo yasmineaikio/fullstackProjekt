@@ -1,12 +1,14 @@
 <template>
   <div class="search">
 
-    <div class="search-input">
+    <div class="search-input" v-on:keyup.enter="searchBooks">
       <div id="search">
-      <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" v-on:keyup.enter="searchBooks">
-      <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
-    </div>
-
+        <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
+        <div class="">
+        <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
+        <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
+      </div>
+      </div>
       <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
         <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
@@ -33,43 +35,33 @@
           </div>
         </div>
       </div>
-
-      </div>
+    </div>
 
     <div class="search-result" v-if="result">
-      <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span></p>
-      <p v-else>Visar resultat för "{{ searchText }}" <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}".</span> </p>
-      <li v-for="book in books">
-        {{book.title}}
-        {{book.author}}
-        {{book.category}}
-        {{book.year}}
-        {{book.language}}
-      </li>
+      <result
+      v-bind:searchText="searchText"
+      v-bind:pickedCat="pickedCat"
+      v-bind:pickedLang="pickedLang"
+      v-bind:books="books"
+      >
+      </result>
     </div>
 
   </div>
 </template>
 <script>
+
+  import Result from './result.vue'
   export default {
+    components: {
+      'result': Result,
+    },
     created(){
-        fetch('http://localhost:3000/books/categories')
+        fetch('http://localhost:3000/books/catsandlangs')
         .then (response => response.json())
         .then (result => {
-          console.log(result)
-          this.cats = result
-          // console.log(result)
-          // let allCats = []
-          // let allLangs = []
-          // for (let i = 0; i < result.length; i++){
-          //   allCats[i] = result[i].category
-          //   allLangs[i] = result[i].language
-          // }
-          // let uniqueCats = [...new Set(allCats)]
-          // let uniqueLangs = [...new Set(allLangs)]
-          // this.cats = uniqueCats
-          // this.langs = uniqueLangs
-
+          this.cats = result[0]
+          this.langs = result[1]
         })
     },
     data() {
@@ -141,7 +133,7 @@
     background-color: #7A7A7A;
   }
   #search-textfield {
-    width: 92%;
+    width: 98%;
     height: 30px;
     padding: 6px;
     font-family: 'Work sans', sans-serif;
@@ -156,7 +148,7 @@
     cursor: pointer;
     position: absolute;
     top: 7px;
-    left: 89%;
+    left: 95%;
     color: #F3C954;
   }
   #advanced-search {

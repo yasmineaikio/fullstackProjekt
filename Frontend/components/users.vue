@@ -2,9 +2,9 @@
   <div>
       <form @submit.prevent="addUser()">
           <h4>Skapa konto</h4>
-          <input type="text" placeholder="Användernamn" v-model="name"><br>
-          <input type="password" placeholder="Lösenord" v-model="password"><br>
-          <input type="email" placeholder="e-postadress" v-model="email"><br>
+          <input type="text" placeholder="Användernamn" v-model="name" required><br>
+          <input type="password" placeholder="Lösenord" v-model="password" required><br>
+          <input type="email" placeholder="e-postadress" v-model="email" required><br>
           <button type="submit">Skapa</button>
       </form>
   </div>

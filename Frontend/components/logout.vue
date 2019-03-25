@@ -36,5 +36,8 @@ export default {
      cursor: pointer;
      display: inline;
     }
+    .logout-btn:hover:before {
+     visibility: hidden;
+    }
 </style>
 
