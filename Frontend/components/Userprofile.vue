@@ -1,26 +1,28 @@
 <template>
   <div id="profilepagemain" v-if="inloggad">
-  <h1>Hej {{ this.name }}!</h1>
+  <h2>Hej {{ name }}!</h2>
 
-  <div id="profilepageuserinfo">
+  <div id="profilepageuserinfo" class="container">
     Namn Namn | <a href="">mail@mail.mail</a> | Adress
   </div>
 
-  <div id="profilepagebooks">
-    <h2>Lånade böcker</h2>
+  <div id="profilepagebooks" class="container">
+    <h3>Lånade böcker</h3>
 
-    <table id="booktable" v-for="book in books">
+    <table id="booktable">
       <tr>
+        <th>ID</th>
         <th>Titel</th>
         <th>Författare</th>
         <th>Lånedatum</th>
         <th>Återlämningsdatum</th>
       </tr>
-      <tr>
-        <td>{{ book.title }}</td>
-        <td>{{ book.author }}</td>
-        <td>HÄMTA</td>
-        <td>HÄMTA</td>
+      <tr v-for="loan in loans">
+        <td>{{ loan.ID }}</td>
+        <td>{{ loan.title }}</td>
+        <td>{{ loan.author }}</td>
+        <td>{{ loan.date }}</td>
+        <td>{{ loan.due }}</td>
       </tr>
     </table>
   </div>
@@ -33,6 +35,7 @@
 
   </div>
 </template>
+
 <script>
 
   export default {
@@ -44,6 +47,7 @@
         name: 'Test',
         users: null,
         books: null,
+        loans: null,
         inloggad: true,
       }
     },
@@ -61,32 +65,46 @@
             this.books = result
           })
 
+        fetch('http://localhost:3000/loans')
+          .then(response => response.json())
+          .then (result => {
+            this.loans = result
+          })
         }
     }
   }
+
+
 
 </script>
 
 
 <style scoped>
 #profilepagemain {
-width:80%;
-margin:auto;
+  font-family: 'Work Sans', sans-serif;
+  width:80%;
+  margin:auto;
 }
 
 #profilepageuserinfo {
-margin:4px;
 }
 
 #profilepagebooks {
-background-color:lightsalmon;
-padding:0 4px 4px 4px;
+  padding:0 4px 4px 4px;
 }
 
 #booktable {
-border:1px solid #000;
-width: 80%;
-margin:auto;
+  margin:auto;
+  border-collapse: collapse;
+  font-family: arial, sans-serif;
+  overflow-x: scroll;
+  width:80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 
 </style>
