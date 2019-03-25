@@ -6,7 +6,7 @@
   </div>
   <div class="books">
    <div v-for='book in books.slice(0, 3)' class="book">
-      <img src="https://cdn.pixabay.com/photo/2015/12/04/17/06/notebook-1076812_960_720.jpg">
+      <img src="https://images.unsplash.com/photo-1461419912973-9964f1f54b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80">
       <h3>{{book.title}}</h3>
       <p>{{book.author}} | {{book.category}}</p>
       <p><loan-button></loan-button></p>
