@@ -2,8 +2,11 @@
   <div id="profilepagemain" v-if="this.$cookie.get('Cookie')">
   <h1>Hej {{ this.name }}!</h1>
 
+
   <div id="profilepageuserinfo">
-   {{ this.name }} | <a href="">mail@mail.mail</a> | Adress
+  <h3>Kontaktinformation</h3>
+   {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
+   <update-user-button></update-user-button>
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -40,6 +43,7 @@
 </template>
 
 <script>
+  import UpdateUserButton from './updateUserButton.vue'
 
   export default {
   created() {
@@ -51,23 +55,33 @@
         users: null,
         books: null,
         loans: null,
+        realname: '',
+        address: '',
         inloggad: true,
+        emaillink: 'mailto:' + this.email,
       }
+    },
+    components: {
+      'update-user-button': UpdateUserButton,
     },
     methods: {
       fetchresult() {
-        fetch('http://localhost:3000/users')
-          .then(response => response.json())
-          .then (result => {
-            this.users = result
-          })
-
         fetch('http://localhost:3000/login')
         .then(response => response.json())
           .then (result => {
             //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
           })
+
+          fetch('http://localhost:3000/users')
+            .then(response => response.json())
+            .then (result => {
+              this.realname = result.find(value => value.name === this.name ).realname
+              this.email = result.find(value => value.name === this.name ).email
+              this.address = result.find(value => value.name === this.name ).address
+
+            })
+
 
         fetch('http://localhost:3000/books')
           .then(response => response.json())
