@@ -6,6 +6,7 @@
   <div id="profilepageuserinfo">
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
+   <update-user-button></update-user-button>
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+  import UpdateUserButton from './updateUserButton.vue'
 
   export default {
   created() {
@@ -58,6 +60,9 @@
         inloggad: true,
         emaillink: 'mailto:' + this.email,
       }
+    },
+    components: {
+      'update-user-button': UpdateUserButton,
     },
     methods: {
       fetchresult() {
