@@ -88,7 +88,6 @@
       },
       showAdvanced (){
         this.counter = this.counter +1
-        console.log(this.counter);
         if (this.isEven(this.counter) ){
           this.advanced = false;
           this.pickedCat = ''
