@@ -182,14 +182,6 @@ app.get('/books', (request, response) => {
       })
 
 
-// hämtar lånade böcker (loans) från databasen (Maija)
-app.get('/loans', (request, response) => {
-  database.all('SELECT * FROM loans').then(books => {
-    response.send(books);
-  })
-})
-
-
 app.listen(3000, function() {
   console.log('The server is running!')
 });
