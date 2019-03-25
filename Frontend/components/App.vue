@@ -111,7 +111,7 @@ li a {
   width: 100%;
 }
 
-li a:active {
+li a:active, li a:focus, li a:checked {
   border: none;
 }
 ul li a:before {

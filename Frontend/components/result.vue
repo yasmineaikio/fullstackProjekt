@@ -11,7 +11,7 @@
         <th>Titel</th>
         <th>Författare</th>
         <th>Kategori</th>
-        <th>Utgivningår</th>
+        <th>Utgivningsår</th>
         <th>Språk</th>
         <th>Låna</th>
       </tr>
@@ -39,7 +39,6 @@ export default {
 
 <style lang="css" scoped>
   table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 80%;
     margin: auto;

@@ -36,9 +36,18 @@ import LoanButton from './loanbutton.vue'
       }
 </script>
 
-<style scoped>
+<style>
+/* stilregler som gäller för alla filer */
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
+  p, li, table, input, button, a {
+    font-family: 'Work sans', sans-serif;
+  }
+  h1, h2 {
+    font-family: 'Sourse serif pro', serif;
+  }
+</style>
 
+<style scoped>
   #title h1 {
   color: #7A7A7A;
   font-family: 'Source serif pro', sans-serif;
