@@ -4,7 +4,7 @@
           <h4>Skapa konto</h4>
           <input type="text" placeholder="Användernamn" v-model="name" required><br>
           <input type="password" placeholder="Lösenord" v-model="password" required><br>
-          <input type="text" placeholder="För och efternamn" v-model="userName" required><br>
+          <input type="text" placeholder="För-och efternamn" v-model="userName" required><br>
           <input type="text" placeholder="Address" v-model="address" required><br>
           <input type="email" placeholder="e-postadress" v-model="email" required><br>
           <button type="submit">Skapa</button>
