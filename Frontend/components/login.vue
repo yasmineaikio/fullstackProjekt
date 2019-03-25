@@ -10,7 +10,8 @@
 </template>
 <script>
 import router from "../router" 
-import  uuid  from 'vue-uuid';
+import  uuid  from 'vue-uuid'
+import { Dialog } from 'buefy/dist/components/dialog'
 export default {
     data(){
         return {
@@ -35,7 +36,13 @@ export default {
                     cookie()
                     router.push("/profil")
                 } else {
-                    alert("Fel användernamn eller lösenord! Försök igen!")  //eller skapa nytt konto  
+                    Dialog.alert({
+                    title: 'Ops..',
+                    message: 'Fel användernamn eller lösenord!',
+                    confirmText: 'Försök igen',
+                    type: 'is-dark',
+                })
+                    //eller skapa nytt konto   
                     router.push("/login")
                 }
             })
