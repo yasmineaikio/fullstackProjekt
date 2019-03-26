@@ -35,7 +35,12 @@ export default {
                 if (response.status === 201) {  
                     cookie()
                     router.push("/profil")
-                } else {
+                }
+                else if (response.status === 205) {
+                    cookie()
+                    router.push("/admin")
+                }
+                else {
                     Dialog.alert({
                     title: 'Ops..',
                     message: 'Fel användernamn eller lösenord!',

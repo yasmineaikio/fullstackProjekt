@@ -21,7 +21,7 @@
         <td>{{book.category}}</td>
         <td>{{book.year}}</td>
         <td>{{book.language}}</td>
-        <td><loan-button></loan-button></td>
+        <td><loan-button ></loan-button></td>
       </tr>
     </table>
   </div>

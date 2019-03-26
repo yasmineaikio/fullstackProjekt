@@ -5,7 +5,7 @@
 
   <div id="profilepageuserinfo">
   <h3>Kontaktinformation</h3>
-   {{ this.realname }} |  | {{ this.address }}
+   {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
    <update-user-button></update-user-button>
    <button @click="removeAccount()">Radera konto</button>
   </div>

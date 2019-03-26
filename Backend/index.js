@@ -39,7 +39,7 @@ app.get('/users', (request,response) => {
 app.post('/users', (request, response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.userName, newUser.adress]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.realname, newUser.address]).then(books => {
     response.status(201).send(books);
   })
 })
@@ -52,15 +52,21 @@ app.delete('/users', (request, response) => {
       database.run('DELETE FROM users WHERE name =?', [row[0].user])
       response.status(200).send('User deleted')
     }
-    else 
+    else
     response.status(404).send('User not found')
   })
 })
-
+// loggar in, skapar en cookie samt kollar om användaren är vanlig user eller admin (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) {
+       if (row[0].type === 'admin') {
+        database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
+          response.set('Cookie', regUser.ID)
+          response.status(205).send(user)
+        })
+       } else
       database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
@@ -78,6 +84,8 @@ app.get('/login', (request, response) => {
      response.status(201).send(inloggade);
   })
 })
+
+
 
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
@@ -193,6 +201,7 @@ app.get('/books', (request, response) => {
         })
       })
 
+<<<<<<< HEAD
       //Ändra tillagd bok (Annika)
       app.put('/books/:title', (request, response) => {
         let title = request.body.title
@@ -206,6 +215,33 @@ app.get('/books', (request, response) => {
           response.send(books)
         })
       })
+=======
+      app.post('/loans', (request, response) => {
+        let loanDate = request.body.loanDate
+        let returnDate = request.body.returnDate
+        let bookId = request.body.bookId
+        let userId = request.body.userId
+          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+           response.status(201).send(loan);
+        })
+      })
+
+      // JOBBAR PÅ HÄR, BRY ER INTE!
+      // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
+      app.get('/users/name', (request, response) => {
+        database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
+        response.send(user)
+      })
+    })
+
+      // uppdaterar en användarens uppgifter (Maija)
+      app.put('/users', (request, response) => {
+        database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
+        // uppdaterat kanske
+      })
+    })
+
+>>>>>>> 676e3595da443eff0eb989992df44ae65edf9a08
 
 app.listen(3000, function() {
   console.log('The server is running!')
