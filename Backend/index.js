@@ -201,7 +201,6 @@ app.get('/books', (request, response) => {
         })
       })
 
-<<<<<<< HEAD
       //Ändra tillagd bok (Annika)
       app.put('/books/:title', (request, response) => {
         let title = request.body.title
@@ -215,7 +214,6 @@ app.get('/books', (request, response) => {
           response.send(books)
         })
       })
-=======
       app.post('/loans', (request, response) => {
         let loanDate = request.body.loanDate
         let returnDate = request.body.returnDate
@@ -241,7 +239,6 @@ app.get('/books', (request, response) => {
       })
     })
 
->>>>>>> 676e3595da443eff0eb989992df44ae65edf9a08
 
 app.listen(3000, function() {
   console.log('The server is running!')

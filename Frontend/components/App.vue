@@ -37,12 +37,9 @@
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
     import { Dialog } from 'buefy/dist/components/dialog'
-<<<<<<< HEAD
     import EditBookButton from './editBookButton.vue'
-=======
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
->>>>>>> 676e3595da443eff0eb989992df44ae65edf9a08
     // import { EventBus } from '../eventbus.js'
 
 
@@ -63,11 +60,8 @@
       'home': Home,
       'loan-button': LoanButton,
       'result': Result,
-<<<<<<< HEAD
       'editbook-button': EditBookButton,
-=======
       'admin': Admin,
->>>>>>> 676e3595da443eff0eb989992df44ae65edf9a08
     },
     router,
     methods: {
