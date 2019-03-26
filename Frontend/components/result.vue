@@ -1,11 +1,11 @@
 <template lang="html">
   <div>
-    <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}"
+    <!-- <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
     <p v-else>Visar resultat för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
-    </p>
+    </p> -->
     <table>
       <tr>
         <th>Titel</th>
@@ -29,11 +29,23 @@
 
 <script>
 import LoanButton from './loanbutton.vue'
+// import {EventBus} from '../eventbus.js'
+
 export default {
   components: {
     'loan-button': LoanButton
   },
-  props: ['searchText', 'pickedCat', 'pickedLang', 'books'],
+  created(){
+    EventBus.$on('result', allBooks)
+    console.log(allBooks);
+  },
+  methods: {
+    onResult(arg){
+      console.log(arg);
+    }
+  }
+
+  // props: ['searchText', 'pickedCat', 'pickedLang', 'books'],
 }
 </script>
 

@@ -5,8 +5,8 @@
       <div id="search">
         <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
         <div class="">
-        <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
-        <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
+        <!-- <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/> -->
+        <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link>
       </div>
       </div>
       <div class="advanced">
@@ -50,8 +50,8 @@
   </div>
 </template>
 <script>
-
   import Result from './result.vue'
+  // import {EventBus} from '../eventbus.js'
   export default {
     components: {
       'result': Result,
@@ -107,8 +107,9 @@
           .then (response => response.json())
           .then (result => {
             let allBooks = result
-            this.books = allBooks
-            console.log(allBooks)
+            // this.books = allBooks
+            EventBus.$emit('result', allBooks)
+
           })
         }
         else {
