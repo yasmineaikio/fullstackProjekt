@@ -39,6 +39,7 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
+    // import { EventBus } from '../eventbus.js'
 
 
   export default {
