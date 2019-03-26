@@ -44,10 +44,29 @@ app.post('/users', (request, response) => {
   })
 })
 
+// Tar bort users
+app.delete('/users', (request, response) => {
+  let incoming = request.body.Cookie
+  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then( row => {
+    if (row[0]) {
+      database.run('DELETE FROM users WHERE name =?', [row[0].user])
+      response.status(200).send('User deleted')
+    }
+    else
+    response.status(404).send('User not found')
+  })
+})
+// loggar in, skapar en cookie samt kollar om användaren är vanlig user eller admin (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) {
+       if (row[0].type === 'admin') {
+        database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
+          response.set('Cookie', regUser.ID)
+          response.status(205).send(user)
+        })
+       } else
       database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
@@ -65,6 +84,8 @@ app.get('/login', (request, response) => {
      response.status(201).send(inloggade);
   })
 })
+
+
 
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
@@ -174,15 +195,23 @@ app.get('/books', (request, response) => {
         let language = request.body.language
         let id = uuidv4()
         let image = request.body.image
-        let amount = request.body.amount
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [title, author, category, year, language, amount, image, id]).then(books => {
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [title, author, category, year, language, image, id]).then(books => {
         response.send(books)
         })
       })
 
+      app.post('/loans', (request, response) => {
+        let loanDate = request.body.loanDate
+        let returnDate = request.body.returnDate
+        let bookId = request.body.bookId
+        let userId = request.body.userId
+          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+           response.status(201).send(loan);
+        })
+      })
 
-      // JOBBAR PÅ HÄR
+      // JOBBAR PÅ HÄR, BRY ER INTE!
       // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
       app.get('/users/name', (request, response) => {
         database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
