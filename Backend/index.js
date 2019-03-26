@@ -52,7 +52,7 @@ app.delete('/users', (request, response) => {
       database.run('DELETE FROM users WHERE name =?', [row[0].user])
       response.status(200).send('User deleted')
     }
-    else 
+    else
     response.status(404).send('User not found')
   })
 })
@@ -78,6 +78,8 @@ app.get('/login', (request, response) => {
      response.status(201).send(inloggade);
   })
 })
+
+
 
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
@@ -194,6 +196,15 @@ app.get('/books', (request, response) => {
         })
       })
 
+      app.post('/loans', (request, response) => {
+        let loanDate = request.body.loanDate
+        let returnDate = request.body.returnDate
+        let bookId = request.body.bookId
+        let userId = request.body.userId
+          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+           response.status(201).send(loan);
+        })
+      })
 
 app.listen(3000, function() {
   console.log('The server is running!')
