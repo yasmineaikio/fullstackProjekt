@@ -73,7 +73,7 @@ export default {
             for (let index = 0; index < result.length; index++) {
                 this.logedIn.push(result[index])
             }  
-            //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
+            //Hämtar namnet på usern som är inloggad med hjälp av userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
           })
 
