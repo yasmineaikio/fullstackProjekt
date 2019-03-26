@@ -1,5 +1,12 @@
 <template>
-<div class="box">
+<!--     <input class="addBookTextfields" v-model="title" placeholder="Titel" required><br>
+    <input class="addBookTextfields" v-model="author" placeholder="Författare" required><br>
+    <input class="addBookTextfields" v-model="category" placeholder="Kategori" required><br>
+    <input class="addBookTextfields" v-model="year" placeholder="Utgivningsår" required><br>
+    <input class="addBookTextfields" v-model="language" placeholder="Språk" required><br>
+    <input class="addBookTextfields" v-model="image" placeholder="Bild" required><br>
+    <input class="addBookButton" :disabled="isDisabled" v-on:click="addBook" type="submit" value="Lägg till"><br> -->
+    <div class="box">
   <h1 class="title is-4">
     Nya böcker blir tillgängliga för utlåning genom att fylla i nedan formulär.
     </h1>
@@ -143,7 +150,10 @@ export default {
   margin-bottom: 20px;
 }
 
-.input:focus, .taginput .taginput-container.is-focusable:focus, .input.is-focused, .taginput .is-focused.taginput-container.is-focusable, .input:active, .taginput .taginput-container.is-focusable:active, .input.is-active, .taginput .is-active.taginput-container.is-focusable, .textarea:focus, .textarea.is-focused, .textarea:active, .textarea.is-active {
+.input:focus, .taginput .taginput-container.is-focusable:focus, .input.is-focused, .taginput 
+.is-focused.taginput-container.is-focusable, .input:active, .taginput .taginput-container.is-focusable:active, 
+.input.is-active, .taginput .is-active.taginput-container.is-focusable, .textarea:focus, .textarea.is-focused, 
+.textarea:active, .textarea.is-active {
   border-color: #7A7A7A;
 }
 

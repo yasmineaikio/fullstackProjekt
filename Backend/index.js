@@ -201,6 +201,19 @@ app.get('/books', (request, response) => {
         })
       })
 
+      //Ändra tillagd bok (Annika)
+      app.put('/books/:title', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let image = request.body.image
+        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?', 
+        [title, author, category, year, language, image, request.params.title]).then(books => {
+          response.send(books)
+        })
+      })
       app.post('/loans', (request, response) => {
         let loanDate = request.body.loanDate
         let returnDate = request.body.returnDate
