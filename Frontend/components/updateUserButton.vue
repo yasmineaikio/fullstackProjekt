@@ -1,5 +1,5 @@
 <template>
-  <input v-bind:value="updateUser" v-on:click="updateUser" class="button">
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button">
 </template>
 
 <script>
@@ -17,11 +17,13 @@
       //   alert(newRealname)
       // }
 
-        updateUser() {
+        updateUserFunc() {
           // testar bara: funkar att lägga till en ny användare
           fetch('http://localhost:3000/users', {
-              body: JSON.stringify({name: 'Testar2', password: 'Testar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
-              headers: {'Content-type': 'application/json'},
+              body: JSON.stringify({name: 'NewestTest', password: 'Testaar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
+              headers: {
+                'Content-Type': 'application/json'
+              },
               method: 'POST'
             })
              .then(function (response) {
@@ -31,17 +33,19 @@
               console.log(result)
             })
 
-            fetch('http://localhost:3000/users', {
-                body: JSON.stringify({name: 'Testar2', password: 'Testar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
-                headers: {'Content-type': 'application/json'},
-                method: 'PUT'
-              })
-               .then(function (response) {
-                return response.json()
-              })
-               .then(function (result) {
-                alert(result)
-              })
+            // fetch('http://localhost:3000/users', {
+            //     body: JSON.stringify({name: 'Testar2', password: 'Testar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
+            //     headers: {
+            //       'Content-Type': 'application/json'
+            //     },
+            //     method: 'PUT'
+            //   })
+            //    .then(function (response) {
+            //     return response.json()
+            //   })
+            //    .then(function (result) {
+            //     alert(result)
+            //   })
         }
       }
     }
