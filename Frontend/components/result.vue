@@ -29,11 +29,32 @@
 
 <script>
 import LoanButton from './loanbutton.vue'
+import EventBus from '../eventbus'
+
 export default {
   components: {
     'loan-button': LoanButton
   },
-  props: ['searchText', 'pickedCat', 'pickedLang', 'books'],
+  created(){
+    EventBus.$on('result', this.onResult)
+  },
+  data() {
+    return {
+      books: [],
+      searchText: '',
+      pickedCat: '',
+      pickedLang: '',
+    }
+  },
+  methods: {
+    onResult(object){
+      console.log(object);
+      this.books = object.books
+      this.searchText = object.word
+      this.pickedCat = object.cat
+      this.pickedLang = object.lang
+    }
+  },
 }
 </script>
 
@@ -48,4 +69,5 @@ export default {
     text-align: left;
     padding: 8px;
   }
+
 </style>

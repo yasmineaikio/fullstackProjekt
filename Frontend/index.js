@@ -11,6 +11,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
+Vue.config.devtools = true
 
 Vue.use(Buefy)
 Vue.component('font-awesome-icon', FontAwesomeIcon)

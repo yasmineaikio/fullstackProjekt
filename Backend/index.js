@@ -44,6 +44,19 @@ app.post('/users', (request, response) => {
   })
 })
 
+// Tar bort users
+app.delete('/users', (request, response) => {
+  let incoming = request.body.Cookie
+  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then( row => {
+    if (row[0]) {
+      database.run('DELETE FROM users WHERE name =?', [row[0].user])
+      response.status(200).send('User deleted')
+    }
+    else 
+    response.status(404).send('User not found')
+  })
+})
+
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
