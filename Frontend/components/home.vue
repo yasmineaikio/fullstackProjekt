@@ -43,7 +43,8 @@ import LoanButton from './loanbutton.vue'
     font-family: 'Work sans', sans-serif;
   }
   h1, h2 {
-    font-family: 'Sourse serif pro', serif;
+    font-family: 'Source serif pro', serif;
+
   }
 </style>
 
@@ -52,12 +53,17 @@ import LoanButton from './loanbutton.vue'
   color: #7A7A7A;
   font-family: 'Source serif pro', sans-serif;
   font-size: 3.0em;
-  font-weight: 600;
 }
+
+  h3 {
+  font-size: 1.4em;
+  font-family: 'Source serif pro', sans-serif;
+  }
 
   #title {
     position: relative;
     text-align: center;
+    margin-top: 40px;
   }
 
   .books {
@@ -68,7 +74,6 @@ import LoanButton from './loanbutton.vue'
   }
 
   .book {
-  line-height:0.5em;
     width: 30%;
     display: inline-block;
     margin: 1%;
@@ -84,7 +89,7 @@ import LoanButton from './loanbutton.vue'
     bottom: 1px;
     left: 50%;
     margin-left:-20px;
-    margin-top: -10px;
+    margin-top: 30px;
     width: 40px;
     height: 40px;
     background-repeat: no-repeat;
