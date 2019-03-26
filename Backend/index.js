@@ -56,11 +56,17 @@ app.delete('/users', (request, response) => {
     response.status(404).send('User not found')
   })
 })
-
+// loggar in, skapar en cookie samt kollar om användaren är vanlig user eller admin (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) {
+       if (row[0].type === 'admin') {
+        database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
+          response.set('Cookie', regUser.ID)
+          response.status(205).send(user)
+        })
+       } else
       database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
