@@ -28,13 +28,15 @@
                     <div class="level-item has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
-                            <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.user}}</p>
+                            <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.user}} <span class="online"></span></p>
+                            <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.name}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div class="holder">
                         <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Behörighet</h3>
                         <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.type}}</p>
+                        <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.type}}</p>
                         </div>
                     </div>
                 </nav>
@@ -131,6 +133,15 @@ export default {
 .holder p {
     padding: 5px;
 }
+
+.online {
+    padding: 5px;
+    background: green;
+    border-radius: 100%;
+    float: right;
+    margin: 6px;
+}
+
 
 </style>
 
