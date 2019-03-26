@@ -14,7 +14,7 @@
     <input class="addBookTextfields" v-model="amount" placeholder="Antal" required>
     <input class="addBookButton" :disabled="isDisabled" v-on:click="addBook" type="submit" value="Lägg till">
   </form>
-  <p id="addedText" v-if="message"><font-awesome-icon icon="check" id="check"/> Du har lagt till 
+  <p id="addedText" v-if="message"><font-awesome-icon icon="check" id="check"/> Du har lagt till:
   <span id="addedTitle">{{ addedTitle }}</span></p>
 </div>
 </template>
