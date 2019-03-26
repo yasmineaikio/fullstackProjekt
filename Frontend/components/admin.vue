@@ -17,6 +17,7 @@
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div class="is-center">
                 <a class="button is-light is-outlined">Ta bort användare</a> <a class="button is-light is-outlined">Uppdatera användare</a>
+                <router-link class="button is-light is-outlined" to="/books">Lägg till nya böcker</router-link>
             </div>
         </div>
     </div>
@@ -63,6 +64,7 @@ export default {
         allUsers: [],
         }
     },
+    router,
     methods: {
       getInfo() {
         fetch('http://localhost:3000/login')
