@@ -39,7 +39,7 @@ app.get('/users', (request,response) => {
 app.post('/users', (request, response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.userName, newUser.adress]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.realname, newUser.address]).then(books => {
     response.status(201).send(books);
   })
 })
@@ -210,6 +210,22 @@ app.get('/books', (request, response) => {
            response.status(201).send(loan);
         })
       })
+
+      // JOBBAR PÅ HÄR, BRY ER INTE!
+      // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
+      app.get('/users/name', (request, response) => {
+        database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
+        response.send(user)
+      })
+    })
+
+      // uppdaterar en användarens uppgifter (Maija)
+      app.put('/users', (request, response) => {
+        database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
+        // uppdaterat kanske
+      })
+    })
+
 
 app.listen(3000, function() {
   console.log('The server is running!')
