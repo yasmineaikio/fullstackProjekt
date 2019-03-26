@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div id="container">
   <header>
     <br>
     <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
@@ -36,6 +36,7 @@
     import GetBooks from './GetBooks.vue'
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
+    import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
 
 
@@ -67,7 +68,12 @@
           console.log(this.$cookie.get('Cookie'));
 
         } else {
-          alert('Du måste logga in först!')
+          Dialog.alert({
+            title: 'Ops..',
+            message: 'Du måste logga in först!',
+            confirmText: 'Logga in',
+            type: 'is-dark',
+          })
           this.link = '/login'
           router.push("/login")
         }
@@ -81,6 +87,7 @@ header {
   background-color: #7A7A7A;
   color: white;
   padding: 40px;
+  width: 100%;
 }
 #homelink a {
   text-decoration: none;
@@ -144,8 +151,9 @@ ul li a:hover:before {
 .login-btn:hover:before {
   visibility: hidden;
 }
-.container {
+#container {
   position: relative;
+  max-width: 100%;
 }
 footer {
   position: relative;
