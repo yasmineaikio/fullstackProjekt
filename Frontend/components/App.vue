@@ -36,6 +36,8 @@
     import GetBooks from './GetBooks.vue'
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
+    import EventBus from '../eventbus.js'
+
 
   export default {
     data () {
