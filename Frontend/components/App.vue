@@ -37,7 +37,7 @@
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
     import { Dialog } from 'buefy/dist/components/dialog'
-    import EventBus from '../eventbus.js'
+    // import { EventBus } from '../eventbus.js'
 
 
   export default {
