@@ -34,7 +34,7 @@
         category: '',
         year: '',
         language: '',
-        admin: false,
+        admin: true,
         books: [],
       }
     },
