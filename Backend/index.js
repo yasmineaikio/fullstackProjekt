@@ -39,21 +39,8 @@ app.get('/users', (request,response) => {
 app.post('/users', (request, response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.userName, newUser.adress]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.realname, newUser.address]).then(books => {
     response.status(201).send(books);
-  })
-})
-
-// Tar bort users
-app.delete('/users', (request, response) => {
-  let incoming = request.body.Cookie
-  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then( row => {
-    if (row[0]) {
-      database.run('DELETE FROM users WHERE name =?', [row[0].user])
-      response.status(200).send('User deleted')
-    }
-    else 
-    response.status(404).send('User not found')
   })
 })
 
@@ -193,6 +180,22 @@ app.get('/books', (request, response) => {
         response.send(books)
         })
       })
+
+
+      // JOBBAR PÅ HÄR
+      // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
+      app.get('/users/name', (request, response) => {
+        database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
+        response.send(user)
+      })
+    })
+
+      // uppdaterar en användarens uppgifter (Maija)
+      app.put('/users', (request, response) => {
+        database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
+        // uppdaterat kanske
+      })
+    })
 
 
 app.listen(3000, function() {
