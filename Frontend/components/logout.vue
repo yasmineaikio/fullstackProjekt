@@ -7,7 +7,6 @@ import router from "../router"
 export default {
     methods: {
         logout() {
-            console.log( this.$cookie.get('Cookie'));
             let info = {'Cookie': this.$cookie.get('Cookie')}
             fetch('http://localhost:3000/logout', {
                 method: 'POST',

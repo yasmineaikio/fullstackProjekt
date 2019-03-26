@@ -7,6 +7,7 @@
   <h3>Kontaktinformation</h3>
    {{ this.realname }} |  | {{ this.address }}
    <update-user-button></update-user-button>
+   <button @click="removeAccount()">Radera konto</button>
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -44,6 +45,7 @@
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
+  import router from "../router" 
 
   export default {
   created() {
@@ -92,6 +94,32 @@
           .then (result => {
             this.loans = result
           })
+        },
+        removeAccount() {
+          // Låter user ta bort sitt konto (Alex)
+          let cookie = {'Cookie': this.$cookie.get('Cookie')}
+          fetch('http://localhost:3000/users', {
+                method: 'DELETE',
+                body: JSON.stringify(cookie),
+                headers: {'Content-type': 'application/json'},
+            }).then(function(response) { 
+                if (response.status === 200) {
+                  fetch('http://localhost:3000/logout', {
+                      method: 'POST',
+                      body: JSON.stringify(cookie),
+                      headers: {'Content-type': 'application/json'},
+                  }).then(function(response) {
+                      alert("Ditt konto har raderats!")    
+                      router.push("/")
+                  })    
+                }else {
+                  alert('Något har gått fel, försök igen senare!')
+                }  
+            })
+            .then(function(result){
+                console.log(result)
+            })
+            this.$cookie.delete('Cookie')
         }
     }
   }
