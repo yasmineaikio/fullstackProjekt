@@ -85,8 +85,6 @@ app.get('/login', (request, response) => {
   })
 })
 
-
-
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
    let token = request.body.Cookie
@@ -94,6 +92,24 @@ app.post('/logout', (request, response) => {
      response.send('Utloggad');
    })
 })
+
+// Låter admins ta bort users
+app.delete('/admin', (request, response) => {
+  let user = request.body.userName
+  database.all('SELECT * FROM users WHERE name=?', [user]).then(row => {
+    if(row[0]) { 
+      database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
+        response.status(200).send('user deleted!');
+      })
+    } else {
+      response.status(404).send('No such user');
+    }
+  })
+  
+})
+
+
+
 
 
 // hämtar samtliga böcker från databasen (Alex)

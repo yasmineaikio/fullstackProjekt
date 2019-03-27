@@ -39,13 +39,14 @@
       }
     },
 
-        created() {
-            fetch('http://localhost:3000/books')
-            .then(response => response.json())
-            .then(result => {
-            this.books = result
-        })
-      },
+
+    created() {
+        fetch('http://localhost:3000/books')
+        .then(response => response.json())
+        .then(result => {
+        this.books = result
+    })
+  },
 
     //   created() {
     //       fetch('http://localhost:3000/books?order-by=title')

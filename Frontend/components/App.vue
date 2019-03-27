@@ -37,7 +37,6 @@
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
     import { Dialog } from 'buefy/dist/components/dialog'
-    import EditBookButton from './editBookButton.vue'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
     // import { EventBus } from '../eventbus.js'
@@ -47,7 +46,7 @@
     data () {
       return {
             link:'/',
-            isAdmin: false
+            isAdmin: false,
       }
     },
     components: {
@@ -61,7 +60,6 @@
       'home': Home,
       'loan-button': LoanButton,
       'result': Result,
-      'editbook-button': EditBookButton,
       'admin': Admin,
     },
     router,

@@ -24,8 +24,14 @@ module.exports = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+        'Access-Control-Allow-Credentials': 'true',
         disableHostCheck: true
-    }
+    },
+    proxy: {
+      '/api': {
+        pathRewrite: { '^/api' : '' },
+        target: 'http://localhost:3000'
+      },
 },
   plugins: [
     new VueLoaderPlugin()
@@ -35,4 +41,5 @@ module.exports = {
       vue: 'vue/dist/vue.min.js'
     }
   }
+}
 }
