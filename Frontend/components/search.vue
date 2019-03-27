@@ -110,8 +110,7 @@
 
 <style scoped>
   .search-input {
-    padding: 20px;
-    background-color: #7A7A7A;
+    padding-top: 40px;
   }
   #search-textfield {
     width: 98%;
@@ -128,8 +127,8 @@
     font-size: 16px;
     cursor: pointer;
     position: absolute;
-    top: 7px;
-    left: 95%;
+    /* top: 7px; */
+    left: 93%;
     color: #F3C954;
   }
   #advanced-search {

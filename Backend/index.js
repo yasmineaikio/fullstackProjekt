@@ -225,17 +225,15 @@ app.get('/books', (request, response) => {
         let year = request.body.year
         let language = request.body.language
         let image = request.body.image
-        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?', 
+        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
         [title, author, category, year, language, image, request.params.title]).then(books => {
           response.send(books)
         })
       })
+
+      //lägger in data i loans-tabellen (Yasmine & Sara)
       app.post('/loans', (request, response) => {
-        let loanDate = request.body.loanDate
-        let returnDate = request.body.returnDate
-        let bookId = request.body.bookId
-        let userId = request.body.userId
-          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+          database.run('Insert into loans values (?, ?, ?, ?)', [request.body.loanDate, request.body.returnDate, request.body.userId, request.body.bookId]).then(loan => {
            response.status(201).send(loan);
         })
       })

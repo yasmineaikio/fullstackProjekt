@@ -10,8 +10,8 @@
       <li v-if="this.$cookie.get('Cookie')"><logout></logout></li>
       <li v-else><router-link class="login-btn" to="/login">Logga in</router-link></li>
     </ul>
+    <search-field></search-field>
   </header>
-  <search-field></search-field>
   <router-view></router-view>
   <footer>
     <br><br>
@@ -39,7 +39,6 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-    // import { EventBus } from '../eventbus.js'
 
 
   export default {
@@ -72,9 +71,9 @@
       })
       .then(result => {
           let inloggad = result.find(value => value.type === 'admin')
-          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) { 
+          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
             this.isAdmin = true
-          }  
+          }
       })
     },
       auth() {
@@ -87,7 +86,7 @@
           }else {
             this.link = '/profil'
             router.push("/profil")
-          } 
+          }
         } else {
           Dialog.alert({
             title: 'Ops..',
