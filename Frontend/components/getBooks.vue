@@ -25,7 +25,7 @@
 </template>
 <script>
   import AddBook from './addBook.vue'
-  import LoanButton from './loanbutton.vue'
+  import LoanButton from './loanButton.vue'
   export default {
     data() {
       return {
@@ -56,8 +56,8 @@
     // },
 
     components: {
-      components: {
       'add-book': AddBook,
+      'loan-button': LoanButton
     },
     methods: {
       getBooks() {
@@ -92,8 +92,7 @@
           }     
       })
     },
-      'loan-button': LoanButton,
-    }
+}
 </script>
 
 <style scoped>

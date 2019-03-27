@@ -11,7 +11,7 @@
         <th>Titel</th>
         <th>Författare</th>
         <th>Kategori</th>
-        <th>Utgivningår</th>
+        <th>Utgivningsår</th>
         <th>Språk</th>
         <th>Låna</th>
       </tr>
@@ -21,7 +21,7 @@
         <td>{{book.category}}</td>
         <td>{{book.year}}</td>
         <td>{{book.language}}</td>
-        <td><loan-button></loan-button></td>
+        <td><loan-button ></loan-button></td>
       </tr>
     </table>
   </div>
@@ -29,17 +29,37 @@
 
 <script>
 import LoanButton from './loanbutton.vue'
+import EventBus from '../eventbus'
+
 export default {
   components: {
     'loan-button': LoanButton
   },
-  props: ['searchText', 'pickedCat', 'pickedLang', 'books'],
+  created(){
+    EventBus.$on('result', this.onResult)
+  },
+  data() {
+    return {
+      books: [],
+      searchText: '',
+      pickedCat: '',
+      pickedLang: '',
+    }
+  },
+  methods: {
+    onResult(object){
+      console.log(object);
+      this.books = object.books
+      this.searchText = object.word
+      this.pickedCat = object.cat
+      this.pickedLang = object.lang
+    }
+  },
 }
 </script>
 
 <style lang="css" scoped>
   table {
-    font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 80%;
     margin: auto;
@@ -49,4 +69,5 @@ export default {
     text-align: left;
     padding: 8px;
   }
+
 </style>

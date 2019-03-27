@@ -22,7 +22,7 @@ app.use((request, response, next) => {
 
 app.use(bodyParser.json());
 
-//Deklarerar en databas variabel samt öpnnar databasen (Alex)
+//Deklarerar en databas variabel samt ansluter till databasen (Alex)
 var database;
 db.open('./db.db').then(database_ => {
   database = database_
@@ -39,33 +39,34 @@ app.get('/users', (request,response) => {
 app.post('/users', (request, response) => {
   let newUser = request.body
   let newID = uuidv4();
-  database.run('INSERT INTO users VALUES(?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email]).then(books => {
+  database.run('INSERT INTO users VALUES(?,?,?,?,?,?,?)', [newUser.name, newUser.password, newID, newUser.type, newUser.email, newUser.realname, newUser.address]).then(books => {
     response.status(201).send(books);
   })
 })
 
-// logga in (Alex) Ta ej bort!!!!
-// app.post('/login', (request, response) => {
-//   let newID = uuidv4();
-//   let regUser = request.body
-//    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-//      if(row[0]) {
-//       database.all('INSERT INTO tokens VALUES(?,?)', [regUser.name, newID]).then(user => {
-//         response.set('Cookie', newID)
-//         response.status(201).send(user)
-//       })
-
-//      } else {
-//       response.status(404).send('')
-//       console.log('Fel användernamn eller lösenord, försök igen!');
-//      }
-//    })
-//   })
-
+// Tar bort users
+app.delete('/users', (request, response) => {
+  let incoming = request.body.Cookie
+  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then( row => {
+    if (row[0]) {
+      database.run('DELETE FROM users WHERE name =?', [row[0].user])
+      response.status(200).send('User deleted')
+    }
+    else
+    response.status(404).send('User not found')
+  })
+})
+// loggar in, skapar en cookie samt kollar om användaren är vanlig user eller admin (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
    database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
      if(row[0]) {
+       if (row[0].type === 'admin') {
+        database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
+          response.set('Cookie', regUser.ID)
+          response.status(205).send(user)
+        })
+       } else
       database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
         response.set('Cookie', regUser.ID)
         response.status(201).send(user)
@@ -83,6 +84,8 @@ app.get('/login', (request, response) => {
      response.status(201).send(inloggade);
   })
 })
+
+
 
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
@@ -192,20 +195,49 @@ app.get('/books', (request, response) => {
         let language = request.body.language
         let id = uuidv4()
         let image = request.body.image
-        let amount = request.body.amount
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [title, author, category, year, language, amount, image, id]).then(books => {
+        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [title, author, category, year, language, image, id]).then(books => {
         response.send(books)
         })
       })
 
+      //Ändra tillagd bok (Annika)
+      app.put('/books/:title', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let image = request.body.image
+        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?', 
+        [title, author, category, year, language, image, request.params.title]).then(books => {
+          response.send(books)
+        })
+      })
+      app.post('/loans', (request, response) => {
+        let loanDate = request.body.loanDate
+        let returnDate = request.body.returnDate
+        let bookId = request.body.bookId
+        let userId = request.body.userId
+          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+           response.status(201).send(loan);
+        })
+      })
 
-// hämtar lånade böcker (loans) från databasen (Maija)
-app.get('/loans', (request, response) => {
-  database.all('SELECT * FROM loans').then(books => {
-    response.send(books);
-  })
-})
+      // JOBBAR PÅ HÄR, BRY ER INTE!
+      // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
+      app.get('/users/name', (request, response) => {
+        database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
+        response.send(user)
+      })
+    })
+
+      // uppdaterar en användarens uppgifter (Maija)
+      app.put('/users', (request, response) => {
+        database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
+        // uppdaterat kanske
+      })
+    })
 
 
 app.listen(3000, function() {

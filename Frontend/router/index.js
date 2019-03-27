@@ -7,6 +7,7 @@ import Books from '../components/GetBooks.vue'
 import Profile from '../components/Userprofile.vue'
 import Home from '../components/home.vue'
 import Result from '../components/result.vue'
+import Admin from '../components/admin.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -44,6 +45,11 @@ export default new Router({
     component: Result,
     name: "result",
     path: '/result'
+    },
+    {
+    component: Admin,
+    name: "admin",
+    path: '/admin'
     },
   ]
 })

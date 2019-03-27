@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div id="container">
   <header>
     <br>
     <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
@@ -36,11 +36,18 @@
     import GetBooks from './GetBooks.vue'
     import LoanButton from './loanButton.vue'
     import Result from './result.vue'
+    import { Dialog } from 'buefy/dist/components/dialog'
+    import EditBookButton from './editBookButton.vue'
+    import EventBus from '../eventbus.js'
+    import Admin from './admin.vue'
+    // import { EventBus } from '../eventbus.js'
+
 
   export default {
     data () {
       return {
-            link:'/'
+            link:'/',
+            isAdmin: false
       }
     },
     components: {
@@ -54,18 +61,42 @@
       'home': Home,
       'loan-button': LoanButton,
       'result': Result,
+      'editbook-button': EditBookButton,
+      'admin': Admin,
     },
     router,
     methods: {
+      checkUser() {
+      // Kollar om inloggad user är ADMIN eller inte (Alex)
+      fetch('http://localhost:3000/login')
+      .then(response => {
+          return response.json()
+      })
+      .then(result => {
+          let inloggad = result.find(value => value.type === 'admin')
+          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) { 
+            this.isAdmin = true
+          }  
+      })
+    },
       auth() {
-        //Kollar om user är inloggad (alex)
+        //Kollar om user är inloggad och skickar hen till rätt profilsida (alex)
         if (this.$cookie.get('Cookie')) {
-          this.link = '/profil'
-          router.push("/profil")
-          console.log(this.$cookie.get('Cookie'));
-
+          this.checkUser()
+          if(this.isAdmin) {
+            this.link = '/admin'
+            router.push("/admin")
+          }else {
+            this.link = '/profil'
+            router.push("/profil")
+          } 
         } else {
-          alert('Du måste logga in först!')
+          Dialog.alert({
+            title: 'Ops..',
+            message: 'Du måste logga in först!',
+            confirmText: 'Logga in',
+            type: 'is-dark',
+          })
           this.link = '/login'
           router.push("/login")
         }
@@ -79,6 +110,7 @@ header {
   background-color: #7A7A7A;
   color: white;
   padding: 40px;
+  width: 100%;
 }
 #homelink a {
   text-decoration: none;
@@ -111,7 +143,7 @@ li a {
   width: 100%;
 }
 
-li a:active {
+li a:active, li a:focus, li a:checked {
   border: none;
 }
 ul li a:before {
@@ -142,8 +174,9 @@ ul li a:hover:before {
 .login-btn:hover:before {
   visibility: hidden;
 }
-.container {
+#container {
   position: relative;
+  max-width: 100%;
 }
 footer {
   position: relative;
@@ -171,5 +204,14 @@ footer h3 {
 }
 .footer-icon.facebook {
   color:#3b5998;
+}
+
+</style>
+
+
+<style >
+/* Ej scoped style (Alex) */
+  body {
+  margin: 0;
 }
 </style>

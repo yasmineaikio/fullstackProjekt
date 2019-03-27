@@ -1,13 +1,10 @@
 <template>
   <div class="search">
-
     <div class="search-input" v-on:keyup.enter="searchBooks">
       <div id="search">
         <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
-        <div class="">
-        <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
-        <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
-      </div>
+        <!-- <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/> -->
+        <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link>
       </div>
       <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
@@ -36,22 +33,12 @@
         </div>
       </div>
     </div>
-
-    <div class="search-result" v-if="result">
-      <result
-      v-bind:searchText="searchText"
-      v-bind:pickedCat="pickedCat"
-      v-bind:pickedLang="pickedLang"
-      v-bind:books="books"
-      >
-      </result>
-    </div>
-
   </div>
 </template>
-<script>
 
+<script>
   import Result from './result.vue'
+  import EventBus from '../eventbus'
   export default {
     components: {
       'result': Result,
@@ -73,8 +60,6 @@
         langs: [],
         pickedCat: '',
         pickedLang: '',
-        result: false,
-        books: []
       }
     },
     methods: {
@@ -88,7 +73,6 @@
       },
       showAdvanced (){
         this.counter = this.counter +1
-        console.log(this.counter);
         if (this.isEven(this.counter) ){
           this.advanced = false;
           this.pickedCat = ''
@@ -99,7 +83,7 @@
         }
       },
       searchBooks(){
-        this.result = true;
+        this.advanced = false
         let word = this.searchText
         let cat = this.pickedCat
         let lang = this.pickedLang
@@ -108,8 +92,7 @@
           .then (response => response.json())
           .then (result => {
             let allBooks = result
-            this.books = allBooks
-            console.log(allBooks)
+            EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
           })
         }
         else {
@@ -117,17 +100,15 @@
           .then (response => response.json())
           .then (result => {
             let allBooks = result
-            this.books = allBooks
-            console.log(allBooks)
+            EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
           })
         }
       },
     }
   }
 </script>
+
 <style scoped>
-  .search {
-  }
   .search-input {
     padding: 20px;
     background-color: #7A7A7A;
@@ -161,24 +142,12 @@
     color: white;
     font-family: 'Work Sans', sans-serif;
   }
-
   .advanced ul {
     padding-left: 0;
   }
-
   .advanced li {
     list-style: none;
     display: inline;
-  }
-  .search-result {
-    padding: 20px;
-  }
-  .search-result li {
-    list-style: none;
-    border: solid black 1px;
-    padding: 40px;
-    margin: 40px;
-    width: 50%;
   }
 
 </style>
