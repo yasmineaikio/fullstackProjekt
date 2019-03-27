@@ -93,7 +93,7 @@ app.post('/logout', (request, response) => {
    })
 })
 
-// Låter admins ta bort users
+// Låter admins ta bort users (Alex)
 app.delete('/admin', (request, response) => {
   let user = request.body.userName
   database.all('SELECT * FROM users WHERE name=?', [user]).then(row => {
@@ -105,7 +105,6 @@ app.delete('/admin', (request, response) => {
       response.status(404).send('No such user');
     }
   })
-  
 })
 
 

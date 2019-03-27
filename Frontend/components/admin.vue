@@ -16,7 +16,7 @@
     <div class="columns has-text-centered">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div class="is-center">
-                <a @click="removeUser()" class="button is-light is-outlined">Ta bort användare</a> <a class="button is-light is-outlined">Uppdatera användare</a>
+                <a @click="removeUser()" class="button is-light is-outlined">Ta bort användare</a>
                 <router-link class="button is-light is-outlined" to="/books">Lägg till nya böcker</router-link>
             </div>
         </div>
