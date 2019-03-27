@@ -17,7 +17,9 @@
               <h3>{{book.title}}</h3>
               <p>{{book.author}} | {{book.category}}</p>
               <br>
-              <p><loan-button></loan-button></p>
+              <p><loan-button
+                v-bind:book-id="book.id"
+                ></loan-button></p>
             </div>
           </div>
     </div>

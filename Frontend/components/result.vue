@@ -21,7 +21,9 @@
         <td>{{book.category}}</td>
         <td>{{book.year}}</td>
         <td>{{book.language}}</td>
-        <td><loan-button ></loan-button></td>
+        <td><loan-button
+          v-bind:book-id="book.id"
+          ></loan-button></td>
       </tr>
     </table>
   </div>
@@ -48,7 +50,6 @@ export default {
   },
   methods: {
     onResult(object){
-      console.log(object);
       this.books = object.books
       this.searchText = object.word
       this.pickedCat = object.cat

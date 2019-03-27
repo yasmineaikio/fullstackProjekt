@@ -8,19 +8,21 @@
 
 <script>
 export default {
+  props: ['bookId'],
   data() {
       return {
-        loanDate: '2019-04-14',
-        returnDate: '2019-05-14',
-        bookId: '',
+        loanDate: '2019-03-27',
+        returnDate: '2019-04-27',
+        bookId: this.bookId,
         userId: ''
       }
     },
   methods: {
     addLoan (){
+      console.log(this.bookId);
       fetch ('http://localhost:3000/loans', {
-      body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "bookId": "'
-      + this.bookId + '", "userId": "' + this.userId + '"}',
+      body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "userId": "' + this.userId + '", "bookId": "'
+      + this.bookId + '"}',
       headers: {
           'Content-Type': 'application/json'
       },
