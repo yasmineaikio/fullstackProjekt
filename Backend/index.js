@@ -96,7 +96,7 @@ app.post('/logout', (request, response) => {
 // Låter admins ta bort users (Alex)
 app.delete('/admin', (request, response) => {
   let user = request.body.userName
-  database.all('SELECT * FROM users WHERE name=?', [user]).then(row => {
+  database.all('SELECT * FROM users WHERE name=? AND type=?', [user, 'user']).then(row => {
     if(row[0]) { 
       database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
         response.status(200).send('user deleted!');
