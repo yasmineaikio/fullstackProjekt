@@ -21,8 +21,7 @@ export default {
           language: null,
           id: null,
           image: null,
-          message: false,
-          addedTitle: null
+          editable: null
       }
     },
 

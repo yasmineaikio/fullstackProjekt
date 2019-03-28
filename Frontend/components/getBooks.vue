@@ -10,7 +10,9 @@
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
-    <th>Låna</th>
+    <th v-if="!admin">Låna</th>
+    <th v-if="admin">Ändra</th>
+    <th v-if="admin">Ta bort</th>
   </tr>
   <tr v-for='book in books'>
     <td>{{book.title}}</td>
@@ -18,14 +20,15 @@
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
-    <td><loan-button
-      v-bind:book-id="book.id"
-      ></loan-button></td>
+    <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
+    <td v-if="admin"><edit-book></edit-book></td>
+    <td v-if="admin">Ta bort-knapp</td>
   </tr>
   </table>
   </div>
 </template>
 <script>
+  import EditBook from './editBookButton.vue'
   import AddBook from './addBook.vue'
   import LoanButton from './loanButton.vue'
   export default {
@@ -60,7 +63,8 @@
 
     components: {
       'add-book': AddBook,
-      'loan-button': LoanButton
+      'loan-button': LoanButton,
+      'edit-book': EditBook,
     },
     methods: {
       getBooks() {
