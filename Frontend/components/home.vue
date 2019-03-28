@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import LoanButton from './loanbutton.vue'
+import LoanButton from './loanButton.vue'
   export default {
     data() {
       return {
