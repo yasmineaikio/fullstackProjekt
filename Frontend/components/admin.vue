@@ -1,16 +1,11 @@
 <template>
   <div class="container" id="profilepagemain" v-if="this.$cookie.get('Cookie')">
     <section id ="hero" class="hero has-background-grey">
-        <div class="hero-body">
-            <div class="container">
-            <h1 class="title has-text-white-bis">
+        <div class="hero-body"> 
+            <h1 class="title has-text-white-bis has-text-centered">
                 Välkommen, {{ this.name }}!
             </h1>
             <hr>
-            <h2 class="subtitle has-text-white-bis">
-               <strong class="has-text-white-bis"> Adminuppgifter: </strong> {{ this.realname }} |  | {{ this.address }}
-            </h2>
-            </div>
         </div>
     </section>
     <div class="columns has-text-centered">
@@ -22,51 +17,63 @@
         </div>
     </div>
     <div class="columns">
-       <div class="column is-half has-background-grey-light">
+       <div class="column is-full has-background-grey-light">
            <div class="col has-background-white has-text-centered "> 
-              <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/> Alla användare</h3> 
+              <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/>Medlemmar</h3> 
             </div>
            <div class="has-background-white">
                <nav class="level">
                     <div class="level-item has-text-centered">
                         <div class="holder left">
-                            <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
-                            <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.user}} <span class="online"></span></p>
+                            <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
                             <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.name}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div class="holder">
-                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Behörighet</h3>
-                        <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.type}}</p>
-                        <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.type}}</p>
-                        </div>
-                    </div>
-                </nav>
-           </div>
-       </div>
-       <div class="column is-half has-background-grey-light">
-           <div class="col has-background-white has-text-centered "> 
-              <h3 class="title-column"><font-awesome-icon  :icon="{ prefix: 'fa', iconName: 'book' }"/> Utlånade böcker</h3> 
-            </div>
-            <div class="has-background-white">
-               <nav class="level">
-                    <div class="level-item has-text-centered">
-                        <div class="holder left">
-                            <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Bok</h3>
-                            <p v-for="loan in loans"> {{loan.bookId}}</p>
-                        </div>
-                    </div>
-                    <div class="level-item has-text-centered">
-                        <div class="holder">
-                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
-                        <p v-for="loan in loans"> {{loan.userId}}</p>
+                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Inloggade</h3>
+                        <p v-for="inloggad in logedIn" class="is-size-6  has-text-left"> {{inloggad.user}} <span class="online"></span></p>
                         </div>
                     </div>
                 </nav>
            </div>
        </div>
     </div>
+    <div class="columns">
+        <div class="books-con column is-full has-background-grey-light">
+           <div class="col has-background-white has-text-centered "> 
+              <h3 class="title-column"><font-awesome-icon  :icon="{ prefix: 'fa', iconName: 'book' }"/> Utlånade böcker</h3> 
+           </div>
+           <div class="has-background-white">
+               <div class="columns">
+                    <div class="books-col column is-one-quarter has-text-left">
+                        <div class="holder">
+                            <h3 id="h3" class="has-background-grey-dark has-text-white is-size-5 has-text-weight-bold">Titel</h3>
+                            <p  v-for="book in BookInfo"> {{book}}</p>
+                        </div>
+                    </div>
+                    <div class="books-col column is-one-quarter has-text-centered">
+                        <div class="holder">
+                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-5 has-text-weight-bold">Medlem</h3>
+                        <p v-for="user in UserInfo"> {{user}}</p>
+                        </div>
+                    </div>
+                    <div class="books-col column is-one-quarter has-text-centered">
+                        <div class="holder">
+                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-5 has-text-weight-bold">Lånedatum</h3>
+                        <p v-for="date in LoanDate">{{date}}</p>
+                        </div>
+                    </div>
+                    <div class="books-col column is-one-quarter has-text-centered">
+                        <div class="holder">
+                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-5 has-text-weight-bold">Återlämningsdatum</h3>
+                        <p v-for="rDate in ReturnDate">{{rDate}}</p>
+                        </div>
+                    </div>
+                </div>
+           </div>
+       </div>
+    </div>    
   </div> 
 </template>
 
@@ -123,71 +130,86 @@ const ModalForm = {
         `
     }
 export default {
-    mounted() {
+    created() {
+         fetch('http://localhost:3000/loans')
+            .then(response => response.json())
+            .then (result => {
+                for (let index = 0; index < result.length; index++) {
+                    this.loanBook.push(result[index].bookId)
+                    this.loanUser.push(result[index].userId)
+                    this.ReturnDate.push(result[index].returnDate)
+                    this.LoanDate.push(result[index].loanDate)
+                    let loan = {'user':result[index].userId, 'book':result[index].bookId}
+                    this.loans.push(loan)
+                }                  
+            }).then(() => {
+                this.fetchLoans()
+            })
+        
         this.getInfo()
     },
     data() {
         return {
         name: '',
-        realname: '',
-        address: '',
         logedIn: [],
         allUsers: [],
         loans: [],
+        BookInfo: [],
+        UserInfo: [],
+        loanBook: [],
+        loanUser: [],
+        LoanDate: [],
+        ReturnDate: []
         }
     },
     router,
     methods: {
-      removeUser() {
+        removeUser() {
             this.$modal.open({
                 parent: this,
                 component: ModalForm,
                 hasModalCard: true
             })
-      },
-      getInfo() {
-        fetch('http://localhost:3000/login')
-        .then(response => response.json())
-          .then (result => {
-            for (let index = 0; index < result.length; index++) {
-                this.logedIn.push(result[index])
-            }  
-            //Hämtar namnet på usern som är inloggad med hjälp av userns cookie (Alex)
-            this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
+        },
+        fetchLoans() {
+            for (let i = 0; i < this.loanBook.length; i++) {
+            let loan = {'user':this.loanUser[i], 'book':this.loanBook[i]}   
+            //   console.log(loan);
+                fetch('http://localhost:3000/getloans', {
+            method: 'POST',
+            body: JSON.stringify(loan),
+            headers: {'Content-type': 'application/json'},
+                }).then(response => response.json())
+                .then(result => {
+                    this.BookInfo.push(result.title)
+                    this.UserInfo.push(result.name)
+                })
+            }
+        },         
+        getInfo() {
+            fetch('http://localhost:3000/login')
+            .then(response => response.json())
+            .then (result => {
+                for (let index = 0; index < result.length; index++) {
+                    this.logedIn.push(result[index])
+                }  
+                //Hämtar namnet på usern som är inloggad med hjälp av userns cookie (Alex)
+                this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
           })
 
-        fetch('http://localhost:3000/users')
-        .then(response => response.json())
-        .then (result => {
-            for (let index = 0; index < result.length; index++) {
-                this.allUsers.push(result[index])
-            }  
-            this.allUsers.push(result)
-            this.realname = result.find(value => value.name === this.name ).realname
-            this.email = result.find(value => value.name === this.name ).email
-            this.address = result.find(value => value.name === this.name ).address
-        })
-
-        fetch('http://localhost:3000/loans')
-        .then(response => response.json())
-        .then (result => {
-                // let loan = {'user':result[i].userId, 'book': result[i].bookId}   
-                // console.log(loan);     
-                this.loans= result
-                console.log(this.loans[0].userId);
-                
-        }) 
-        // fetch('http://localhost:300/getloans', {
-        //     method: 'POST',
-        //     body: JSON.stringify(''),
-        //     headers: {'Content-type': 'application/json'},
-        // }).then(response => response.json())
-        // .then(result => {
-        //     this.loans.push(result)
-            
-        // })
-        }
-    },          
+            fetch('http://localhost:3000/users')
+            .then(response => response.json())
+            .then (result => {
+                for (let index = 0; index < result.length; index++) {
+                    this.allUsers.push(result[index])
+                }  
+                this.allUsers.push(result)
+                this.realname = result.find(value => value.name === this.name ).realname
+                this.email = result.find(value => value.name === this.name ).email
+                this.address = result.find(value => value.name === this.name ).address
+            })
+        },
+    },
 }
 </script>
 
@@ -215,10 +237,12 @@ export default {
 
 #h3 {
     padding: 6px 20px;
+    text-transform: uppercase;
 }
 
 .holder {
     width: 100%;
+    min-height: 200px;
 }
 
 .holder.left {
@@ -227,6 +251,7 @@ export default {
 
 .holder p {
     padding: 5px;
+    text-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
 }
 
 .online {
@@ -245,6 +270,18 @@ export default {
 
 .col {
     border: #4A4A4A solid 3px;
+}
+
+.books-col {
+    padding: 0.75rem 0;
+}
+
+.books-col p:nth-child(odd) {
+    background: #ccc;
+}
+
+.books-con {
+    min-height: 350px;
 }
 </style>
 

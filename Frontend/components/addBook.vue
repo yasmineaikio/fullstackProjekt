@@ -55,7 +55,7 @@
 
     <div class="field">
       <div class="control">
-        <input :disabled="isDisabled" v-on:click="addBook" class="button is-hovered" type="submit" value="Lägg till">
+        <input :disabled="isDisabled" v-on:click="addBook" class="button" type="submit" value="Lägg till">
       </div>
     </div>
 
@@ -155,6 +155,10 @@ export default {
 .input.is-active, .taginput .is-active.taginput-container.is-focusable, .textarea:focus, .textarea.is-focused, 
 .textarea:active, .textarea.is-active {
   border-color: #7A7A7A;
+}
+
+.button[disabled], fieldset[disabled] {
+  background-color: #F3C954;
 }
 
 @keyframes fadeIn {
