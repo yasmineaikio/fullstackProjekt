@@ -15,18 +15,16 @@
 
     <table id="booktable">
       <tr>
-        <th>ID</th>
         <th>Titel</th>
         <th>Författare</th>
         <th>Lånedatum</th>
         <th>Återlämningsdatum</th>
       </tr>
       <tr v-for="loan in loans">
-        <td>{{ loan.ID }}</td>
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
-        <td>{{ loan.date }}</td>
-        <td>{{ loan.due }}</td>
+        <td>{{ loan.loanDate }}</td>
+        <td>{{ loan.returnDate }}</td>
       </tr>
     </table>
   </div>
@@ -45,7 +43,7 @@
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
-  import router from "../router" 
+  import router from "../router"
 
   export default {
   created() {
@@ -54,12 +52,13 @@
     data() {
       return {
         name: '',
-        users: null,
-        books: null,
-        loans: null,
+        users: [],
+        books: [],
+        loans: [],
         realname: '',
         address: '',
         inloggad: true,
+        userId: '',
       }
     },
     components: {
@@ -80,19 +79,21 @@
               this.realname = result.find(value => value.name === this.name ).realname
               this.email = result.find(value => value.name === this.name ).email
               this.address = result.find(value => value.name === this.name ).address
+              this.userId = result.find(value => value.name === this.name ).id
+            }).then(() => {
+              //hämtar lån, med viss användare (sara, yasmine)
+              fetch('http://localhost:3000/loans/' + this.userId)
+                .then(response => response.json())
+                .then (result => {
+                  this.loans = result
+                  console.log(this.loans)
+                })
             })
-
 
         fetch('http://localhost:3000/books')
           .then(response => response.json())
           .then (result => {
             this.books = result
-          })
-
-        fetch('http://localhost:3000/loans')
-          .then(response => response.json())
-          .then (result => {
-            this.loans = result
           })
         },
         removeAccount() {
@@ -102,19 +103,19 @@
                 method: 'DELETE',
                 body: JSON.stringify(cookie),
                 headers: {'Content-type': 'application/json'},
-            }).then(function(response) { 
+            }).then(function(response) {
                 if (response.status === 200) {
                   fetch('http://localhost:3000/logout', {
                       method: 'POST',
                       body: JSON.stringify(cookie),
                       headers: {'Content-type': 'application/json'},
                   }).then(function(response) {
-                      alert("Ditt konto har raderats!")    
+                      alert("Ditt konto har raderats!")
                       router.push("/")
-                  })    
+                  })
                 }else {
                   alert('Något har gått fel, försök igen senare!')
-                }  
+                }
             })
             .then(function(result){
                 console.log(result)
