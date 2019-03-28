@@ -27,11 +27,7 @@ module.exports = {
         'Access-Control-Allow-Credentials': 'true',
         disableHostCheck: true
     },
-    proxy: {
-      '/api': {
-        pathRewrite: { '^/api' : '' },
-        target: 'http://localhost:3000'
-      },
+
 },
   plugins: [
     new VueLoaderPlugin()
@@ -41,5 +37,4 @@ module.exports = {
       vue: 'vue/dist/vue.min.js'
     }
   }
-}
 }
