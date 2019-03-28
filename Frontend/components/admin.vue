@@ -175,7 +175,7 @@ export default {
 <style scoped>
 #profilepagemain {
   font-family: 'Work Sans', sans-serif;
-  margin:0 2em;
+  margin:0 auto;
 }
 @media (max-width: 420px) {
     #profilepagemain {
