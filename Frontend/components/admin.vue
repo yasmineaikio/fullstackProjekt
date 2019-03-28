@@ -54,13 +54,13 @@
                     <div class="level-item has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Bok</h3>
-                            
+                            <p v-for="loan in loans"> {{loan.bookId}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div class="holder">
                         <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
-                        
+                        <p v-for="loan in loans"> {{loan.userId}}</p>
                         </div>
                     </div>
                 </nav>
@@ -133,6 +133,7 @@ export default {
         address: '',
         logedIn: [],
         allUsers: [],
+        loans: [],
         }
     },
     router,
@@ -166,7 +167,25 @@ export default {
             this.email = result.find(value => value.name === this.name ).email
             this.address = result.find(value => value.name === this.name ).address
         })
-  
+
+        fetch('http://localhost:3000/loans')
+        .then(response => response.json())
+        .then (result => {
+                // let loan = {'user':result[i].userId, 'book': result[i].bookId}   
+                // console.log(loan);     
+                this.loans= result
+                console.log(this.loans[0].userId);
+                
+        }) 
+        // fetch('http://localhost:300/getloans', {
+        //     method: 'POST',
+        //     body: JSON.stringify(''),
+        //     headers: {'Content-type': 'application/json'},
+        // }).then(response => response.json())
+        // .then(result => {
+        //     this.loans.push(result)
+            
+        // })
         }
     },          
 }

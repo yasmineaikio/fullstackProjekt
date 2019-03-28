@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const uuidv4 = require('uuid/v4');
 const split = require('express-split')
 const app = express();
+const moment = require('moment')
 
 
 
@@ -105,6 +106,22 @@ app.delete('/admin', (request, response) => {
       response.status(404).send('No such user');
     }
   })
+})
+
+// test
+app.post('/getloans', (request, response) => {
+  let loans = request.body
+  database.all('SELECT * FROM users WHERE id=?', [loans.user]).then(row => {
+    database.all('SELECT * FROM books WHERE id=?', [loans.book]).then(rows => {
+      let merge = []
+      merge.push(row)
+      merge.push(rows)
+      response.send(merge)
+      console.log(merge);
+      
+    }) 
+  })
+  
 })
 
 
