@@ -20,10 +20,11 @@ export default {
             email: '',
             id: null,
             type: 'user',
+            
         }
     },
     methods: {
-        login() {
+        login() { 
             let newID = this.$uuid.v1()
             var cookie =  () => this.$cookie.set('Cookie', newID , 1)
             var userinfo = {'name': this.name, 'password': this.password, 'ID':newID} 
@@ -51,9 +52,6 @@ export default {
                     router.push("/login")
                 }
             })
-            .then(function(result){
-                console.log(result)
-            })     
         }
     },
 }

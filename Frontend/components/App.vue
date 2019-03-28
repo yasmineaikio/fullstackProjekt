@@ -48,6 +48,10 @@
             isAdmin: false,
       }
     },
+    
+    created() {
+      
+    },
     components: {
       'search-field': Search,
       'add-book': AddBook,
@@ -63,6 +67,7 @@
     },
     router,
     methods: {
+      
       checkUser() {
       // Kollar om inloggad user är ADMIN eller inte (Alex)
       fetch('http://localhost:3000/login')
@@ -71,7 +76,7 @@
       })
       .then(result => {
           let inloggad = result.find(value => value.type === 'admin')
-          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
+          if(inloggad && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
             this.isAdmin = true
           }
       })
