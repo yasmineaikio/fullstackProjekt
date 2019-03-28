@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import router from './router'
 import UUID from 'vue-uuid';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCog } from '@fortawesome/free-solid-svg-icons'
@@ -34,5 +35,6 @@ import App from './components/App.vue'
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
+  router
 })
