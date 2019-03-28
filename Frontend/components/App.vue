@@ -39,7 +39,7 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-
+    import EditBook from './editBookButton.vue'
 
   export default {
     data () {
@@ -60,6 +60,7 @@
       'loan-button': LoanButton,
       'result': Result,
       'admin': Admin,
+      'edit-book': EditBook,
     },
     router,
     methods: {

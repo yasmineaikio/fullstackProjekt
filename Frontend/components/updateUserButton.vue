@@ -9,6 +9,12 @@
       return {
         updateUser: 'Ändra uppgifter',
         anvandare: null,
+        name: null,
+        password: null,
+        type: null,
+        email: null,
+        realname: null,
+        address: null,
       }
     },
     methods: {
@@ -35,18 +41,18 @@
           //   })
 
             // // testar bara: för att hämta alla användare - funkar
-            fetch('http://localhost:3000/users')
-              .then(function (response) {
-                return response.json()
-              })
-              .then(function (result) {
-                let anvandare = result
-                console.log(anvandare)
-              })
+            // fetch('http://localhost:3000/users')
+            //   .then(function (response) {
+            //     return response.json()
+            //   })
+            //   .then(function (result) {
+            //     let anvandare = result
+            //     console.log(anvandare)
+            //   })
 
-            // för att ändra en användares uppgifter:
+            // // för att ändra en användares uppgifter:
             // fetch('http://localhost:3000/users', {
-            //     body: JSON.stringify({name: 'Testar2', password: 'Testar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
+            //     body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
             //     headers: {
             //       'Content-Type': 'application/json'
             //     },
@@ -56,8 +62,24 @@
             //     return response.json()
             //   })
             //    .then(function (result) {
-            //     alert(result)
+            //     updatedUser = result
             //   })
+
+            // för att ändra en användares uppgifter:
+            fetch('http://localhost:3000/users', {
+              body: '{ "name": "' + this.name + '", "password": "' + this.password +'", "email": "'
+              + this.email + '", "realname": "' + this.realname + '","address": "' + this.address + '" }',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                method: 'PUT'
+              })
+               .then(function (response) {
+                return response.json()
+              })
+               .then(function (result) {
+                updatedUser = result
+              })
 
         }
       }
