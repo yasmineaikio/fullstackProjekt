@@ -97,7 +97,7 @@ app.post('/logout', (request, response) => {
 app.delete('/admin', (request, response) => {
   let user = request.body.userName
   database.all('SELECT * FROM users WHERE name=? AND type=?', [user, 'user']).then(row => {
-    if(row[0]) { 
+    if(row[0]) {
       database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
         response.status(200).send('user deleted!');
       })
@@ -237,12 +237,17 @@ app.get('/books', (request, response) => {
         })
       })
 
-      // JOBBAR PÅ HÄR, BRY ER INTE!
-      // hämtar en användarens uppgifter (Maija) - FUNKAR EJ!
+      // JOBBAR PÅ HÄR OCH TESTAR, BRY ER INTE!
+      // hämtar en användarens uppgifter (Maija)
       app.get('/users/name', (request, response) => {
-        database.all('SELECT * FROM users WHERE name = ?', [name-i-adressen-typ]).then(user => {
+        database.all('SELECT * FROM users WHERE name = ?', ['NewTest']).then(user => {
         response.send(user)
       })
+    })
+
+      // hämtar info från adressen
+    app.get('/users/:name', (request, response) => {
+      response.send('Hej ' + request.params.name + '!')
     })
 
       // uppdaterar en användarens uppgifter (Maija)
@@ -251,6 +256,7 @@ app.get('/books', (request, response) => {
         // uppdaterat kanske
       })
     })
+
 
 
 app.listen(3000, function() {
