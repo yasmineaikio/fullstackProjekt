@@ -11,13 +11,12 @@ import router from '../router'
 import { Dialog } from 'buefy/dist/components/dialog'
 export default {
   props: ['bookId'],
-  router,
   data() {
       return {
         loanDate: '2019-03-27',
         returnDate: '2019-04-27',
         bookId: this.bookId,
-        userId: ''
+        userId: '',
       }
     },
   methods: {
@@ -45,7 +44,6 @@ export default {
           confirmText: 'Logga in',
           type: 'is-dark',
         })
-        this.link = '/login'
         router.push("/login")
       }
 
