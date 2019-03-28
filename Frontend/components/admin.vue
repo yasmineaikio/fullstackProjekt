@@ -90,8 +90,11 @@ const ModalForm = {
                      if(response.status === 200) {
                         location.reload()
                      }else {
-                        Dialog.alert('Fel användarnamn! Försök igen!')  
-                     }    
+                        Dialog.alert(
+                            {message: 'Fel användarnamn! Försök igen!',
+                            confirmText: 'Försök igen',
+                            type: 'is-dark'})  
+                         }    
                     })
           },
         },
