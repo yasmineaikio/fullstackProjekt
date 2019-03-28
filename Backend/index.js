@@ -85,8 +85,6 @@ app.get('/login', (request, response) => {
   })
 })
 
-
-
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
    let token = request.body.Cookie
@@ -94,6 +92,23 @@ app.post('/logout', (request, response) => {
      response.send('Utloggad');
    })
 })
+
+// Låter admins ta bort users (Alex)
+app.delete('/admin', (request, response) => {
+  let user = request.body.userName
+  database.all('SELECT * FROM users WHERE name=? AND type=?', [user, 'user']).then(row => {
+    if(row[0]) { 
+      database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
+        response.status(200).send('user deleted!');
+      })
+    } else {
+      response.status(404).send('No such user');
+    }
+  })
+})
+
+
+
 
 
 // hämtar samtliga böcker från databasen (Alex)
@@ -201,12 +216,23 @@ app.get('/books', (request, response) => {
         })
       })
 
+      //Ändra tillagd bok (Annika)
+      app.put('/books/:title', (request, response) => {
+        let title = request.body.title
+        let author = request.body.author
+        let category = request.body.category
+        let year = request.body.year
+        let language = request.body.language
+        let image = request.body.image
+        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
+        [title, author, category, year, language, image, request.params.title]).then(books => {
+          response.send(books)
+        })
+      })
+
+      //lägger in data i loans-tabellen (Yasmine & Sara)
       app.post('/loans', (request, response) => {
-        let loanDate = request.body.loanDate
-        let returnDate = request.body.returnDate
-        let bookId = request.body.bookId
-        let userId = request.body.userId
-          database.run('Insert into loans values (?, ?, ?, ?)', [loanDate, returnDate, bookId, userId]).then(loan => {
+          database.run('Insert into loans values (?, ?, ?, ?)', [request.body.loanDate, request.body.returnDate, request.body.userId, request.body.bookId]).then(loan => {
            response.status(201).send(loan);
         })
       })

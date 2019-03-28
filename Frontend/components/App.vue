@@ -10,8 +10,8 @@
       <li v-if="this.$cookie.get('Cookie')"><logout></logout></li>
       <li v-else><router-link class="login-btn" to="/login">Logga in</router-link></li>
     </ul>
+    <search-field></search-field>
   </header>
-  <search-field></search-field>
   <router-view></router-view>
   <footer>
     <br><br>
@@ -39,13 +39,13 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-    // import { EventBus } from '../eventbus.js'
 
 
   export default {
     data () {
       return {
-            link:'/'
+            link:'/',
+            isAdmin: false,
       }
     },
     components: {
@@ -63,13 +63,30 @@
     },
     router,
     methods: {
+      checkUser() {
+      // Kollar om inloggad user är ADMIN eller inte (Alex)
+      fetch('http://localhost:3000/login')
+      .then(response => {
+          return response.json()
+      })
+      .then(result => {
+          let inloggad = result.find(value => value.type === 'admin')
+          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
+            this.isAdmin = true
+          }
+      })
+    },
       auth() {
-        //Kollar om user är inloggad (alex)
+        //Kollar om user är inloggad och skickar hen till rätt profilsida (alex)
         if (this.$cookie.get('Cookie')) {
-          this.link = '/profil'
-          router.push("/profil")
-          console.log(this.$cookie.get('Cookie'));
-
+          this.checkUser()
+          if(this.isAdmin) {
+            this.link = '/admin'
+            router.push("/admin")
+          }else {
+            this.link = '/profil'
+            router.push("/profil")
+          }
         } else {
           Dialog.alert({
             title: 'Ops..',

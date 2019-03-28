@@ -16,34 +16,55 @@
     <div class="columns has-text-centered">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div class="is-center">
-                <a class="button is-light is-outlined">Ta bort användare</a> <a class="button is-light is-outlined">Uppdatera användare</a>
+                <a @click="removeUser()" class="button is-light is-outlined">Ta bort användare</a>
                 <router-link class="button is-light is-outlined" to="/books">Lägg till nya böcker</router-link>
             </div>
         </div>
     </div>
     <div class="columns">
        <div class="column is-half has-background-grey-light">
+           <div class="col has-background-white has-text-centered "> 
+              <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/> Alla användare</h3> 
+            </div>
            <div class="has-background-white">
                <nav class="level">
                     <div class="level-item has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
-                            <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.user}}</p>
+                            <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.user}} <span class="online"></span></p>
+                            <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.name}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div class="holder">
                         <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Behörighet</h3>
                         <p v-for="inloggad in logedIn" class="is-size-6  has-text-left">{{inloggad.type}}</p>
+                        <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.type}}</p>
                         </div>
                     </div>
                 </nav>
            </div>
        </div>
        <div class="column is-half has-background-grey-light">
-           <div class="has-background-white"> 
-              <h3>Utlånade böcker</h3> 
+           <div class="col has-background-white has-text-centered "> 
+              <h3 class="title-column"><font-awesome-icon  :icon="{ prefix: 'fa', iconName: 'book' }"/> Utlånade böcker</h3> 
             </div>
+            <div class="has-background-white">
+               <nav class="level">
+                    <div class="level-item has-text-centered">
+                        <div class="holder left">
+                            <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Bok</h3>
+                            
+                        </div>
+                    </div>
+                    <div class="level-item has-text-centered">
+                        <div class="holder">
+                        <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Användare</h3>
+                        
+                        </div>
+                    </div>
+                </nav>
+           </div>
        </div>
     </div>
   </div> 
@@ -51,6 +72,53 @@
 
 <script>
 import router from "../router" 
+import { Dialog } from 'buefy/dist/components/dialog'
+const ModalForm = {
+        data () {
+            return {
+                userName:'',
+            }
+        },
+        methods: {
+            remover() {
+                let toBeDelete = {'userName': this.userName}
+                fetch('http://localhost:3000/admin', {
+                    method: "DELETE",
+                    body: JSON.stringify(toBeDelete),
+                    headers: {'Content-type': 'application/json'}
+                }).then(function(response) {
+                     if(response.status === 200) {
+                        location.reload()
+                     }else {
+                        Dialog.alert('Fel användarnamn! Försök igen!')  
+                     }    
+                    })
+          },
+        },
+        template: `
+            <form action="">
+                <div class="modal-card" style="width: auto">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Ta bort användare</p>
+                    </header>
+                    <section class="modal-card-body">
+                        <b-field label="Ange användare som ska tas bort">
+                            <b-input
+                                type="text"
+                                v-model="userName"
+                                placeholder="Användarnamn"
+                                required>
+                            </b-input>
+                        </b-field>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button" type="button" @click="$parent.close()">Stäng</button>
+                        <button @click="remover()" class="button is-warning">Radera</button>
+                    </footer>
+                </div>
+            </form>
+        `
+    }
 export default {
     mounted() {
         this.getInfo()
@@ -66,6 +134,13 @@ export default {
     },
     router,
     methods: {
+      removeUser() {
+            this.$modal.open({
+                parent: this,
+                component: ModalForm,
+                hasModalCard: true
+            })
+      },
       getInfo() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -73,7 +148,7 @@ export default {
             for (let index = 0; index < result.length; index++) {
                 this.logedIn.push(result[index])
             }  
-            //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
+            //Hämtar namnet på usern som är inloggad med hjälp av userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
           })
 
@@ -132,5 +207,22 @@ export default {
     padding: 5px;
 }
 
+.online {
+    padding: 5px;
+    background: green;
+    border-radius: 100%;
+    float: right;
+    margin: 6px;
+}
+
+.title-column {
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-family: 'Times New Roman', Times, serif
+}
+
+.col {
+    border: #4A4A4A solid 3px;
+}
 </style>
 

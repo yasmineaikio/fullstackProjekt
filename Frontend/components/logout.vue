@@ -4,6 +4,7 @@
 
 <script>
 import router from "../router" 
+import { Dialog } from 'buefy/dist/components/dialog'
 export default {
     methods: {
         logout() {
@@ -13,7 +14,7 @@ export default {
                 body: JSON.stringify(info),
                 headers: {'Content-type': 'application/json'},
             }).then(function(response) {
-                alert("Du har loggat ut")    
+                Dialog.alert("Du har loggat ut")    
                 router.push("/")
             })
             .then(function(result){

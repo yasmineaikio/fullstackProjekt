@@ -18,7 +18,9 @@
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
-    <td><loan-button></loan-button></td>
+    <td><loan-button
+      v-bind:book-id="book.id"
+      ></loan-button></td>
   </tr>
   </table>
   </div>
@@ -39,13 +41,14 @@
       }
     },
 
-        created() {
-            fetch('http://localhost:3000/books')
-            .then(response => response.json())
-            .then(result => {
-            this.books = result
-        })
-      },
+
+    created() {
+        fetch('http://localhost:3000/books')
+        .then(response => response.json())
+        .then(result => {
+        this.books = result
+    })
+  },
 
     //   created() {
     //       fetch('http://localhost:3000/books?order-by=title')
@@ -78,7 +81,7 @@
         this.books = result
     })
    },
-  
+
     mounted() {
       // Kollar om inloggad user är ADMIN eller inte (Alex)
       fetch('http://localhost:3000/login')
@@ -87,9 +90,9 @@
       })
       .then(result => {
           let inloggad = result.find(value => value.user === 'ADMIN')
-          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) { 
+          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
             this.admin = true
-          }     
+          }
       })
     },
 }

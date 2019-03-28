@@ -7,30 +7,48 @@
 </template>
 
 <script>
+import router from '../router'
+import { Dialog } from 'buefy/dist/components/dialog'
 export default {
+  props: ['bookId'],
+  router,
   data() {
       return {
-        loanDate: '2019-04-14',
-        returnDate: '2019-05-14',
-        bookId: '',
+        loanDate: '2019-03-27',
+        returnDate: '2019-04-27',
+        bookId: this.bookId,
         userId: ''
       }
     },
   methods: {
     addLoan (){
-      fetch ('http://localhost:3000/loans', {
-      body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "bookId": "'
-      + this.bookId + '", "userId": "' + this.userId + '"}',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    })
+      if (this.$cookie.get('Cookie')) {
+        console.log(this.bookId);
+          fetch ('http://localhost:3000/loans', {
+          body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "userId": "' + this.userId + '", "bookId": "'
+          + this.bookId + '"}',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        })
+          .then (response => response.json())
+          .then (result => {
+            console.log('Boken är lånad');
+          })
 
-      .then (response => response.json())
-      .then (result => {
-        console.log();
-      })
+      }
+      else {
+        Dialog.alert({
+          title: 'Ops..',
+          message: 'Du måste logga in först!',
+          confirmText: 'Logga in',
+          type: 'is-dark',
+        })
+        this.link = '/login'
+        router.push("/login")
+      }
+
     }
   }
 }
