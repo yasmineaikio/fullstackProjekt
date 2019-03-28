@@ -21,7 +21,7 @@ export default {
           language: null,
           id: null,
           image: null,
-          editable: null
+          editable: null,
       }
     },
 
