@@ -3,8 +3,8 @@
     <div class="search-input" v-on:keyup.enter="searchBooks">
       <div id="search">
         <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
-        <!-- <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/> -->
-        <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link>
+        <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
+        <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
       </div>
       <div class="advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
@@ -38,6 +38,7 @@
 
 <script>
   import Result from './result.vue'
+  import router from "../router"
   import EventBus from '../eventbus'
   export default {
     components: {
@@ -103,6 +104,7 @@
             EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
           })
         }
+        router.push("/result")
       },
     }
   }
