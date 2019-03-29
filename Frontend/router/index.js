@@ -8,6 +8,7 @@ import Profile from '../components/Userprofile.vue'
 import Home from '../components/home.vue'
 import Result from '../components/result.vue'
 import Admin from '../components/admin.vue'
+import Contact from '../components/contact.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -51,5 +52,10 @@ export default new Router({
     name: "admin",
     path: '/admin'
     },
+    {
+      component: Contact,
+      name: "contact",
+      path: '/contact'
+      },
   ]
 })
