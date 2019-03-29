@@ -18,7 +18,7 @@
         <th>Titel</th>
         <th>Författare</th>
         <th>Lånedatum</th>
-        <th>Återlämningsdatum</th>
+        <th>Utgångsdatum</th>
       </tr>
       <tr v-for="loan in loans">
         <td>{{ loan.title }}</td>
