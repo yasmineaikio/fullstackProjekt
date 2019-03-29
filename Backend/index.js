@@ -236,10 +236,11 @@ app.put('/books/:title', (request, response) => {
   })
 })
 
+//Tar bort lån från loans-tabellen dagen efter utgångsdatumet (Yasmine & Sara)
 let clearLoans = function() {
-  let returnDate = moment().format('LL')
-  let removeDate = moment().add(1, 'days').format('LL')
-  database.run('DELETE FROM loans WHERE ?>?', [returnDate, removeDate])
+  let removeDate = moment().subtract(1, 'days').format('LL')
+  console.log(removeDate);
+  database.run('DELETE FROM loans WHERE returnDate = ?', [removeDate])
 }
 
 setInterval(clearLoans, 6000)
