@@ -53,6 +53,13 @@ export default {
           .then (result => {
             console.log('Boken är lånad');
           })
+          Dialog.alert({
+            title: 'Sådär',
+            message: 'Du har nu lånat boken',
+            confirmText: 'Mina sidor',
+            type: 'is-dark',
+          })
+          router.push("/profil")
       }
       else {
         Dialog.alert({
