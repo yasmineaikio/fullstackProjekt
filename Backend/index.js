@@ -116,7 +116,7 @@ app.post('/getloans', (request, response) => {
       merge.title = rows[0].title
       response.send(merge)
       }
-    }) 
+    })
   })
 })
 
@@ -251,6 +251,7 @@ app.post('/loans', (request, response) => {
   })
 })
 
+//hämtar vilka lån en viss användare har (Yasmine & Sara)
 app.get('/loans/:name', (request, response) => {
   database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=?', [request.params.name])
     .then(loan => {
