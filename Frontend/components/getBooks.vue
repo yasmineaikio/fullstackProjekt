@@ -94,7 +94,7 @@
       })
       .then(result => {
           let inloggad = result.find(value => value.user === 'ADMIN')
-          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
+          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('adminCookie') && inloggad.type === 'admin' ) {
             this.admin = true
           }
       })

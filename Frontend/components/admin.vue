@@ -1,5 +1,5 @@
 <template>
-  <div class="container" id="profilepagemain" v-if="this.$cookie.get('Cookie')">
+  <div class="container" id="profilepagemain" v-if="this.$cookie.get('adminCookie')">
     <section id ="hero" class="hero has-background-grey">
         <div class="hero-body"> 
             <h1 class="title has-text-white-bis has-text-centered">
@@ -19,7 +19,7 @@
     <div class="columns">
        <div class="column is-full has-background-grey-light">
            <div class="col has-background-white has-text-centered "> 
-              <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/>Medlemmar</h3> 
+              <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/> Medlemmar</h3> 
             </div>
            <div class="has-background-white">
                <nav class="level">
@@ -79,6 +79,7 @@
 
 <script>
 import router from "../router" 
+import { Snackbar } from 'buefy/dist/components/snackbar'
 import { Dialog } from 'buefy/dist/components/dialog'
 const ModalForm = {
         data () {
@@ -173,17 +174,16 @@ export default {
         },
         fetchLoans() {
             for (let i = 0; i < this.loanBook.length; i++) {
-            let loan = {'user':this.loanUser[i], 'book':this.loanBook[i]}   
-            //   console.log(loan);
+                let loan = {'user':this.loanUser[i], 'book':this.loanBook[i]}   
                 fetch('http://localhost:3000/getloans', {
-            method: 'POST',
-            body: JSON.stringify(loan),
-            headers: {'Content-type': 'application/json'},
-                }).then(response => response.json())
-                .then(result => {
-                    this.BookInfo.push(result.title)
-                    this.UserInfo.push(result.name)
-                })
+                    method: 'POST',
+                    body: JSON.stringify(loan),
+                    headers: {'Content-type': 'application/json'},
+                    }).then(response => response.json())
+                    .then(result => {
+                        this.BookInfo.push(result.title)
+                        this.UserInfo.push(result.name)
+                    })
             }
         },         
         getInfo() {
@@ -193,8 +193,8 @@ export default {
                 for (let index = 0; index < result.length; index++) {
                     this.logedIn.push(result[index])
                 }  
-                //Hämtar namnet på usern som är inloggad med hjälp av userns cookie (Alex)
-                this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
+                //Hämtar namnet på Admin som är inloggad (Alex)
+                this.name = result.find(value => value.token === this.$cookie.get('adminCookie')).user
           })
 
             fetch('http://localhost:3000/users')

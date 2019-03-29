@@ -110,13 +110,14 @@ app.post('/getloans', (request, response) => {
   let loans = request.body
   database.all('SELECT name FROM users WHERE id=?', [loans.user]).then(row => {
     database.all('SELECT title FROM books WHERE id=?', [loans.book]).then(rows => {
+      if (row[0] && rows[0]) {
       let merge = {}
       merge.name = row[0].name
       merge.title = rows[0].title
       response.send(merge)
+      }
     }) 
   })
-  
 })
 
 
