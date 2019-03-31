@@ -11,7 +11,6 @@
     <div class="columns">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div>
-                <a @click="removeUser()" class="button is-light is-outlined">Ta bort användare</a>
                 <router-link class="button is-light is-outlined" to="/books">Lägg till nya böcker</router-link>
                 <a @click="isOpen = !isOpen" aria-controls="contentIdForA11y2" class="inbox-btn button is-warning">Inbox(<span>{{antal}}</span>)</a>
             </div>
@@ -43,17 +42,17 @@
               <h3 class="title-column"><font-awesome-icon :icon="{ prefix: 'fa', iconName: 'user' }"/> Medlemmar</h3> 
             </div>
            <div class="has-background-white">
-               <nav class="level">
-                    <div class="level-item has-text-centered">
+               <nav class="nav columns">
+                    <div class="column is-half has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
-                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}}</p>
+                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <a class="user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
                         </div>
                     </div>
-                    <div class="level-item has-text-centered">
+                    <div class="column is-half has-text-centered">
                         <div class="holder">
                         <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Inloggade</h3>
-                        <p v-for="inloggad in logedIn" class="is-size-5  has-text-left"> &#10050; {{inloggad.user}} <span class="online"></span></p>
+                        <p v-for="inloggad in logedIn" class="is-size-5  has-text-left"> &#9737; {{inloggad.user}} <span class="online"></span></p>
                         </div>
                     </div>
                 </nav>
@@ -102,55 +101,6 @@
 import router from "../router" 
 import { Snackbar } from 'buefy/dist/components/snackbar'
 import { Dialog } from 'buefy/dist/components/dialog'
-const ModalForm = {
-        data () {
-            return {
-                userName:'',
-            }
-        },
-        methods: {
-            remover() {
-                let toBeDelete = {'userName': this.userName}
-                fetch('http://localhost:3000/admin', {
-                    method: "DELETE",
-                    body: JSON.stringify(toBeDelete),
-                    headers: {'Content-type': 'application/json'}
-                }).then(function(response) {
-                     if(response.status === 200) {
-                        location.reload()
-                     }else {
-                        Dialog.alert(
-                            {message: 'Fel användarnamn! Försök igen!',
-                            confirmText: 'Försök igen',
-                            type: 'is-dark'})  
-                         }    
-                    })
-          },
-        },
-        template: `
-            <form action="">
-                <div class="modal-card" style="width: auto">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Ta bort användare</p>
-                    </header>
-                    <section class="modal-card-body">
-                        <b-field label="Ange användare som ska tas bort">
-                            <b-input
-                                type="text"
-                                v-model="userName"
-                                placeholder="Användarnamn"
-                                required>
-                            </b-input>
-                        </b-field>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button" type="button" @click="$parent.close()">Stäng</button>
-                        <button @click="remover()" class="button is-warning">Radera</button>
-                    </footer>
-                </div>
-            </form>
-        `
-    }
 export default {
     created() {
          fetch('http://localhost:3000/loans')
@@ -189,10 +139,30 @@ export default {
     },
     router,
     methods: {
+        confirmCustomDelete(name, id) {
+            this.$dialog.confirm({
+                title:  name + ' ska tas bort',
+                message: 'Är du säker att du vill <b>ta bort</b> användaren? Du kan inte ångra detta.',
+                confirmText: 'Ta bort',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => {
+                    this.removeUser(id)
+                    this.$toast.open('Användaren har tagits bort!')
+                    }
+            })
+        },
         fetchMessages() {
-             fetch('http://localhost:3000/inbox').then(response => response.json()).then(result => {
+            fetch('http://localhost:3000/inbox').then(response => response.json()).then(result => {
                 this.inbox = result
                 this.antal = result.length
+            })
+        },
+        fetchUsers() {
+            fetch('http://localhost:3000/users')
+            .then(response => response.json())
+            .then (result => { 
+                this.allUsers = result
             })
         },
         removeMsg(id) {
@@ -208,12 +178,15 @@ export default {
            }) 
             
         },
-        removeUser() {
-            this.$modal.open({
-                parent: this,
-                component: ModalForm,
-                hasModalCard: true
-            })
+        removeUser(arg) {
+            let toBeDelete = {'userName': arg} 
+            fetch('http://localhost:3000/admin', {
+                method: "DELETE",
+                body: JSON.stringify(toBeDelete),
+                headers: {'Content-type': 'application/json'}
+            }).then(() => {
+                   this.fetchUsers()
+                })
         },
         fetchLoans() {
             for (let i = 0; i < this.loanBook.length; i++) {
@@ -240,15 +213,7 @@ export default {
                 //Hämtar namnet på Admin som är inloggad (Alex)
                 this.name = result.find(value => value.token === this.$cookie.get('adminCookie')).user
             })
-
-            fetch('http://localhost:3000/users')
-            .then(response => response.json())
-            .then (result => {
-                for (let index = 0; index < result.length; index++) {
-                    this.allUsers.push(result[index])
-                }  
-            })
-            
+            this.fetchUsers()
             this.fetchMessages()  
         },
     },
@@ -377,6 +342,19 @@ export default {
     padding: 30px;
     background: #fff;
     box-shadow: 1px 2px 3px 1px rgba(84, 82, 82, 0.7);
+}
+
+.nav .column {
+    padding: 0.75rem 0;
+}
+
+.columns:last-child {
+    margin-bottom: 0 !important;
+}
+
+.user-delete {
+    float: right;
+    padding: 0 10px;
 }
 </style>
 
