@@ -46,7 +46,7 @@
                     <div class="column is-half has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
-                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <a class="user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
+                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <a class="button is-danger is-outlined user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
                         </div>
                     </div>
                     <div class="column is-half has-text-centered">
