@@ -8,23 +8,41 @@
 
 <script>
 import router from '../router'
+import moment from 'moment'
 import { Dialog } from 'buefy/dist/components/dialog'
 export default {
   props: ['bookId'],
   data() {
       return {
-        loanDate: '2019-03-27',
-        returnDate: '2019-04-27',
+        loanDate: '',
+        returnDate: '',
         bookId: this.bookId,
         userId: '',
+        name: ''
       }
+    },
+    created(){
+      fetch('http://localhost:3000/login')
+      .then(response => response.json())
+      .then (result => {
+        this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
+      })
+
+      fetch('http://localhost:3000/users')
+      .then(response => response.json())
+      .then (result => {
+        this.userId = result.find(value => value.name === this.name ).id
+      })
+
     },
   methods: {
     addLoan (){
       if (this.$cookie.get('Cookie')) {
-        console.log(this.bookId);
+        this.loanDate = moment().format('LL')
+        this.returnDate = moment().add(30, 'days').format('LL')
+
           fetch ('http://localhost:3000/loans', {
-          body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "userId": "' + this.userId + '", "bookId": "'
+          body: '{ "returnDate": "' + this.returnDate + '", "loanDate": "' + this.loanDate +'", "userId": "' + this.userId + '", "bookId": "'
           + this.bookId + '"}',
           headers: {
               'Content-Type': 'application/json'
@@ -35,7 +53,13 @@ export default {
           .then (result => {
             console.log('Boken är lånad');
           })
-
+          Dialog.alert({
+            title: 'Sådär',
+            message: 'Du har nu lånat boken',
+            confirmText: 'Mina sidor',
+            type: 'is-dark',
+          })
+          router.push("/profil")
       }
       else {
         Dialog.alert({

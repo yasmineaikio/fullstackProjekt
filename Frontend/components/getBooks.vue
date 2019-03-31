@@ -10,6 +10,7 @@
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
+<<<<<<< HEAD
     <th>Låna</th>
     
     <!-- <th v-on"sortBooks('title')">Titel</th>
@@ -18,20 +19,27 @@
     <th v-on"sortBooks('year')">Utgivningår</th>
     <th v-on"sortBooks('lang')">Språk</th>
   </tr> -->
+=======
+    <th v-if="!admin">Låna</th>
+    <th v-if="admin">Ändra</th>
+    <th v-if="admin">Ta bort</th>
+  </tr>
+>>>>>>> c9ac932c02ff311bb77cf9c4bc9c22bc595d6c2c
   <tr v-for='book in books'>
     <td>{{book.title}}</td>
     <td>{{book.author}}</td>
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
-    <td><loan-button
-      v-bind:book-id="book.id"
-      ></loan-button></td>
+    <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
+    <td v-if="admin"><edit-book></edit-book></td>
+    <td v-if="admin">Ta bort-knapp</td>
   </tr>
   </table>
   </div>
 </template>
 <script>
+  import EditBook from './editBookButton.vue'
   import AddBook from './addBook.vue'
   import LoanButton from './loanButton.vue'
   export default {
@@ -76,7 +84,8 @@
 
     components: {
       'add-book': AddBook,
-      'loan-button': LoanButton
+      'loan-button': LoanButton,
+      'edit-book': EditBook,
     },
     
     methods: {
@@ -107,7 +116,7 @@
       })
       .then(result => {
           let inloggad = result.find(value => value.user === 'ADMIN')
-          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
+          if(inloggad.user === 'ADMIN' && inloggad.token === this.$cookie.get('adminCookie') && inloggad.type === 'admin' ) {
             this.admin = true
           }
       })

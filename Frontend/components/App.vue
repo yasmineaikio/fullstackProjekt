@@ -5,9 +5,11 @@
     <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
-      <li><router-link to="/users">Bli medlem</router-link></li>
-      <li v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
-      <li v-if="this.$cookie.get('Cookie')"><logout></logout></li>
+      <li><router-link to="/contact">Kontakt</router-link></li>
+      <li v-if="!this.$cookie.get('Cookie') && !this.$cookie.get('adminCookie')"><router-link to="/users">Bli medlem</router-link></li>
+      <li v-if="this.$cookie.get('Cookie')" v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
+      <li v-if="this.$cookie.get('adminCookie')"><router-link to="/admin">Administration</router-link></li>
+      <li v-if="this.$cookie.get('Cookie') || this.$cookie.get('adminCookie')"><logout></logout></li>
       <li v-else><router-link class="login-btn" to="/login">Logga in</router-link></li>
     </ul>
     <search-field></search-field>
@@ -39,7 +41,7 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-
+    import EditBook from './editBookButton.vue'
 
   export default {
     data () {
@@ -47,6 +49,10 @@
             link:'/',
             isAdmin: false,
       }
+    },
+    
+    created() {
+      
     },
     components: {
       'search-field': Search,
@@ -60,33 +66,15 @@
       'loan-button': LoanButton,
       'result': Result,
       'admin': Admin,
+      'edit-book': EditBook,
     },
     router,
     methods: {
-      checkUser() {
-      // Kollar om inloggad user är ADMIN eller inte (Alex)
-      fetch('http://localhost:3000/login')
-      .then(response => {
-          return response.json()
-      })
-      .then(result => {
-          let inloggad = result.find(value => value.type === 'admin')
-          if(inloggad.token === this.$cookie.get('Cookie') && inloggad.type === 'admin' ) {
-            this.isAdmin = true
-          }
-      })
-    },
       auth() {
-        //Kollar om user är inloggad och skickar hen till rätt profilsida (alex)
+        //Kollar om user är inloggad
         if (this.$cookie.get('Cookie')) {
-          this.checkUser()
-          if(this.isAdmin) {
-            this.link = '/admin'
-            router.push("/admin")
-          }else {
             this.link = '/profil'
             router.push("/profil")
-          }
         } else {
           Dialog.alert({
             title: 'Ops..',
