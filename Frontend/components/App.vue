@@ -5,6 +5,7 @@
     <a id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
     <ul>
       <li><router-link to="/books">Böcker</router-link></li>
+      <li><router-link to="/contact">Kontakt</router-link></li>
       <li v-if="!this.$cookie.get('Cookie') && !this.$cookie.get('adminCookie')"><router-link to="/users">Bli medlem</router-link></li>
       <li v-if="this.$cookie.get('Cookie')" v-on:click="auth()"><router-link v-bind:to="link">Mina sidor</router-link></li>
       <li v-if="this.$cookie.get('adminCookie')"><router-link to="/admin">Administration</router-link></li>

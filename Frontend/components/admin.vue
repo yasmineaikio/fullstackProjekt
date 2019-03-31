@@ -8,14 +8,35 @@
             <hr>
         </div>
     </section>
-    <div class="columns has-text-centered">
+    <div class="columns">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
-            <div class="is-center">
+            <div>
                 <a @click="removeUser()" class="button is-light is-outlined">Ta bort användare</a>
                 <router-link class="button is-light is-outlined" to="/books">Lägg till nya böcker</router-link>
+                <a @click="isOpen = !isOpen" aria-controls="contentIdForA11y2" class="inbox-btn button is-warning">Inbox(<span>{{antal}}</span>)</a>
             </div>
         </div>
     </div>
+    <b-collapse aria-id="contentIdForA11y2" :open.sync="isOpen">
+            <div>
+                <div class="container">
+                    <div class="column is-full" v-for="msg in inbox">
+                        <b-collapse :open="false" aria-id="contentIdForA11y1">
+                            <h2 class="msg-title is-size-5 has-text-weight-bold" slot="trigger" aria-controls="contentIdForA11y1">{{msg.subject}} <span class="msg-date has-text-centered"> <i> {{msg.date}} </i> </span> <span class="msg-remover" @click="removeMsg(msg.id)">Ta bort</span></h2>
+                            <div class="notification">
+                                <div class="content">
+                                    <font-awesome-icon class="msg-icon" :icon="{ prefix: 'fa', iconName: 'user' }"/><span class="is-size-5"> {{msg.name}} </span>
+                                    <font-awesome-icon class="msg-icon mail" :icon="{ prefix: 'fa', iconName: 'envelope' }"/><span class="is-size-5" style="cursor:pointer;"> {{msg.email}} </span>
+                                    <hr class="msg-hr">
+                                    <h3>Meddelandet:</h3>
+                                    <p class="msg-content"> {{msg.content}} </p>
+                                </div>
+                            </div>
+                        </b-collapse>
+                    </div>
+                </div>   
+            </div>
+    </b-collapse>
     <div class="columns">
        <div class="column is-full has-background-grey-light">
            <div class="col has-background-white has-text-centered "> 
@@ -26,13 +47,13 @@
                     <div class="level-item has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
-                            <p v-for=" user in allUsers" class="is-size-6  has-text-left">{{user.name}}</p>
+                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}}</p>
                         </div>
                     </div>
                     <div class="level-item has-text-centered">
                         <div class="holder">
                         <h3 id="h3" class="has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Inloggade</h3>
-                        <p v-for="inloggad in logedIn" class="is-size-6  has-text-left"> {{inloggad.user}} <span class="online"></span></p>
+                        <p v-for="inloggad in logedIn" class="is-size-5  has-text-left"> &#10050; {{inloggad.user}} <span class="online"></span></p>
                         </div>
                     </div>
                 </nav>
@@ -151,20 +172,42 @@ export default {
     },
     data() {
         return {
-        name: '',
-        logedIn: [],
-        allUsers: [],
-        loans: [],
-        BookInfo: [],
-        UserInfo: [],
-        loanBook: [],
-        loanUser: [],
-        LoanDate: [],
-        ReturnDate: []
+            name: '',
+            logedIn: [],
+            allUsers: [],
+            loans: [],
+            BookInfo: [],
+            UserInfo: [],
+            loanBook: [],
+            loanUser: [],
+            LoanDate: [],
+            ReturnDate: [],
+            inbox: [],
+            antal: 0,
+            isOpen: false,
         }
     },
     router,
     methods: {
+        fetchMessages() {
+             fetch('http://localhost:3000/inbox').then(response => response.json()).then(result => {
+                this.inbox = result
+                this.antal = result.length
+            })
+        },
+        removeMsg(id) {
+           let msgId = {'id':id} 
+           fetch('http://localhost:3000/inbox', {
+               method: 'DELETE',
+               body: JSON.stringify(msgId),
+               headers: {'Content-type': 'application/json'}
+           })
+           .then(() => {
+               this.fetchMessages()
+               Snackbar.open('Meddelandet har tagits bort!')
+           }) 
+            
+        },
         removeUser() {
             this.$modal.open({
                 parent: this,
@@ -187,6 +230,7 @@ export default {
             }
         },         
         getInfo() {
+            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays (Alex)
             fetch('http://localhost:3000/login')
             .then(response => response.json())
             .then (result => {
@@ -195,7 +239,7 @@ export default {
                 }  
                 //Hämtar namnet på Admin som är inloggad (Alex)
                 this.name = result.find(value => value.token === this.$cookie.get('adminCookie')).user
-          })
+            })
 
             fetch('http://localhost:3000/users')
             .then(response => response.json())
@@ -203,11 +247,9 @@ export default {
                 for (let index = 0; index < result.length; index++) {
                     this.allUsers.push(result[index])
                 }  
-                this.allUsers.push(result)
-                this.realname = result.find(value => value.name === this.name ).realname
-                this.email = result.find(value => value.name === this.name ).email
-                this.address = result.find(value => value.name === this.name ).address
             })
+            
+            this.fetchMessages()  
         },
     },
 }
@@ -282,6 +324,54 @@ export default {
 
 .books-con {
     min-height: 350px;
+}
+
+.msg-title {
+    border-bottom: #4A4A4A solid 2px;
+    padding: 0 10px;
+}
+
+.msg-title:hover {
+    border-left: 4px solid #FFDB4A;
+} 
+
+.msg-remover {
+    float: right;
+    padding: 0 10px;
+}
+
+.msg-date {
+    position: absolute;
+    left: 20%;
+    opacity: 0.7;
+    margin-left: 1em;
+}
+
+.inbox-btn {
+    float: right;
+    margin-right: 8px;
+}
+
+.msg-icon {
+    font-size: 1.5em;
+}
+
+.msg-icon.mail {
+    margin-left: 2em;
+}
+
+.content span {
+    padding: 0 3px;
+}
+
+.msg-hr {
+    border: 1px solid #FFDB4A;
+}
+
+.msg-content {
+    padding: 30px;
+    background: #fff;
+    box-shadow: 1px 2px 3px 1px rgba(84, 82, 82, 0.7);
 }
 </style>
 

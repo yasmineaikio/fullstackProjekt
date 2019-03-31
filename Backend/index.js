@@ -105,7 +105,7 @@ app.delete('/admin', (request, response) => {
   })
 })
 
-// Hämtar utlånade böcker samt users som lånar ut dem (Alex)
+// Hämtar utlånade böcker samt users som lånar dem (Alex)
 app.post('/getloans', (request, response) => {
   let loans = request.body
   database.all('SELECT name FROM users WHERE id=?', [loans.user]).then(row => {
@@ -120,8 +120,25 @@ app.post('/getloans', (request, response) => {
   })
 })
 
+// Tar emot meddelanden från kontaktsidan && visar dem på /inbox && låter admin hantera och ta bort dem (Alex)
+app.post('/inbox', (request,response) => {
+  let inbox = request.body
+  database.run('INSERT INTO inbox VALUES(?,?,?,?,?,?)', [inbox.name, inbox.email, inbox.subject, inbox.content, inbox.date, inbox.id]).then(row => {
+    response.status(201).send(row)
+  })
+})
 
+app.get('/inbox', (req, res) => {
+  database.all('SELECT * FROM inbox').then(msg => {
+    res.send(msg)
+  })
+})
 
+app.delete('/inbox', (req, res) => {
+  database.run('DELETE FROM inbox WHERE id=?', [req.body.id]).then(() => {
+    res.send('msg removed')
+  })
+})
 
 
 // hämtar samtliga böcker från databasen (Alex)
