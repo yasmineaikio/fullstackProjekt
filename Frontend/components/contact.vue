@@ -1,7 +1,7 @@
 <template>
     <div  class="container is-fluid" >
         <section id="contact-con" class="contact-info" style="background-image:url('http://greenish.haahe.net/wp-content/uploads/2018/12/fuse-brussels-273772-unsplash.jpg')">
-            <div class="columns" style="padding:2%; min-height:600px;">
+            <div class="columns" style="padding:2%; min-height:500px;">
                 <div class="column is-half">
                     <h2 class="banner is-size-4 has-background-dark has-text-white has-text-centered"><span>Adress och kontaktuppgifter</span></h2>
                     <div id="contact-info">

@@ -340,6 +340,11 @@ export default {
     padding: 0 10px;
 }
 
+.msg-remover:hover {
+    color: #c00;
+    border-right:4px solid #c00;
+}
+
 .msg-date {
     position: absolute;
     left: 20%;
