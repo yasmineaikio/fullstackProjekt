@@ -109,6 +109,14 @@ app.delete('/admin', (request, response) => {
 
 
 
+// sotering av böcker - ej klar(Elin)
+// app.get('/books', (request, response) => {
+//   // let title = request.query.books
+//   database.all('SELECT * FROM books ORDER BY title', [request.query.books]).then(books => {
+//       response.send(books);
+//       // console.log(request.query.orderBy);
+//     })
+//   })
 
 
 // hämtar samtliga böcker från databasen (Alex)
@@ -142,12 +150,7 @@ app.get('/books', (request, response) => {
   })
 
 
-      // // sotering av böcker - ej klar, låt stå (Elin)
-      // app.get('/books', (request, response) => {
-      //   database.all('SELECT * FROM books ORDER BY title').then(books => {
-      //       response.send(books);
-      //     })
-      //   })
+
 
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
