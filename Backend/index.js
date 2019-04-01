@@ -111,17 +111,17 @@ app.post('/getloans', (request, response) => {
   database.all('SELECT name FROM users WHERE id=?', [loans.user]).then(row => {
     database.all('SELECT title FROM books WHERE id=?', [loans.book]).then(rows => {
       if (row[0] && rows[0]) {
-      let merge = {}
-      merge.name = row[0].name
-      merge.title = rows[0].title
-      response.send(merge)
+        let merge = {}
+        merge.name = row[0].name
+        merge.title = rows[0].title
+        response.send(merge)
       }
     })
   })
 })
 
 // Tar emot meddelanden från kontaktsidan && visar dem på /inbox && låter admin hantera och ta bort dem (Alex)
-app.post('/inbox', (request,response) => {
+app.post('/inbox', (request, response) => {
   let inbox = request.body
   database.run('INSERT INTO inbox VALUES(?,?,?,?,?,?)', [inbox.name, inbox.email, inbox.subject, inbox.content, inbox.date, inbox.id]).then(row => {
     response.status(201).send(row)
@@ -206,17 +206,17 @@ app.get('/books/:word', (request, response) => {
 
 
 
-      //hämtar kategorier och språk (Sara)
-      app.get('/books/catsandlangs', (request, response) => {
-        database.all('select distinct category from books order by category').then(books => {
-          let categories = books.map(row => row.category)
-            database.all('select distinct language from books order by language').then(books => {
-              let languages = books.map(row => row.language)
-              let all = [categories, languages]
-              response.send(all)
-            })
-        })
+  //hämtar kategorier och språk (Sara)
+  app.get('/books/catsandlangs', (request, response) => {
+    database.all('select distinct category from books order by category').then(books => {
+      let categories = books.map(row => row.category)
+      database.all('select distinct language from books order by language').then(books => {
+        let languages = books.map(row => row.language)
+        let all = [categories, languages]
+        response.send(all)
       })
+    })
+  })
 
   if (request.query.cat && request.query.lang) {
     database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
