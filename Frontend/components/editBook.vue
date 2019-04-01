@@ -8,6 +8,7 @@
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
+    <th>Redigera</th>
   </tr>
 
   <tr v-for='book in books' v-bind:key="book">
@@ -15,13 +16,14 @@
     <td>
       <span v-if="click" v-on:click="editable">{{ book.title }}</span>
     <input v-if="unClick" type="text" v-model="book.title">
-            <input v-if="unClick" v-on:click="editBook(book.image, book.title, book.author, book.category, book.year, book.language)"
-              type="button" value="Redigera">
+            
             </td>
     <td>{{book.author}}</td>
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
+    <td><input v-if="unClick" v-on:click="editBook(book.title)"
+              type="button" value="Redigera"></td>
   </tr>
   </table>
 <!--     <form>
@@ -67,12 +69,14 @@ export default {
       this.click = true
 
       fetch('http://localhost:3000/books/'+ title, {
-        body: JSON.stringify({ title: title }),
-        headers: {'Content-Type': 'application/json'},
+        body: '{ "title": "' + this.title + '" }',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
         method: 'PUT'
       })
       .then (response => {
-        fetch('http://localhost:3000/books/')
+        fetch('http://localhost:3000/books')
         .then(response => response.json())
         .then(result => {
           this.books = result
