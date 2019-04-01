@@ -136,13 +136,14 @@ app.get('/inbox', (req, res) => {
 
 
 // sotering av böcker - ej klar(Elin)
-// app.get('/books', (request, response) => {
-//   // let title = request.query.books
-//   database.all('SELECT * FROM books ORDER BY title', [request.query.books]).then(books => {
-//       response.send(books);
-//       // console.log(request.query.orderBy);
-//     })
-//   })
+app.get('/books/sort/:sortBook', (request, response) => {
+  console.log(request.params.sortBook)
+  let book = request.params.sortBook
+  database.all('SELECT * FROM books ORDER BY ' + book).then(books => {
+      response.send(books);
+      console.log(books);
+    })
+  })
 
 app.delete('/inbox', (req, res) => {
   database.run('DELETE FROM inbox WHERE id=?', [req.body.id]).then(() => {
