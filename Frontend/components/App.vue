@@ -41,7 +41,7 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-    import EditBook from './editBookButton.vue'
+    import EditBook from './editBook.vue'
 
   export default {
     data () {

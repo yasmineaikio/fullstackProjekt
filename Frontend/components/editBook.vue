@@ -3,7 +3,7 @@
     <form>
     <div class="field">
       <div class="control">
-        <input v-on:click="editBook" class="button" type="submit" value="Ändra">
+        <input class="button" type="submit" value="Ändra">
       </div>
     </div>
   </form>
