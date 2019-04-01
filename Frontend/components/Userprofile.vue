@@ -125,7 +125,7 @@
                 const todaysDate = moment().format('YYYY/MM/DD')
                 const countDown = returnDate.diff(todaysDate, 'days');
               console.log(countDown)
-          }
+          },
         updateUserFunc() {
             // // för att ändra den inloggade användares uppgifter (Maija):
             fetch('http://localhost:3000/users', {
