@@ -25,6 +25,9 @@
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
         <td><extend-button
+          v-bind:book-id="loan.bookId"
+          v-bind:user-id="loan.userId"
+          v-on:added-to-loans="getUpdatedLoans"
           ></extend-button></td>
       </tr>
     </table>
@@ -47,7 +50,6 @@
         updateUser: 'Ändra uppgifter',
         name: '',
         users: [],
-        books: [],
         loans: [],
         realname: '',
         address: '',
@@ -60,6 +62,9 @@
       'extend-button': ExtendButton,
     },
     methods: {
+      getUpdatedLoans(loans){
+        this.loans = loans
+      },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -86,12 +91,6 @@
                   console.log(this.loans)
                 })
             })
-
-        fetch('http://localhost:3000/books')
-          .then(response => response.json())
-          .then (result => {
-            this.books = result
-          })
         },
         removeAccount() {
           // Låter user ta bort sitt konto (Alex)

@@ -307,10 +307,17 @@ app.post('/loans', (request, response) => {
 
 //hämtar vilka lån en viss användare har (Yasmine & Sara)
 app.get('/loans/:name', (request, response) => {
-  database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=? order by Loans.returnDate asc', [request.params.name])
+  database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId, Loans.bookId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=? order by Loans.returnDate asc', [request.params.name])
     .then(loan => {
       response.status(201).send(loan);
     })
+})
+
+//förlänger lån av en viss bok (Sara)
+app.post('/loans/extend', (request, response) => {
+  database.run('Update loans SET returnDate = ?, loanDate = ? WHERE bookId = ?', [request.body.returnDate, request.body.loanDate, request.body.bookId]).then(loan => {
+    response.status(201).send(loan);
+  })
 })
 
 // JOBBAR PÅ HÄR OCH TESTAR, BRY ER INTE!
