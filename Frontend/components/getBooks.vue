@@ -2,30 +2,28 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-  
+
   <table>
   <tr>
+    <th>Bokomslag</th>
     <th>Titel</th>
     <th>Författare</th>
     <th>Kategori</th>
     <th>Utgivningår</th>
     <th>Språk</th>
-<<<<<<< HEAD
-    <th>Låna</th>
-    
+
     <!-- <th v-on"sortBooks('title')">Titel</th>
     <th v-on"sortBooks('author')">Författare</th>
     <th v-on"sortBooks('cate')">Kategori</th>
     <th v-on"sortBooks('year')">Utgivningår</th>
     <th v-on"sortBooks('lang')">Språk</th>
   </tr> -->
-=======
     <th v-if="!admin">Låna</th>
     <th v-if="admin">Ändra</th>
     <th v-if="admin">Ta bort</th>
   </tr>
->>>>>>> c9ac932c02ff311bb77cf9c4bc9c22bc595d6c2c
   <tr v-for='book in books'>
+    <td><img v-bind:src="book.image"/></td>
     <td>{{book.title}}</td>
     <td>{{book.author}}</td>
     <td>{{book.category}}</td>
@@ -67,7 +65,7 @@
   },
       // sotera böcker (Elin)
     created() {
-        fetch('http://localhost:3000/books?order-by=title') 
+        fetch('http://localhost:3000/books?order-by=title')
         .then(response => response.json())
         .then(result => {
         this.books = result
@@ -79,7 +77,7 @@
     //       this.currentSort = this.currentSortDir==='asc'?'desc':'asc'
     //     }
     //     this.currentSort = s
-    //   }  
+    //   }
     // },
 
     components: {
@@ -87,7 +85,7 @@
       'loan-button': LoanButton,
       'edit-book': EditBook,
     },
-    
+
     methods: {
       getBooks() {
         fetch('http://localhost:3000/books')
