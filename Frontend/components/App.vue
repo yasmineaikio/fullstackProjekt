@@ -42,6 +42,7 @@
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
     import EditBook from './editBook.vue'
+    import ExtendButton from './extendButton.vue'
 
   export default {
     data () {
@@ -50,9 +51,9 @@
             isAdmin: false,
       }
     },
-    
+
     created() {
-      
+
     },
     components: {
       'search-field': Search,
@@ -67,6 +68,7 @@
       'result': Result,
       'admin': Admin,
       'edit-book': EditBook,
+      'extend-button': ExtendButton,
     },
     router,
     methods: {
@@ -110,46 +112,6 @@ header {
 #homelink:active {
   color: #fff;
 }
-ul {
-  list-style: none;
-  margin: 5px;
-  float: right;
-}
-li {
-  display: inline;;
-  padding: 1px;
-  font-family: 'Work sans', sans-serif;
-}
-li a {
-  text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  position: relative;
-  width: 100%;
-}
-
-li a:active, li a:focus, li a:checked {
-  border: none;
-}
-ul li a:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #F3C954;
-  visibility: hidden;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transition: all 0.3s ease-in-out 0s;
-  transition: all 0.3s ease-in-out 0s;
-}
-ul li a:hover:before {
-  visibility: visible;
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
-}
 .login-btn {
   background-color: #F3C954;
   color: black;
@@ -178,6 +140,7 @@ footer h3 {
 .footer-social {
   text-align: center;
   padding: 10px;
+  font-size:1.6em;
 }
 .footer-icon {
   padding: 0 5px;
@@ -194,9 +157,89 @@ footer h3 {
 </style>
 
 
-<style >
-/* Ej scoped style (Alex) */
+<style>
+/* från home.vue */
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
+  p, li, table, input, button, a {
+    font-family: 'Work sans', sans-serif;
+  }
+
   body {
   margin: 0;
+}
+
+#title {
+  /* position: relative; */
+  text-align: center;
+  margin-top: 40px;
+}
+
+#title h1 {
+  color: #7A7A7A;
+  font-family: 'Source serif pro', sans-serif;
+  font-size: 3.0em;
+}
+
+h1 {
+    font-size: 1.6em;
+    font-family: 'Source serif pro', serif;
+}
+
+h2 {
+  font-size: 1.6em;
+  font-family: 'Source serif pro', serif;
+}
+
+h3 {
+  font-size: 1.4em;
+  font-family: 'Source serif pro', sans-serif;
+}
+
+/*  från App.vues scoped-kod */
+ul {
+  list-style: none;
+  margin: 5px;
+  float: right;
+}
+li {
+  display: inline;
+  padding: 1px;
+  font-family: 'Work sans', sans-serif;
+}
+li a {
+  text-decoration: none;
+  color: white;
+  padding: 10px 20px;
+  position: relative;
+  width: 100%;
+}
+li a:active, li a:focus, li a:checked {
+  border: none;
+}
+ul li a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #F3C954;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out 0s;
+  transition: all 0.3s ease-in-out 0s;
+}
+ul li a:hover:before {
+  visibility: visible;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}
+
+/* från getBooks.vue */
+input, td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
 </style>

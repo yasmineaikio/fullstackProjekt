@@ -1,12 +1,11 @@
 <template>
-  <div id="profilepagemain" v-if="this.$cookie.get('Cookie')">
+  <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
   <h1>Hej {{ this.name }}!</h1>
 
 
-  <div id="profilepageuserinfo">
+  <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
-   <update-user-button></update-user-button>
    <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
@@ -25,24 +24,18 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
+        <td><extend-button
+          ></extend-button></td>
       </tr>
     </table>
   </div>
-
-
-<!--
-<p>Alla användare i databasen:</p>
-<ul v-for="user in users">
-  <li>{{ user }}</li>
-</ul>
--->
-
 
   </div>
 </template>
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
+  import ExtendButton from './extendButton.vue'
   import router from "../router"
 
   export default {
@@ -51,6 +44,7 @@
   },
     data() {
       return {
+        updateUser: 'Ändra uppgifter',
         name: '',
         users: [],
         books: [],
@@ -63,6 +57,7 @@
     },
     components: {
       'update-user-button': UpdateUserButton,
+      'extend-button': ExtendButton,
     },
     methods: {
       fetchresult() {
@@ -123,26 +118,32 @@
                 console.log(result)
             })
             this.$cookie.delete('Cookie')
-        }
+        },
+        updateUserFunc() {
+            // // för att ändra den inloggade användares uppgifter (Maija):
+            fetch('http://localhost:3000/users', {
+                body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                // body: JSON.stringify( { name: name, password: password, email: email, realname: realname, address: address} ),
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                method: 'PUT'
+              })
+              .then(response => {
+                fetch('http://localhost:3000/users/')
+                  .then(response => response.json())
+                  .then (result => {
+                      console.log(result)
+                    })
+              })
+            }
+
     }
   }
 </script>
 
 
 <style scoped>
-#profilepagemain {
-  font-family: 'Work Sans', sans-serif;
-  width:80%;
-  margin:auto;
-}
-
-#profilepageuserinfo {
-}
-
-#profilepagebooks {
-  padding:0 4px 4px 4px;
-}
-
 #booktable {
   margin:auto;
   border-collapse: collapse;
@@ -151,10 +152,6 @@
   width:80%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
+
 
 </style>
