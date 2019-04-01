@@ -5,12 +5,25 @@
 
   <table>
   <tr>
-    <th>Bokomslag</th>
+    <!-- <th>Bokomslag</th>
     <th>Titel</th>
     <th>Författare</th>
     <th>Kategori</th>
     <th>Utgivningår</th>
+    <th>Språk</th> -->
+
+    <th v-on:click = "sortBooks('title')">Titel</th>
+    <th v-on:click = "sortBooks('author')">Författare</th>
+    <th v-on:click = "sortBooks('category')">Kategori</th>
+    <th v-on:click = "sortBooks('year')">Utgivningår</th>
+    <th v-on:click = "sortBooks('language')">Språk</th>
+  </tr>
+    <th v-if="!admin">Låna</th>
+    <th v-if="admin">Ändra</th>
+    <th v-if="admin">Ta bort</th>
     <th>Språk</th>
+    <th>Låna</th>
+    
 
     <!-- <th v-on"sortBooks('title')">Titel</th>
     <th v-on"sortBooks('author')">Författare</th>
@@ -18,9 +31,7 @@
     <th v-on"sortBooks('year')">Utgivningår</th>
     <th v-on"sortBooks('lang')">Språk</th>
   </tr> -->
-    <th v-if="!admin">Låna</th>
-    <th v-if="admin">Ändra</th>
-    <th v-if="admin">Ta bort</th>
+  
   </tr>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
@@ -30,14 +41,11 @@
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
     <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
-    <td v-if="admin"><edit-book></edit-book></td>
-    <td v-if="admin">Ta bort-knapp</td>
   </tr>
   </table>
   </div>
 </template>
 <script>
-  import EditBook from './editBookButton.vue'
   import AddBook from './addBook.vue'
   import LoanButton from './loanButton.vue'
   export default {
@@ -50,8 +58,6 @@
         language: '',
         admin: false,
         books: [],
-        currentSort:'title',
-        currentSortDir:'asc'
       }
     },
 
@@ -62,49 +68,45 @@
         .then(result => {
         this.books = result
     })
+    
   },
-      // sotera böcker (Elin)
-    created() {
-        fetch('http://localhost:3000/books?order-by=title')
-        .then(response => response.json())
-        .then(result => {
-        this.books = result
-      })
-    },
-    // methods: {
-    //   sortBooks(s){
-    //     if (s === this.currentSort) {
-    //       this.currentSort = this.currentSortDir==='asc'?'desc':'asc'
-    //     }
-    //     this.currentSort = s
-    //   }
-    // },
+    // sotera böcker (Elin)
+    methods: {
+      sortBooks(katt) {
+        console.log(katt);
+      fetch('http://localhost:3000/books/sort/' + katt)
+      .then(response => response.json())
+      .then(result => {
+      this.books = result
+    })
+    // console.log(Hej);
+    }
+  },    
 
     components: {
       'add-book': AddBook,
-      'loan-button': LoanButton,
-      'edit-book': EditBook,
+      'loan-button': LoanButton
     },
 
-    methods: {
-      getBooks() {
-        fetch('http://localhost:3000/books')
-        .then(function(response) {
-          return response.json()
-        })
-        .then(function(result){
-          console.log(result)
-        })
-      }
-    },
+    // methods: {
+    //   getBooks() {
+    //     fetch('http://localhost:3000/books')
+    //     .then(function(response) {
+    //       return response.json()
+    //     })
+    //     .then(function(result){
+    //       console.log(result)
+    //     })
+    //   }
+    // },
 
-    created() {
-        fetch('http://localhost:3000/books')
-        .then(response => response.json())
-        .then(result => {
-        this.books = result
-    })
-   },
+   //  created() {
+   //      fetch('http://localhost:3000/books')
+   //      .then(response => response.json())
+   //      .then(result => {
+   //      this.books = result
+   //  })
+   // },
 
     mounted() {
       // Kollar om inloggad user är ADMIN eller inte (Alex)

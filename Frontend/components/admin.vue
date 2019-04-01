@@ -46,7 +46,7 @@
                     <div class="column is-half has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
-                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <a class="button is-danger is-outlined user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
+                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <span class="user-type"> ({{user.type}}) </span> <a @click="promote(user.name, user.id, user.type)" class="button is-dark is-outlined user-update">Promota</a><a class="button is-danger is-outlined user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
                         </div>
                     </div>
                     <div class="column is-half has-text-centered">
@@ -148,8 +148,35 @@ export default {
                 hasIcon: true,
                 onConfirm: () => {
                     this.removeUser(id)
-                    this.$toast.open('Användaren har tagits bort!')
+                    this.$toast.open(name + ' har tagits bort!')
                     }
+            })
+        },
+        promote(name, id) {
+        this.$dialog.prompt({
+            title: 'Redigera ' + name,
+            message: 'Välj vilka behörgiheter som ' + '<strong>' + name + '</strong> ska ha genom att skriva antingen (admin) eller (user) och spara',
+            confirmText: 'Spara',
+            type: 'is-dark',
+            inputAttrs: {
+                    type: 'text',
+                    placeholder: 'Skriv user eller admin',
+                },
+            onConfirm: (value) => {
+                if (value === 'admin' || value === 'user') {
+                    this.updateUser(id, value)
+                    this.$toast.open(name + ' behörigheter har uppdaterats')
+                }else {
+                    this.$dialog.confirm({
+                        title: 'Fel inmatning',
+                        message: 'Du har angett fel behörighet! Du får skriva antingen admin eller user!',
+                        confirmText: 'Okej',
+                        type: 'is-dark',
+
+                    })
+                }
+                
+                }
             })
         },
         fetchMessages() {
@@ -183,6 +210,18 @@ export default {
             fetch('http://localhost:3000/admin', {
                 method: "DELETE",
                 body: JSON.stringify(toBeDelete),
+                headers: {'Content-type': 'application/json'}
+            }).then(() => {
+                   this.fetchUsers()
+                })
+        },
+        updateUser(id, value) {
+            let user = {'id': id, 'type': value} 
+            console.log(user);
+            
+            fetch('http://localhost:3000/admin', {
+                method: 'PUT',
+                body: JSON.stringify(user),
                 headers: {'Content-type': 'application/json'}
             }).then(() => {
                    this.fetchUsers()
@@ -352,9 +391,17 @@ export default {
     margin-bottom: 0 !important;
 }
 
-.user-delete {
+.user-delete, .user-update {
     float: right;
     padding: 0 10px;
+    margin: 0 5px;
+}
+
+.user-type {
+    font-style: italic;
+    font-size: 0.7rem;
+    font-weight: 700;
+    opacity: 0.8;
 }
 </style>
 
