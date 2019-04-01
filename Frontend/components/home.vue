@@ -9,17 +9,17 @@
     <div class="columns is-multiline">
       <div v-for='book in books.slice(0, 4)' class="column is-one-quarter">
         <div class="card is-fullimage">
-        <figure class="image is-4by3">
-          <img src="https://images.unsplash.com/photo-1461419912973-9964f1f54b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80" alt="Placeholder image">
+        <figure class="image is-3by4">
+          <img v-bind:src="book.image"/>
         </figure>
           <div class="card-content">
             <div class="media-content">
               <h3>{{book.title}}</h3>
               <p>{{book.author}} | {{book.category}}</p>
               <br>
-              <p><loan-button
+              <div class="loanButton has-text-centered"><loan-button
                 v-bind:book-id="book.id"
-                ></loan-button></p>
+                ></loan-button></div>
             </div>
           </div>
     </div>
@@ -48,6 +48,7 @@ import LoanButton from './loanButton.vue'
             'loan-button': LoanButton,
           }
       }
+
 </script>
 
 <style>
