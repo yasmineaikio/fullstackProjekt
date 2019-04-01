@@ -11,13 +11,8 @@
     <th v-on:click = "sortBooks('category')">Kategori</th>
     <th v-on:click = "sortBooks('year')">Utgivningår</th>
     <th v-on:click = "sortBooks('language')">Språk</th>
-  </tr>
     <th v-if="!admin">Låna</th>
-    <th v-if="admin">Ändra</th>
-    <th v-if="admin">Ta bort</th>
-    <th>Språk</th>
-    <th>Låna</th>
-  
+    
   </tr>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
