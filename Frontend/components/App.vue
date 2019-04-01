@@ -41,7 +41,7 @@
     import { Dialog } from 'buefy/dist/components/dialog'
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
-    import EditBook from './editBookButton.vue'
+    import EditBook from './editBook.vue'
 
   export default {
     data () {
@@ -138,6 +138,7 @@ footer h3 {
 .footer-social {
   text-align: center;
   padding: 10px;
+  font-size:1.6em;
 }
 .footer-icon {
   padding: 0 5px;

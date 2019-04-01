@@ -9,18 +9,12 @@
    <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
-  <div class="container is-fluid">
-  <h3>Ändra uppgifter</h3>
-  <input v-model="name" type="text" placeholder="Användarnamn">
-  <input v-model="password" type="text" placeholder="Lösenord">
-  <input v-model="email" type="text" placeholder="E-mail">
-  <input v-model="realname" type="text" placeholder="Hela namn">
-  <input v-model="address" type="text" placeholder="Adress">
+  <div>
+    <countDown></countDown>
 
-  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
   </div>
 
-  <div class="container is-fluid">
+  <div id="profilepagebooks" class="container">
     <h3>Lånade böcker</h3>
 
     <table id="booktable">
