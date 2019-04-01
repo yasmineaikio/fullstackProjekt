@@ -50,9 +50,9 @@
             isAdmin: false,
       }
     },
-    
+
     created() {
-      
+
     },
     components: {
       'search-field': Search,
