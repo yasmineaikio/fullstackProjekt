@@ -71,6 +71,12 @@ export default {
         router.push("/login")
       }
 
+    },
+    showCountdown() {
+      if (this.$cookie.get('Cookie')) {
+        this.loanDate = moment().format('YYYY/MM/DD')
+        this.returnDate = moment().add(30, 'days').format('YYYY/MM/DD')
+      }
     }
   }
 }
