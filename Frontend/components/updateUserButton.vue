@@ -1,5 +1,14 @@
 <template>
-  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button">
+  <div>
+  <h1>Ändra uppgifter</h1>
+    <input v-model="name" type="text" placeholder="Användarnamn">
+    <input v-model="password" type="text" placeholder="Lösenord">
+    <input v-model="email" type="text" placeholder="E-mail">
+    <input v-model="realname" type="text" placeholder="Namn">
+    <input v-model="address" type="text" placeholder="Adress">
+
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
+  </div>
 </template>
 
 <script>
@@ -11,48 +20,35 @@
         anvandare: null,
         name: null,
         password: null,
-        type: null,
         email: null,
         realname: null,
         address: null,
       }
     },
     methods: {
-      // alertFunction() {
-      // let newRealname = prompt('Ändra realname')
-      //   // this.updateUser = 'Du har klickat på knappen'
-      //   alert(newRealname)
-      // }
-
         updateUserFunc() {
-          // // testar bara: funkar att lägga till en ny användare med uppgifter som ändras i koden (dvs. ej användbart)
-          // fetch('http://localhost:3000/users', {
-          //     body: JSON.stringify({name: 'NewTest', password: 'Testaar', type: 'user', email: 'testar@test.test', realname: 'fsadfsd', address: 'Testar'}),
-          //     headers: {
-          //       'Content-Type': 'application/json'
-          //     },
-          //     method: 'POST'
-          //   })
-          //    .then(function (response) {
-          //     return response.json()
-          //   })
-          //    .then(function (result) {
-          //     console.log(result)
-          //   })
-
-            // // testar bara: för att hämta alla användare - funkar
-            // fetch('http://localhost:3000/users')
-            //   .then(function (response) {
-            //     return response.json()
-            //   })
-            //   .then(function (result) {
-            //     let anvandare = result
-            //     console.log(anvandare)
-            //   })
-
             // // för att ändra en användares uppgifter:
+            fetch('http://localhost:3000/users', {
+                body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                method: 'PUT'
+              })
+              .then(response => {
+
+                fetch('http://localhost:3000/users/')
+                  .then(response => response.json())
+                  .then (result => {
+                      console.log(result)
+                    })
+
+              })
+
+            // för att ändra en användares uppgifter:
             // fetch('http://localhost:3000/users', {
-            //     body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+            //   body: '{ "name": "' + this.name + '", "password": "' + this.password + '", "email": "'
+            //   + this.email + '", "realname": "' + this.realname + '","address": "' + this.address + '" }',
             //     headers: {
             //       'Content-Type': 'application/json'
             //     },
@@ -64,22 +60,6 @@
             //    .then(function (result) {
             //     updatedUser = result
             //   })
-
-            // för att ändra en användares uppgifter:
-            fetch('http://localhost:3000/users', {
-              body: '{ "name": "' + this.name + '", "password": "' + this.password +'", "email": "'
-              + this.email + '", "realname": "' + this.realname + '","address": "' + this.address + '" }',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                method: 'PUT'
-              })
-               .then(function (response) {
-                return response.json()
-              })
-               .then(function (result) {
-                updatedUser = result
-              })
 
         }
       }
