@@ -286,7 +286,7 @@ let clearLoans = function() {
   database.run('DELETE FROM loans WHERE returnDate = ?', [removeDate])
 }
 
-setInterval(clearLoans, 6000)
+setInterval(clearLoans, 6000 * 60 * 60 * 24)
 
 //lägger in data i loans-tabellen (Yasmine & Sara)
 app.post('/loans', (request, response) => {
