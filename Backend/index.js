@@ -294,7 +294,7 @@ app.put('/books/:title', (request, response) => {
 
 //Tar bort lån från loans-tabellen dagen efter utgångsdatumet (Yasmine & Sara)
 let clearLoans = function() {
-  let removeDate = moment().subtract(1, 'days').format('LL')
+  let removeDate = moment().subtract(1, 'days').format('YYYY/MM/DD')
   database.run('DELETE FROM loans WHERE returnDate = ?', [removeDate])
 }
 
@@ -309,7 +309,7 @@ app.post('/loans', (request, response) => {
 
 //hämtar vilka lån en viss användare har (Yasmine & Sara)
 app.get('/loans/:name', (request, response) => {
-  database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=?', [request.params.name])
+  database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=? order by Loans.returnDate asc', [request.params.name])
     .then(loan => {
       response.status(201).send(loan);
     })
