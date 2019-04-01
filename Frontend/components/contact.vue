@@ -10,6 +10,7 @@
                 </div>
                 <div class="column is-half has-text-centered">
                     <h2 class="banner is-size-4 has-background-dark has-text-white has-text-centered"> <span>Skriv till oss</span></h2>
+                    <p style="margin:1% 10%;">Den ursprungliga Lorem Ipsum-texten från 1500-talet är återgiven nedan för de intresserade. Styckena 1.10.32 och 1.10.33 från "de Finibus Bonorum et Malorum" av Cicero hittar du också i deras originala form, åtföljda av de engelska översättningarna av H. Rackham från 1914</p>
                     <div class="arrow bounce"></div>
                     <button class="button is-warning is-large" style="width:150px;" @click="isComponentModalActive = true"><font-awesome-icon class="msg-icon" :icon="{ prefix: 'fa', iconName: 'envelope' }"/></button>
                     <b-modal class="modalForm" :active.sync="isComponentModalActive" has-modal-card>
@@ -25,7 +26,7 @@
                 :center="{lat:56.9070429, lng:12.487072}"
                 :zoom="15"
                 map-type-id="terrain"
-                style="width: 100%; height: 300px;"
+                style="width: 100%; height: 300px; margin-bottom:1em;"
             >
             <GmapMarker
                 :key="index"

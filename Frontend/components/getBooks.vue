@@ -21,6 +21,17 @@
     <th v-if="!admin">Låna</th>
     <th v-if="admin">Ändra</th>
     <th v-if="admin">Ta bort</th>
+    <th>Språk</th>
+    <th>Låna</th>
+    
+
+    <!-- <th v-on"sortBooks('title')">Titel</th>
+    <th v-on"sortBooks('author')">Författare</th>
+    <th v-on"sortBooks('cate')">Kategori</th>
+    <th v-on"sortBooks('year')">Utgivningår</th>
+    <th v-on"sortBooks('lang')">Språk</th>
+  </tr> -->
+  
   </tr>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
@@ -30,14 +41,11 @@
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
     <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
-    <td v-if="admin"><edit-book></edit-book></td>
-    <td v-if="admin">Ta bort-knapp</td>
   </tr>
   </table>
   </div>
 </template>
 <script>
-  import EditBook from './editBookButton.vue'
   import AddBook from './addBook.vue'
   import LoanButton from './loanButton.vue'
   export default {
@@ -77,8 +85,7 @@
 
     components: {
       'add-book': AddBook,
-      'loan-button': LoanButton,
-      'edit-book': EditBook,
+      'loan-button': LoanButton
     },
 
     // methods: {
