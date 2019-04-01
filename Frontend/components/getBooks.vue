@@ -2,9 +2,10 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-  
+
   <table>
   <tr>
+    <th>Bokomslag</th>
     <th>Titel</th>
     <th>Författare</th>
     <th>Kategori</th>
@@ -12,6 +13,7 @@
     <th>Språk</th>
     <th>Låna</th>
     
+
     <!-- <th v-on"sortBooks('title')">Titel</th>
     <th v-on"sortBooks('author')">Författare</th>
     <th v-on"sortBooks('cate')">Kategori</th>
@@ -21,6 +23,7 @@
   
   </tr>
   <tr v-for='book in books'>
+    <td><img v-bind:src="book.image"/></td>
     <td>{{book.title}}</td>
     <td>{{book.author}}</td>
     <td>{{book.category}}</td>
@@ -59,7 +62,7 @@
   },
       // sotera böcker (Elin)
     created() {
-        fetch('http://localhost:3000/books?order-by=title') 
+        fetch('http://localhost:3000/books?order-by=title')
         .then(response => response.json())
         .then(result => {
         this.books = result
@@ -71,14 +74,14 @@
     //       this.currentSort = this.currentSortDir==='asc'?'desc':'asc'
     //     }
     //     this.currentSort = s
-    //   }  
+    //   }
     // },
 
     components: {
       'add-book': AddBook,
       'loan-button': LoanButton
     },
-    
+
     methods: {
       getBooks() {
         fetch('http://localhost:3000/books')

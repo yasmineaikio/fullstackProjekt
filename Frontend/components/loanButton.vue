@@ -38,8 +38,8 @@ export default {
   methods: {
     addLoan (){
       if (this.$cookie.get('Cookie')) {
-        this.loanDate = moment().format('LL')
-        this.returnDate = moment().add(30, 'days').format('LL')
+        this.loanDate = moment().format('YYYY/MM/DD')
+        this.returnDate = moment().add(30, 'days').format('YYYY/MM/DD')
 
           fetch ('http://localhost:3000/loans', {
           body: '{ "returnDate": "' + this.returnDate + '", "loanDate": "' + this.loanDate +'", "userId": "' + this.userId + '", "bookId": "'
