@@ -147,7 +147,7 @@ app.get('/inbox', (req, res) => {
 })
 
 
-// sotering av böcker - ej klar(Elin)
+// sotering av böcker (Elin)
 app.get('/books/sort/:sortBook', (request, response) => {
   console.log(request.params.sortBook)
   let book = request.params.sortBook
