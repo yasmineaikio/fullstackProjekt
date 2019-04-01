@@ -178,6 +178,7 @@ footer h3 {
 .footer-social {
   text-align: center;
   padding: 10px;
+  font-size:1.6em;
 }
 .footer-icon {
   padding: 0 5px;
