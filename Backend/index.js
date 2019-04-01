@@ -198,13 +198,6 @@ app.get('/books/catsandlangs', (request, response) => {
   })
 })
 
-// hämtar böcker utifrån sökord (Sara)
-app.get('/books/:word', (request, response) => {
-  let searched = request.params.word.split(' ')
-  //funkar inte att söka på tom sträng
-
-
-
 
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
@@ -217,6 +210,10 @@ app.get('/books/:word', (request, response) => {
             })
         })
       })
+
+    // hämtar böcker utifrån sökord (Sara)
+  app.get('/books/:word', (request, response) => {
+    let searched = request.params.word.split(' ')
 
   if (request.query.cat && request.query.lang) {
     database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {

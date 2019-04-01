@@ -42,6 +42,7 @@
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
     import EditBook from './editBookButton.vue'
+    import ExtendButton from './extendButton.vue'
 
   export default {
     data () {
@@ -50,9 +51,9 @@
             isAdmin: false,
       }
     },
-    
+
     created() {
-      
+
     },
     components: {
       'search-field': Search,
@@ -67,6 +68,7 @@
       'result': Result,
       'admin': Admin,
       'edit-book': EditBook,
+      'extend-button': ExtendButton,
     },
     router,
     methods: {
