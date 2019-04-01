@@ -105,6 +105,18 @@ app.delete('/admin', (request, response) => {
   })
 })
 
+// Låter admin promota en user till admin (Alex)
+app.put('/admin', (req,res) => {
+  let user = req.body
+  database.all('SELECT * FROM users WHERE id=?', [user.id]).then(row => {
+    if (row[0]) {
+      database.run('UPDATE users SET type=? WHERE id=?', [user.type, user.id]).then(rows => {
+        res.send(rows)
+      })
+    }
+  })
+})
+
 // Hämtar utlånade böcker samt users som lånar dem (Alex)
 app.post('/getloans', (request, response) => {
   let loans = request.body
