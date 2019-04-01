@@ -10,11 +10,6 @@
    <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
-  <div>
-    <countDown></countDown>
-
-  </div>
-
   <div id="profilepagebooks" class="container">
     <h3>Lånade böcker</h3>
 
