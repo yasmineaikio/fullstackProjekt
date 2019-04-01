@@ -239,24 +239,46 @@ app.get('/books', (request, response) => {
       })
 
       // JOBBAR PÅ HÄR OCH TESTAR, BRY ER INTE!
-      // hämtar en användarens uppgifter (Maija)
-      app.get('/users/name', (request, response) => {
-        database.all('SELECT * FROM users WHERE name = ?', ['NewTest']).then(user => {
-        response.send(user)
-      })
-    })
+      // hämtar en användarens uppgifter med namn i koden (Maija) - FUNKAR
+    //   app.get('/users/name', (request, response) => {
+    //     database.all('SELECT * FROM users WHERE name = ?', ['jonkri']).then(user => {
+    //     response.send(user)
+    //   })
+    // })
 
-      // hämtar info från adressen
-    app.get('/users/:name', (request, response) => {
-      response.send('Hej ' + request.params.name + '!')
-    })
+      // hämtar användarens info från adressen
+  //   app.get('/users/:name', (request, response) => {
+  //     response.send(
+  //       {
+  //         "name": request.params.name,
+  //         "password": request.params.password,
+  //         "type": "",
+  //         "email": "",
+  //         "realname": "",
+  //         "address": ""
+  //       }
+  //     )
+  //   })
+  //
+  //   // uppdaterar en användarens uppgifter med namn i koden (Maija)
+  //   app.put('/users/', (request, response) => {
+  //     database.run('UPDATE users SET email=? WHERE name=?', ['nyyy@bytt.net', 'NewTest']).then(() => {
+  //         response.send('bytt')
+  //   })
+  // })
 
-      // uppdaterar en användarens uppgifter (Maija)
-      app.put('/users', (request, response) => {
-        database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
-        // uppdaterat kanske
-      })
-    })
+  // uppdaterar en användarens uppgifter (Maija)
+  app.put('/users/:name', (request, response) => {
+      let name = request.body.name
+      let password = request.body.password
+      let email = request.body.email
+      let realname = request.body.realname
+      let address = request.body.address
+    database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?',
+    [name, password, email, realname, address]).then(updatedUser => {
+        response.send(updatedUser)
+  })
+})
 
 
 

@@ -45,7 +45,7 @@
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
-  import router from "../router" 
+  import router from "../router"
 
   export default {
   created() {
@@ -72,7 +72,9 @@
           .then (result => {
             //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
-          })
+          })/*.then(() => {
+            this.name...
+          })*/
 
           fetch('http://localhost:3000/users')
             .then(response => response.json())
@@ -102,19 +104,19 @@
                 method: 'DELETE',
                 body: JSON.stringify(cookie),
                 headers: {'Content-type': 'application/json'},
-            }).then(function(response) { 
+            }).then(function(response) {
                 if (response.status === 200) {
                   fetch('http://localhost:3000/logout', {
                       method: 'POST',
                       body: JSON.stringify(cookie),
                       headers: {'Content-type': 'application/json'},
                   }).then(function(response) {
-                      alert("Ditt konto har raderats!")    
+                      alert("Ditt konto har raderats!")
                       router.push("/")
-                  })    
+                  })
                 }else {
                   alert('Något har gått fel, försök igen senare!')
-                }  
+                }
             })
             .then(function(result){
                 console.log(result)
