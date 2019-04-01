@@ -24,6 +24,8 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
+        <td><extend-button
+          ></extend-button></td>
       </tr>
     </table>
   </div>
@@ -33,6 +35,7 @@
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
+  import ExtendButton from './extendButton.vue'
   import router from "../router"
 
   export default {
@@ -54,6 +57,7 @@
     },
     components: {
       'update-user-button': UpdateUserButton,
+      'extend-button': ExtendButton,
     },
     methods: {
       fetchresult() {

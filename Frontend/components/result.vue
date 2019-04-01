@@ -8,6 +8,7 @@
     </p>
     <table>
       <tr>
+        <th>Bokomslag</th>
         <th>Titel</th>
         <th>Författare</th>
         <th>Kategori</th>
@@ -16,6 +17,7 @@
         <th>Låna</th>
       </tr>
       <tr v-for="book in books">
+        <td><img v-bind:src="book.image"/></td>
         <td>{{book.title}}</td>
         <td>{{book.author}}</td>
         <td>{{book.category}}</td>
