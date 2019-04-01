@@ -1,15 +1,17 @@
 <template>
     <div  class="container is-fluid" >
         <section id="contact-con" class="contact-info" style="background-image:url('http://greenish.haahe.net/wp-content/uploads/2018/12/fuse-brussels-273772-unsplash.jpg')">
-            <div class="columns" style="padding:2%; min-height:600px;">
+            <div class="columns" style="padding:2%; min-height:500px;">
                 <div class="column is-half">
-                    <h2 class="is-size-3"><span>Adress och kontaktuppgifter</span></h2>
-                    <p>bokgatan 212 <br> 561 32 Falkenberg <br> Mail: falkenberg.bok@books.se <br> Tel: 076-7827892</p>
+                    <h2 class="banner is-size-4 has-background-dark has-text-white has-text-centered"><span>Adress och kontaktuppgifter</span></h2>
+                    <div id="contact-info">
+                        <p>Bokgatan 212 <br> 561 32 Falkenberg <br> falkenberg.bok@books.se <br>076-7827892</p>
+                    </div>
                 </div>
                 <div class="column is-half has-text-centered">
-                    <h2 class="is-size-3"> <span>Skriv till oss</span></h2>
+                    <h2 class="banner is-size-4 has-background-dark has-text-white has-text-centered"> <span>Skriv till oss</span></h2>
                     <div class="arrow bounce"></div>
-                    <button class="button is-dark is-medium" @click="isComponentModalActive = true">Meddelande</button>
+                    <button class="button is-warning is-large" style="width:150px;" @click="isComponentModalActive = true"><font-awesome-icon class="msg-icon" :icon="{ prefix: 'fa', iconName: 'envelope' }"/></button>
                     <b-modal class="modalForm" :active.sync="isComponentModalActive" has-modal-card>
                         <modal-form></modal-form>
                     </b-modal>
@@ -40,7 +42,10 @@
 </template>
 
 <script>
+import { Snackbar } from 'buefy/dist/components/snackbar'
 import router from "../router" 
+import moment from 'moment'
+import  uuid  from 'vue-uuid'
 const ModalForm = {
         data (){
             return {
@@ -52,8 +57,17 @@ const ModalForm = {
         },
         methods:{
             send() {
-                
-                
+                let date = moment().format('LL')
+                let id = this.$uuid.v1()
+                let msg = {'name':this.name, 'email':this.email, 'subject': this.subject, 'content': this.content, 'date': date, 'id':id}
+                fetch('http://localhost:3000/inbox', {
+                    method: 'POST',
+                    headers: {'Content-type': 'application/json'},
+                    body: JSON.stringify(msg)
+                }).then (response => response.json())
+                .then(() => {
+                    Snackbar.open('Tack för ditt meddelande!')
+                })
             }
         },
         template: `
@@ -83,7 +97,7 @@ const ModalForm = {
                                         placeholder="Ditt meddelande">
                                     </b-input>
                                 </b-field>
-                                <button type="submit" class="button is-warning">
+                                <button type="submit" class="button is-warning" @click="$parent.close()">
                                     Skicka meddelandet
                                 </button>
                             </section>
@@ -127,8 +141,17 @@ export default {
         width: 500px;
     }
 
-    .divider {
-        padding: 20px;
+    .divider, .banner  {
+        padding: 15px;
+    }
+
+    #contact-info {
+        padding: 10px;
+        border-left: 2px solid #FFDB4A;
+    }
+
+    .msg-icon {
+        font-size: 1.5em;
     }
     
 </style>

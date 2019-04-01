@@ -10,6 +10,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
@@ -32,6 +33,7 @@ library.add(faAngleUp)
 library.add(faCheck)
 library.add(faFacebook)
 library.add(faTwitter)
+library.add(faEnvelope)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyAek2X6YRcS4XJ1SalmKH7YsKda63eMau0', 

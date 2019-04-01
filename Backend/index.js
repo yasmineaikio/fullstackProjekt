@@ -94,9 +94,9 @@ app.post('/logout', (request, response) => {
 // Låter admins ta bort users (Alex)
 app.delete('/admin', (request, response) => {
   let user = request.body.userName
-  database.all('SELECT * FROM users WHERE name=? AND type=?', [user, 'user']).then(row => {
+  database.all('SELECT * FROM users WHERE id=? AND type=?', [user, 'user']).then(row => {
     if (row[0]) {
-      database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
+      database.run('DELETE FROM users WHERE id =?', [user]).then(() => {
         response.status(200).send('user deleted!');
       })
     } else {
@@ -105,7 +105,7 @@ app.delete('/admin', (request, response) => {
   })
 })
 
-// Hämtar utlånade böcker samt users som lånar ut dem (Alex)
+// Hämtar utlånade böcker samt users som lånar dem (Alex)
 app.post('/getloans', (request, response) => {
   let loans = request.body
   database.all('SELECT name FROM users WHERE id=?', [loans.user]).then(row => {
@@ -120,7 +120,35 @@ app.post('/getloans', (request, response) => {
   })
 })
 
+// Tar emot meddelanden från kontaktsidan && visar dem på /inbox && låter admin hantera och ta bort dem (Alex)
+app.post('/inbox', (request,response) => {
+  let inbox = request.body
+  database.run('INSERT INTO inbox VALUES(?,?,?,?,?,?)', [inbox.name, inbox.email, inbox.subject, inbox.content, inbox.date, inbox.id]).then(row => {
+    response.status(201).send(row)
+  })
+})
 
+app.get('/inbox', (req, res) => {
+  database.all('SELECT * FROM inbox').then(msg => {
+    res.send(msg)
+  })
+})
+
+
+// sotering av böcker - ej klar(Elin)
+// app.get('/books', (request, response) => {
+//   // let title = request.query.books
+//   database.all('SELECT * FROM books ORDER BY title', [request.query.books]).then(books => {
+//       response.send(books);
+//       // console.log(request.query.orderBy);
+//     })
+//   })
+
+app.delete('/inbox', (req, res) => {
+  database.run('DELETE FROM inbox WHERE id=?', [req.body.id]).then(() => {
+    res.send('msg removed')
+  })
+})
 
 
 
@@ -175,6 +203,21 @@ app.get('/books/:word', (request, response) => {
   let searched = request.params.word.split(' ')
   //funkar inte att söka på tom sträng
 
+
+
+
+      //hämtar kategorier och språk (Sara)
+      app.get('/books/catsandlangs', (request, response) => {
+        database.all('select distinct category from books order by category').then(books => {
+          let categories = books.map(row => row.category)
+            database.all('select distinct language from books order by language').then(books => {
+              let languages = books.map(row => row.language)
+              let all = [categories, languages]
+              response.send(all)
+            })
+        })
+      })
+
   if (request.query.cat && request.query.lang) {
     database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
       response.status(201)
@@ -199,6 +242,7 @@ app.get('/books/:word', (request, response) => {
     })
   }
 })
+
 
 // hämtar lånade böcker (loans) från databasen (Maija)
 app.get('/loans', (request, response) => {

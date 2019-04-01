@@ -7,7 +7,7 @@
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
    <update-user-button></update-user-button>
-   <button @click="removeAccount()">Radera konto</button>
+   <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -71,7 +71,9 @@
           .then (result => {
             //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
-          })
+          })/*.then(() => {
+            this.name...
+          })*/
 
           fetch('http://localhost:3000/users')
             .then(response => response.json())
