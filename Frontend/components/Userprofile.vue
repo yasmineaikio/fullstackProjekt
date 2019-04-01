@@ -19,12 +19,14 @@
         <th>Författare</th>
         <th>Lånedatum</th>
         <th>Utgångsdatum</th>
+        <th>Dagar kvar</th>
       </tr>
       <tr v-for="loan in loans">
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
+        <td @click="countDown()"></td>
       </tr>
     </table>
   </div>
@@ -44,6 +46,7 @@
 <script>
   import UpdateUserButton from './updateUserButton.vue'
   import router from "../router"
+  import moment from 'moment'
 
   export default {
   created() {
@@ -59,6 +62,7 @@
         address: '',
         inloggad: true,
         userId: '',
+        returnDate: ''
       }
     },
     components: {
@@ -88,7 +92,6 @@
                 .then(response => response.json())
                 .then (result => {
                   this.loans = result
-                  console.log(this.loans)
                 })
             })
 
@@ -123,7 +126,12 @@
                 console.log(result)
             })
             this.$cookie.delete('Cookie')
-        }
+        },
+        countDown()  {
+                const todaysDate = moment().format('YYYY/MM/DD')
+                const countDown = returnDate.diff(todaysDate, 'days');
+              console.log(countDown)
+          }
     }
   }
 </script>
