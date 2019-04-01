@@ -20,12 +20,14 @@ export default {
             email: '',
             id: null,
             type: 'user',
+            
         }
     },
     methods: {
-        login() {
+        login() { 
             let newID = this.$uuid.v1()
             var cookie =  () => this.$cookie.set('Cookie', newID , 1)
+            var adminCookie =  () => this.$cookie.set('adminCookie', newID , 1)
             var userinfo = {'name': this.name, 'password': this.password, 'ID':newID} 
             fetch('http://localhost:3000/login', {
                 method: 'POST',
@@ -37,7 +39,7 @@ export default {
                     router.push("/profil")
                 }
                 else if (response.status === 205) {
-                    cookie()
+                    adminCookie()
                     router.push("/admin")
                 }
                 else {
@@ -51,9 +53,6 @@ export default {
                     router.push("/login")
                 }
             })
-            .then(function(result){
-                console.log(result)
-            })     
         }
     },
 }

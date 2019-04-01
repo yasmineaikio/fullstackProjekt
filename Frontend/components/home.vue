@@ -5,21 +5,21 @@
     <div class="arrow bounce"></div>
   </div>
 
-  <div v-for='book in books.slice(0, 4)' class="container is-fluid">
+  <div class="container is-fluid">
     <div class="columns is-multiline">
-      <div class="column is-one-quarter">
+      <div v-for='book in books.slice(0, 4)' class="column is-one-quarter">
         <div class="card is-fullimage">
-        <figure class="image is-4by3">
-          <img src="https://images.unsplash.com/photo-1461419912973-9964f1f54b24?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80" alt="Placeholder image">
+        <figure class="image is-3by4">
+          <img v-bind:src="book.image"/>
         </figure>
           <div class="card-content">
             <div class="media-content">
               <h3>{{book.title}}</h3>
               <p>{{book.author}} | {{book.category}}</p>
               <br>
-              <p><loan-button
+              <div class="loanButton has-text-centered"><loan-button
                 v-bind:book-id="book.id"
-                ></loan-button></p>
+                ></loan-button></div>
             </div>
           </div>
     </div>
@@ -48,6 +48,7 @@ import LoanButton from './loanButton.vue'
             'loan-button': LoanButton,
           }
       }
+
 </script>
 
 <style>
@@ -60,26 +61,6 @@ import LoanButton from './loanButton.vue'
     font-family: 'Source serif pro', serif;
 
   }
-</style>
-
-<style scoped>
-  #title h1 {
-  color: #7A7A7A;
-  font-family: 'Source serif pro', sans-serif;
-  font-size: 3.0em;
-}
-
-  h3 {
-  font-size: 1.4em;
-  font-family: 'Source serif pro', sans-serif;
-  }
-
-  #title {
-    position: relative;
-    text-align: center;
-    margin-top: 40px;
-  }
-
   .arrow {
     position: relative;
     bottom: 1px;
@@ -106,4 +87,27 @@ import LoanButton from './loanButton.vue'
       transform: translateY(-15px);
     }
   }
+</style>
+
+<style scoped>
+  #title h1 {
+  color: #7A7A7A;
+  font-family: 'Source serif pro', sans-serif;
+  font-size: 3.0em;
+}
+
+  h3 {
+  font-size: 1.4em;
+  font-family: 'Source serif pro', sans-serif;
+  }
+
+  #title {
+    position: relative;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+.card {
+  height: 100%;
+}
 </style>

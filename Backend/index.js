@@ -6,8 +6,6 @@ const split = require('express-split')
 const app = express();
 const moment = require('moment')
 
-
-
 app.use(function(request, result, next) {
   result.header('Access-Control-Allow-Origin', '*');
   result.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -30,10 +28,10 @@ db.open('./db.db').then(database_ => {
 })
 
 // hämtar samtliga users från databasen (Alex)
-app.get('/users', (request,response) => {
-    database.all('SELECT * FROM users').then(users => {
-      response.send(users);
-    })
+app.get('/users', (request, response) => {
+  database.all('SELECT * FROM users').then(users => {
+    response.send(users);
+  })
 })
 
 // lägger till users (Alex)
@@ -48,58 +46,57 @@ app.post('/users', (request, response) => {
 // Tar bort users
 app.delete('/users', (request, response) => {
   let incoming = request.body.Cookie
-  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then( row => {
+  database.all('SELECT * FROM tokens WHERE token =?', [incoming]).then(row => {
     if (row[0]) {
       database.run('DELETE FROM users WHERE name =?', [row[0].user])
       response.status(200).send('User deleted')
-    }
-    else
-    response.status(404).send('User not found')
+    } else
+      response.status(404).send('User not found')
   })
 })
 // loggar in, skapar en cookie samt kollar om användaren är vanlig user eller admin (Alex)
 app.post('/login', (request, response) => {
   let regUser = request.body
-   database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
-     if(row[0]) {
-       if (row[0].type === 'admin') {
+  database.all('SELECT * FROM users WHERE name=? AND password=?', [regUser.name, regUser.password]).then(row => {
+    if (row[0]) {
+      if (row[0].type === 'admin') {
         database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
           response.set('Cookie', regUser.ID)
           response.status(205).send(user)
         })
-       } else
-      database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
-        response.set('Cookie', regUser.ID)
-        response.status(201).send(user)
-      })
-     } else {
+      } else
+        database.all('INSERT INTO tokens VALUES(?,?,?)', [regUser.name, regUser.ID, row[0].type]).then(user => {
+          response.set('Cookie', regUser.ID)
+          response.status(201).send(user)
+        })
+    } else {
       response.status(404).send('')
       console.log('Fel användernamn eller lösenord, försök igen!');
-     }
-   })
+    }
   })
+})
 
- // Hämtar inloggade (Alex)
+// Hämtar inloggade (Alex)
 app.get('/login', (request, response) => {
-    database.all('SELECT * FROM tokens').then(inloggade => {
-     response.status(201).send(inloggade);
+  database.all('SELECT * FROM tokens').then(inloggade => {
+    response.status(201).send(inloggade);
   })
 })
 
 // Loggar ut (Alex)
 app.post('/logout', (request, response) => {
-   let token = request.body.Cookie
-   database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
-     response.send('Utloggad');
-   })
+  let token = request.body.Cookie
+  database.run('DELETE FROM tokens WHERE token =?', [token]).then(() => {
+    response.send('Utloggad');
+  })
 })
 
 // Låter admins ta bort users (Alex)
 app.delete('/admin', (request, response) => {
   let user = request.body.userName
-  database.all('SELECT * FROM users WHERE name=? AND type=?', [user, 'user']).then(row => {
-    if(row[0]) {
-      database.run('DELETE FROM users WHERE name =?', [user]).then(() => {
+  database.all('SELECT * FROM users WHERE id=? AND type=?', [user, 'user']).then(row => {
+    if (row[0]) {
+      database.run('DELETE FROM users WHERE id =?', [user]).then(() => {
         response.status(200).send('user deleted!');
       })
     } else {
@@ -108,7 +105,50 @@ app.delete('/admin', (request, response) => {
   })
 })
 
+// Hämtar utlånade böcker samt users som lånar dem (Alex)
+app.post('/getloans', (request, response) => {
+  let loans = request.body
+  database.all('SELECT name FROM users WHERE id=?', [loans.user]).then(row => {
+    database.all('SELECT title FROM books WHERE id=?', [loans.book]).then(rows => {
+      if (row[0] && rows[0]) {
+      let merge = {}
+      merge.name = row[0].name
+      merge.title = rows[0].title
+      response.send(merge)
+      }
+    })
+  })
+})
 
+// Tar emot meddelanden från kontaktsidan && visar dem på /inbox && låter admin hantera och ta bort dem (Alex)
+app.post('/inbox', (request,response) => {
+  let inbox = request.body
+  database.run('INSERT INTO inbox VALUES(?,?,?,?,?,?)', [inbox.name, inbox.email, inbox.subject, inbox.content, inbox.date, inbox.id]).then(row => {
+    response.status(201).send(row)
+  })
+})
+
+app.get('/inbox', (req, res) => {
+  database.all('SELECT * FROM inbox').then(msg => {
+    res.send(msg)
+  })
+})
+
+
+// sotering av böcker - ej klar(Elin)
+// app.get('/books', (request, response) => {
+//   // let title = request.query.books
+//   database.all('SELECT * FROM books ORDER BY title', [request.query.books]).then(books => {
+//       response.send(books);
+//       // console.log(request.query.orderBy);
+//     })
+//   })
+
+app.delete('/inbox', (req, res) => {
+  database.run('DELETE FROM inbox WHERE id=?', [req.body.id]).then(() => {
+    res.send('msg removed')
+  })
+})
 
 
 
@@ -116,39 +156,55 @@ app.delete('/admin', (request, response) => {
 app.get('/books', (request, response) => {
 
   //kollar först om kategori och/eller språk är valt (Sara)
-  if (request.query.cat && request.query.lang){
-    database.all('select * from books where category = ? AND language = ?', [request.query.cat, request.query.lang]).then (books => {
+  if (request.query.cat && request.query.lang) {
+    database.all('select * from books where category = ? AND language = ?', [request.query.cat, request.query.lang]).then(books => {
       response.status(201)
-      response.send (books)
+      response.send(books)
     })
-  }
-  else if (request.query.cat){
-    database.all('select * from books where category = ?', [request.query.cat]).then (books => {
+  } else if (request.query.cat) {
+    database.all('select * from books where category = ?', [request.query.cat]).then(books => {
       response.status(201)
-      response.send (books)
+      response.send(books)
     })
-  }
-  else if (request.query.lang){
-    database.all('select * from books where language = ?', [request.query.lang]).then (books => {
+  } else if (request.query.lang) {
+    database.all('select * from books where language = ?', [request.query.lang]).then(books => {
       response.status(201)
-      response.send (books)
+      response.send(books)
     })
-  }
-
-  else {
+  } else {
     database.all('SELECT * FROM books').then(books => {
       response.send(books);
     })
   }
+})
+
+
+// // sotering av böcker - ej klar, låt stå (Elin)
+// app.get('/books', (request, response) => {
+//   database.all('SELECT * FROM books ORDER BY title').then(books => {
+//       response.send(books);
+//     })
+//   })
+
+//hämtar kategorier och språk (Sara)
+app.get('/books/catsandlangs', (request, response) => {
+  database.all('select distinct category from books order by category').then(books => {
+    let categories = books.map(row => row.category)
+    database.all('select distinct language from books order by language').then(books => {
+      let languages = books.map(row => row.language)
+      let all = [categories, languages]
+      response.send(all)
+    })
   })
+})
+
+// hämtar böcker utifrån sökord (Sara)
+app.get('/books/:word', (request, response) => {
+  let searched = request.params.word.split(' ')
+  //funkar inte att söka på tom sträng
 
 
-      // // sotering av böcker - ej klar, låt stå (Elin)
-      // app.get('/books', (request, response) => {
-      //   database.all('SELECT * FROM books ORDER BY title').then(books => {
-      //       response.send(books);
-      //     })
-      //   })
+
 
       //hämtar kategorier och språk (Sara)
       app.get('/books/catsandlangs', (request, response) => {
@@ -162,121 +218,108 @@ app.get('/books', (request, response) => {
         })
       })
 
-      // hämtar böcker utifrån sökord (Sara)
-      app.get('/books/:word', (request, response) => {
-        let searched = request.params.word.split(' ')
-        //funkar inte att söka på tom sträng
+  if (request.query.cat && request.query.lang) {
+    database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
+      response.status(201)
+      response.send(books)
+    })
+  } else if (request.query.cat) {
+    database.all('select * from books where category = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
+      response.status(201)
+      response.send(books)
+    })
+  } else if (request.query.lang) {
+    database.all('select * from books where language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
+      response.status(201)
+      response.send(books)
+    })
+  } else {
+    database.all('select * from books where title like ? OR author like ? OR (author like ? AND author like ?) order by year desc',
+      ['%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']
+    ).then(books => {
+      response.status(201)
+      response.send(books)
+    })
+  }
+})
 
-        if (request.query.cat && request.query.lang){
-            database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
-              response.status(201)
-              response.send (books)
-            })
-        }
-        else if (request.query.cat){
-          database.all('select * from books where category = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
-            response.status(201)
-            response.send (books)
-          })
-        }
-        else if (request.query.lang){
-          database.all('select * from books where language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then (books => {
-            response.status(201)
-            response.send (books)
-          })
-        }
-        else {
-          database.all('select * from books where title like ? OR author like ? OR (author like ? AND author like ?) order by year desc',
-          ['%' + request.params.word + '%', '%' + request.params.word + '%','%' + searched[0] + '%', '%' + searched[1] + '%']
-          ).then(books => {
-            response.status(201)
-            response.send(books)
-          })
-        }
-      })
 
-      // hämtar lånade böcker (loans) från databasen (Maija)
-      app.get('/loans', (request, response) => {
-        database.all('SELECT * FROM loans').then(books => {
-          response.send(books);
-        })
-      })
+// hämtar lånade böcker (loans) från databasen (Maija)
+app.get('/loans', (request, response) => {
+  database.all('SELECT * FROM loans').then(books => {
+    response.send(books);
+  })
+})
 
-      //Lägger till bok (Annika)
-      app.post('/books', (request, response) => {
-        let title = request.body.title
-        let author = request.body.author
-        let category = request.body.category
-        let year = request.body.year
-        let language = request.body.language
-        let id = uuidv4()
-        let image = request.body.image
-        database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [title, author, category, year, language, image, id]).then(books => {
-        response.send(books)
-        })
-      })
+//Lägger till bok (Annika)
+app.post('/books', (request, response) => {
+  let title = request.body.title
+  let author = request.body.author
+  let category = request.body.category
+  let year = request.body.year
+  let language = request.body.language
+  let id = uuidv4()
+  let image = request.body.image
+  database.run('INSERT INTO books VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [title, author, category, year, language, image, id]).then(books => {
+    response.send(books)
+  })
+})
 
-      //Ändra tillagd bok (Annika)
-      app.put('/books/:title', (request, response) => {
-        let title = request.body.title
-        let author = request.body.author
-        let category = request.body.category
-        let year = request.body.year
-        let language = request.body.language
-        let image = request.body.image
-        database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
-        [title, author, category, year, language, image, request.params.title]).then(books => {
-          response.send(books)
-        })
-      })
+//Ändra tillagd bok (Annika)
+app.put('/books/:title', (request, response) => {
+  let title = request.body.title
+  let author = request.body.author
+  let category = request.body.category
+  let year = request.body.year
+  let language = request.body.language
+  let image = request.body.image
+  database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
+    [title, author, category, year, language, image, request.params.title]).then(books => {
+    response.send(books)
+  })
+})
 
-      //lägger in data i loans-tabellen (Yasmine & Sara)
-      app.post('/loans', (request, response) => {
-          database.run('Insert into loans values (?, ?, ?, ?)', [request.body.loanDate, request.body.returnDate, request.body.userId, request.body.bookId]).then(loan => {
-           response.status(201).send(loan);
-        })
-      })
+//Tar bort lån från loans-tabellen dagen efter utgångsdatumet (Yasmine & Sara)
+let clearLoans = function() {
+  let removeDate = moment().subtract(1, 'days').format('LL')
+  database.run('DELETE FROM loans WHERE returnDate = ?', [removeDate])
+}
 
-      // JOBBAR PÅ HÄR OCH TESTAR, BRY ER INTE!
-      // hämtar en användarens uppgifter med namn i koden (Maija) - FUNKAR
-    //   app.get('/users/name', (request, response) => {
-    //     database.all('SELECT * FROM users WHERE name = ?', ['jonkri']).then(user => {
-    //     response.send(user)
-    //   })
-    // })
+setInterval(clearLoans, 6000)
 
-      // hämtar användarens info från adressen
-  //   app.get('/users/:name', (request, response) => {
-  //     response.send(
-  //       {
-  //         "name": request.params.name,
-  //         "password": request.params.password,
-  //         "type": "",
-  //         "email": "",
-  //         "realname": "",
-  //         "address": ""
-  //       }
-  //     )
-  //   })
-  //
-  //   // uppdaterar en användarens uppgifter med namn i koden (Maija)
-  //   app.put('/users/', (request, response) => {
-  //     database.run('UPDATE users SET email=? WHERE name=?', ['nyyy@bytt.net', 'NewTest']).then(() => {
-  //         response.send('bytt')
-  //   })
-  // })
+//lägger in data i loans-tabellen (Yasmine & Sara)
+app.post('/loans', (request, response) => {
+  database.run('Insert into loans values (?, ?, ?, ?)', [request.body.returnDate, request.body.loanDate, request.body.userId, request.body.bookId]).then(loan => {
+    response.status(201).send(loan);
+  })
+})
 
-  // uppdaterar en användarens uppgifter (Maija)
-  app.put('/users/:name', (request, response) => {
-      let name = request.body.name
-      let password = request.body.password
-      let email = request.body.email
-      let realname = request.body.realname
-      let address = request.body.address
-    database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?',
-    [name, password, email, realname, address]).then(updatedUser => {
-        response.send(updatedUser)
+//hämtar vilka lån en viss användare har (Yasmine & Sara)
+app.get('/loans/:name', (request, response) => {
+  database.all('SELECT Books.title, Books.author, Loans.loanDate, Loans.returnDate, Loans.userId FROM Books INNER JOIN Loans ON Books.id=Loans.BookId INNER JOIN Users ON Users.id=Loans.userId WHERE Loans.userId=?', [request.params.name])
+    .then(loan => {
+      response.status(201).send(loan);
+    })
+})
+
+// JOBBAR PÅ HÄR OCH TESTAR, BRY ER INTE!
+// hämtar en användarens uppgifter (Maija)
+app.get('/users/name', (request, response) => {
+  database.all('SELECT * FROM users WHERE name = ?', ['NewTest']).then(user => {
+    response.send(user)
+  })
+})
+
+// hämtar info från adressen
+app.get('/users/:name', (request, response) => {
+  response.send('Hej ' + request.params.name + '!')
+})
+
+// uppdaterar en användarens uppgifter (Maija)
+app.put('/users', (request, response) => {
+  database.run('UPDATE users SET email=? WHERE name=?;', ['bytt@bytt.net', 'NewTest']).then(() => {
+    // uppdaterat kanske
   })
 })
 

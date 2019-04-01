@@ -42,7 +42,7 @@ export default {
         this.returnDate = moment().add(30, 'days').format('LL')
 
           fetch ('http://localhost:3000/loans', {
-          body: '{ "loanDate": "' + this.loanDate + '", "returnDate": "' + this.returnDate +'", "userId": "' + this.userId + '", "bookId": "'
+          body: '{ "returnDate": "' + this.returnDate + '", "loanDate": "' + this.loanDate +'", "userId": "' + this.userId + '", "bookId": "'
           + this.bookId + '"}',
           headers: {
               'Content-Type': 'application/json'
@@ -53,6 +53,13 @@ export default {
           .then (result => {
             console.log('Boken är lånad');
           })
+          Dialog.alert({
+            title: 'Sådär',
+            message: 'Du har nu lånat boken',
+            confirmText: 'Mina sidor',
+            type: 'is-dark',
+          })
+          router.push("/profil")
       }
       else {
         Dialog.alert({

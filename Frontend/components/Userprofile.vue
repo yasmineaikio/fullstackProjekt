@@ -7,7 +7,7 @@
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
    <update-user-button></update-user-button>
-   <button @click="removeAccount()">Radera konto</button>
+   <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
   <div id="profilepagebooks" class="container">
@@ -15,18 +15,16 @@
 
     <table id="booktable">
       <tr>
-        <th>ID</th>
         <th>Titel</th>
         <th>Författare</th>
         <th>Lånedatum</th>
-        <th>Återlämningsdatum</th>
+        <th>Utgångsdatum</th>
       </tr>
       <tr v-for="loan in loans">
-        <td>{{ loan.ID }}</td>
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
-        <td>{{ loan.date }}</td>
-        <td>{{ loan.due }}</td>
+        <td>{{ loan.loanDate }}</td>
+        <td>{{ loan.returnDate }}</td>
       </tr>
     </table>
   </div>
@@ -54,12 +52,13 @@
     data() {
       return {
         name: '',
-        users: null,
-        books: null,
-        loans: null,
+        users: [],
+        books: [],
+        loans: [],
         realname: '',
         address: '',
         inloggad: true,
+        userId: '',
       }
     },
     components: {
@@ -82,19 +81,21 @@
               this.realname = result.find(value => value.name === this.name ).realname
               this.email = result.find(value => value.name === this.name ).email
               this.address = result.find(value => value.name === this.name ).address
+              this.userId = result.find(value => value.name === this.name ).id
+            }).then(() => {
+              //hämtar lån, med viss användare (sara, yasmine)
+              fetch('http://localhost:3000/loans/' + this.userId)
+                .then(response => response.json())
+                .then (result => {
+                  this.loans = result
+                  console.log(this.loans)
+                })
             })
-
 
         fetch('http://localhost:3000/books')
           .then(response => response.json())
           .then (result => {
             this.books = result
-          })
-
-        fetch('http://localhost:3000/loans')
-          .then(response => response.json())
-          .then (result => {
-            this.loans = result
           })
         },
         removeAccount() {
