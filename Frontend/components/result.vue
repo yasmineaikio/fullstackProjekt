@@ -6,6 +6,7 @@
     <p v-else>Visar resultat för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
+    <div class="table_wrap">
     <table class="table is-hoverable">
       <thead>
       <tr>
@@ -33,6 +34,7 @@
     </tbody>
     </table>
   </div>
+</div>
 </template>
 
 <script>
