@@ -54,14 +54,14 @@ export default new Router({
     path: '/admin'
     },
     {
-      component: Contact,
-      name: "contact",
-      path: '/contact'
-      },
-      {
-        component: Manage,
-        name: "managebooks",
-        path: '/managebooks'
-        },
+    component: Contact,
+    name: "contact",
+    path: '/contact'
+    },
+    {
+    component: Manage,
+    name: "managebooks",
+    path: '/managebooks'
+    },
   ]
 })
