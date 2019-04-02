@@ -22,7 +22,6 @@
 
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
-
     <table id="booktable">
       <tr>
         <th>Titel</th>
@@ -45,7 +44,6 @@
       </tr>
     </table>
   </div>
-
   </div>
 </template>
 
