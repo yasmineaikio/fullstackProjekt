@@ -152,10 +152,10 @@ app.get('/books/sort/:sortBook', (request, response) => {
   console.log(request.params.sortBook)
   let book = request.params.sortBook
   database.all('SELECT * FROM books ORDER BY ' + book).then(books => {
-      response.send(books);
-      console.log(books);
-    })
+    response.send(books);
+    console.log(books);
   })
+})
 
 app.delete('/inbox', (req, res) => {
   database.run('DELETE FROM inbox WHERE id=?', [req.body.id]).then(() => {
@@ -202,10 +202,11 @@ app.get('/books', (request, response) => {
       })
     })
   })
+})
 
-    // hämtar böcker utifrån sökord (Sara)
-  app.get('/books/:word', (request, response) => {
-    let searched = request.params.word.split(' ')
+// hämtar böcker utifrån sökord (Sara)
+app.get('/books/:word', (request, response) => {
+  let searched = request.params.word.split(' ')
 
   if (request.query.cat && request.query.lang) {
     database.all('select * from books where category = ? AND language = ? AND (title like ? OR author like ? OR (author like ? AND author like ?)) order by year desc', [request.query.cat, request.query.lang, '%' + request.params.word + '%', '%' + request.params.word + '%', '%' + searched[0] + '%', '%' + searched[1] + '%']).then(books => {
@@ -239,7 +240,6 @@ app.get('/loans', (request, response) => {
     response.send(books);
   })
 })
-
 //Lägger till bok (Annika)
 app.post('/books', (request, response) => {
   let title = request.body.title
@@ -316,9 +316,9 @@ app.get('/users/name', (request, response) => {
 app.put('/users/', (request, response) => {
   database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.name2, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.name]).then(() => {
 
-      database.all('SELECT * FROM users WHERE name=?;', [request.body.name2]).then((user) => {
-        response.send(user);
-        console.log(user)
+    database.all('SELECT * FROM users WHERE name=?;', [request.body.name2]).then((user) => {
+      response.send(user);
+      console.log(user)
     })
 
   })

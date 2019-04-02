@@ -101,4 +101,10 @@ import LoanButton from './loanButton.vue'
 .card {
   height: 100%;
 }
+
+@media (max-width: 500px) {
+   #title h1 {
+    font-size: 2em;
+  }
+}
 </style>
