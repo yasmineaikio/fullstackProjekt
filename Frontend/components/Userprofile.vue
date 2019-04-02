@@ -167,7 +167,7 @@
             })
             this.$cookie.delete('Cookie')
         },
-        updateUserFunc() {
+        updateUserFunc(name, name2, password, email, realname, address) {
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
