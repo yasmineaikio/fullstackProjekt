@@ -4,7 +4,7 @@
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
 
       <div class="navbar-brand" style="position:relative;">
-        <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
+        <a  id="homelink"><router-link to="/">BOOK IT</router-link></a>
         <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span style="height:2px;" class="has-text-white" aria-hidden="true"></span>
@@ -155,7 +155,7 @@ header {
 }
 #homelink {
   position: relative;
-  height: 80%;
+  height: 100%;
 }
 
 #homelink a {
@@ -163,7 +163,7 @@ header {
   color: white;
   padding: 0;
   margin: 2em 0;
-  font-size: 1.5em;
+  font-size: 2.5em;
   font-family: 'Source Serif Pro', sans-serif;
   text-transform: uppercase;
   /* border: inset #999 3px; */
@@ -195,10 +195,10 @@ header {
 
 .logo-subtitle {
   position: absolute;
-  bottom: 0;
+  bottom: -5px;
   font-style: italic;
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   text-shadow: 0px 0px 0.3px #F3C954;
   font-family: 'Lobster Two', cursive;
 }
