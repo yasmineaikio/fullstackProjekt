@@ -80,10 +80,21 @@ button[type=submit] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1em;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 input[type=submit]:hover {
     background-color: #000;
 }
+
+
+@media (max-width: 768px) {
+    form {
+        width: 100%;
+    }
+}
+
 
 </style>

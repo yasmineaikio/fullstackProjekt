@@ -140,6 +140,7 @@ export default {
 
     #formModal {
         width: 500px;
+        margin: 0 auto;
     }
 
     .divider, .banner  {
@@ -153,6 +154,13 @@ export default {
 
     .msg-icon {
         font-size: 1.5em;
+    }
+
+    @media (max-width: 600px) {
+            #formModal {
+            width: auto;
+            margin: 0 auto;
+        }
     }
     
 </style>
