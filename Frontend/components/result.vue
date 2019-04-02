@@ -1,12 +1,12 @@
 <template lang="html">
-  <div>
+  <div class="container">
     <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
     <p v-else>Visar resultat för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
-    <table>
+    <table class="table is-narrow">
       <tr>
         <th>Bokomslag</th>
         <th>Titel</th>
@@ -61,8 +61,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-  table {
+<style scoped>
+  /* table {
     border-collapse: collapse;
     width: 80%;
     margin: auto;
@@ -71,6 +71,6 @@ export default {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-  }
+  } */
 
 </style>

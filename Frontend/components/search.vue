@@ -55,7 +55,7 @@
     data() {
       return {
         searchText: '',
-        advanced: true,
+        advanced: false,
         counter: 0,
         cats: [],
         langs: [],

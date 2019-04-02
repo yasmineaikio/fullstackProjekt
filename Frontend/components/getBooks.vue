@@ -40,7 +40,7 @@
         admin: false,
         books: [],
         sort: null,
-        
+
       }
     },
 
@@ -50,7 +50,7 @@
         .then(result => {
         this.books = result
     })
-    
+
   },
     // sotera böcker (Elin)
     methods: {
@@ -62,7 +62,7 @@
       this.books = result
       })
     }
-  },    
+  },
 
     components: {
       'add-book': AddBook,
