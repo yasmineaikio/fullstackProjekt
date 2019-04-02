@@ -381,4 +381,13 @@ input, td, th {
   }
 }
 
+/* table */
+.table_wrap {
+  overflow-x: auto;
+}
+
+.table td img {
+  height: 5rem;
+}
+
 </style>

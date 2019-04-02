@@ -24,6 +24,7 @@
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
+  <div class="table_wrap">
     <table class="table is-hoverable is-fullwidth">
       <thead>
       <tr>
@@ -50,7 +51,8 @@
     </tbody>
     </table>
   </div>
-  </div>
+ </div>
+</div>
 </template>
 
 <script>
@@ -197,5 +199,7 @@
   overflow-x: scroll;
   width:80%;
 } */
+
+
 
 </style>
