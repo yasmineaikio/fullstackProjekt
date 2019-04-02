@@ -33,6 +33,7 @@
         <th>Lånedatum</th>
         <th>Utgångsdatum</th>
         <th>Dagar kvar</th>
+        <th>Förläng lån</th>
       </tr>
     </thead>
     <tbody>
