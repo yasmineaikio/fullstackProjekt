@@ -267,7 +267,7 @@ footer h3 {
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
 @import url('https://fonts.googleapis.com/css?family=Lobster+Two');
 
-$primary-color: ##F3C954;
+/* $primary-color: ##F3C954; */
 
 p, li, table, input, button, a {
   font-family: 'Work sans', sans-serif;

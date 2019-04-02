@@ -24,7 +24,8 @@
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
-    <table>
+    <table class="table is-hoverable is-fullwidth">
+      <thead>
       <tr>
         <th>Titel</th>
         <th>Författare</th>
@@ -32,6 +33,8 @@
         <th>Utgångsdatum</th>
         <th>Dagar kvar</th>
       </tr>
+    </thead>
+    <tbody>
       <tr v-for="loan in loans">
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
@@ -44,6 +47,7 @@
           v-on:added-to-loans="getUpdatedLoans"
           ></extend-button></td>
       </tr>
+    </tbody>
     </table>
   </div>
   </div>
@@ -55,6 +59,7 @@
   import router from "../router"
   import moment from 'moment'
   import { Dialog } from 'buefy/dist/components/dialog'
+  import { Table } from 'buefy/dist/components/table'
 
   export default {
   created() {
