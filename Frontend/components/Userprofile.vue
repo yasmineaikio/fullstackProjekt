@@ -1,15 +1,26 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
-  <h1>Hej {{ this.name }}!</h1>
+  <h3>Hej {{ this.name }}!</h3>
 
 
   <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
-   <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
+   <button class="button" style="float:right; margin:0 5px;" @click="removeAccountWarning()">Radera konto</button>
   </div>
 
-  <div id="profilepagebooks" class="container">
+  <div class="container is-fluid">
+  <h3>Ändra uppgifter</h3>
+  <input v-model="name2" type="text" placeholder="Användarnamn">
+  <input v-model="password" type="text" placeholder="Lösenord">
+  <input v-model="email" type="text" placeholder="E-mail">
+  <input v-model="realname" type="text" placeholder="Hela namn">
+  <input v-model="address" type="text" placeholder="Adress">
+
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
+  </div>
+
+  <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
     <table id="booktable">
@@ -43,6 +54,7 @@
   import ExtendButton from './extendButton.vue'
   import router from "../router"
   import moment from 'moment'
+  import { Dialog } from 'buefy/dist/components/dialog'
 
   export default {
   created() {
@@ -52,6 +64,7 @@
       return {
         updateUser: 'Ändra uppgifter',
         name: '',
+        name2: '',
         users: [],
         loans: [],
         realname: '',
@@ -108,6 +121,19 @@
                 })
             })
         },
+        removeAccountWarning() {
+          this.$dialog.confirm({
+                title:  'Ta bort kontot',
+                message: 'Är du säker att du vill <b>ta bort</b> ditt konto? Du kan inte ångra detta.',
+                confirmText: 'Ta bort',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => {
+                    this.removeAccount()
+                    this.$toast.open('Ditt konto har tagits bort!')
+                    }
+            })
+        },
         removeAccount() {
           // Låter user ta bort sitt konto (Alex)
           let cookie = {'Cookie': this.$cookie.get('Cookie')}
@@ -122,11 +148,10 @@
                       body: JSON.stringify(cookie),
                       headers: {'Content-type': 'application/json'},
                   }).then(function(response) {
-                      alert("Ditt konto har raderats!")
                       router.push("/")
                   })
                 }else {
-                  alert('Något har gått fel, försök igen senare!')
+                  Dialog.alert('Något har gått fel, försök igen senare!')
                 }
             })
             .then(function(result){
@@ -135,10 +160,10 @@
             this.$cookie.delete('Cookie')
         },
         updateUserFunc() {
-            // // för att ändra den inloggade användares uppgifter (Maija):
+            // för att ändra den inloggade användares uppgifter (Maija):
+            console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
-                // body: JSON.stringify( { name: name, password: password, email: email, realname: realname, address: address} ),
+                body: JSON.stringify( { name: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -165,7 +190,6 @@
   overflow-x: scroll;
   width:80%;
 }
-
 
 
 </style>
