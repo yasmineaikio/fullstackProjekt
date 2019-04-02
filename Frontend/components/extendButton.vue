@@ -1,8 +1,6 @@
 <template lang="html">
   <div>
-    <form>
-      <button v-on:click="extendLoan" type="submit">Förläng lån</button>
-    </form>
+    <button class="button" v-on:click="extendLoan" type="submit">Förläng lån</button>
   </div>
 </template>
 
@@ -51,10 +49,10 @@ export default {
 
 <style lang="css" scoped>
   button {
-    font-size:15px;
+    /* font-size:15px; */
     background-color: #F3C954;
     border: 2px solid transparent;
-    padding: 10px 40px;
+    /* padding: 10px 40px; */
     border-radius: 2px;
   }
   button:hover {
