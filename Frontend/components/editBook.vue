@@ -12,18 +12,35 @@
   </tr>
 
   <tr v-for='book in books' v-bind:key="book">
-    <td><img v-bind:src="book.image"/></td>
+    <td>
+      <img v-bind:src="book.image"/>
+      </td>
     <td>
       <span v-if="click" v-on:click="editable">{{ book.title }}</span>
       <input v-if="!click" type="text" v-model="book.title">
     </td>
-    <td>{{book.author}}</td>
-    <td>{{book.category}}</td>
-    <td>{{book.year}}</td>
-    <td>{{book.language}}</td>
     <td>
-      <span v-if="click">Klicka på det fält du vill redigera</span>
-      <input v-if="!click" v-on:click="editBook(book.title)" type="submit" value="Spara">
+      <span v-if="click" v-on:click="editable">{{ book.author }}</span>
+      <input v-if="!click" type="text" v-model="book.author">
+      </td>
+    <td>
+      <span v-if="click" v-on:click="editable">{{ book.category }}</span>
+      <input v-if="!click" type="text" v-model="book.category">
+    </td>
+    <td>
+      <span v-if="click" v-on:click="editable">{{ book.year }}</span>
+      <input v-if="!click" type="text" v-model="book.year">
+    </td>
+    <td>
+      <span v-if="click">{{ book.language }}</span>
+      <input v-if="!click" type="text" v-model="book.language">
+    </td>
+    <td>
+      <input type="submit" value="Redigera" v-if="click" v-on:click="editable">
+      <input v-if="!click" v-on:click="editBook(book.id, book.title, book.author, book.category, book.year, book.language)" 
+        type="submit" value="Spara">
+      <input v-if="!click" v-on:click="click=true"
+        type="submit" value="Avbryt">
     </td>
   </tr>
   </table>
@@ -41,14 +58,8 @@
 export default {
   data() {
       return {
-        title: null,
-        author: null,
-        category: null,
-        year: null,
-        language: null,
         books: [],
-        id: null,
-        click: true,
+        click: true
       }
     },
     created() {
@@ -62,15 +73,17 @@ export default {
     editable(){
       this.click = false
     },
-    editBook(title){
-      console.log(title)
+    editBook(id, title, author, category, year, language){
+      console.log(id, title, author, category, year, language)
       this.click = true
 
-      fetch('http://localhost:3000/books/'+ title, {
-        body: '{ "title": "' + this.title + '" }',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
+      fetch('http://localhost:3000/books', {
+        body: '{ "title": "' + title + '", "author": "' + author +'", "category": "' 
+              + category + '", "year": "' + year + '","language": "' + language + '", "id": "' 
+              + id + '" }',
+        headers: {
+              'Content-Type': 'application/json'
+        },
         method: 'PUT'
       })
       .then (response => {
@@ -78,6 +91,7 @@ export default {
         .then(response => response.json())
         .then(result => {
           this.books = result
+          console.log(result)
         })
       })
     },
