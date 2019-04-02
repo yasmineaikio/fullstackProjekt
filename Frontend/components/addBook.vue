@@ -115,6 +115,10 @@ export default {
 </script>
 
 <style scoped>
+.box {
+  margin-left: 4em;
+  margin-right: 4em;
+}
 .label, .checkbox {
   height: 20px;
   font-family: 'Work Sans', sans-serif;

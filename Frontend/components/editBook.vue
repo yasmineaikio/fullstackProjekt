@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table_wrap">
     <table class="table is-hoverable">
     <thead>
       <tr>
@@ -110,7 +110,7 @@ h3  {
   padding: 20px
 }
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
   margin: auto;
