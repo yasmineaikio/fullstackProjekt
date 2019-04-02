@@ -262,6 +262,8 @@ footer h3 {
 <style>
 /* från home.vue */
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two');
+
   p, li, table, input, button, a {
     font-family: 'Work sans', sans-serif;
   }
@@ -283,7 +285,7 @@ footer h3 {
 }
 
 h1 {
-    font-size: 1.6em;
+    font-size: 1.8em;
     font-family: 'Source serif pro', serif;
 }
 

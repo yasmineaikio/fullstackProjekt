@@ -1,19 +1,19 @@
 <template>
-  <div class="search">
+  <div class="container search">
     <div class="search-input" v-on:keyup.enter="searchBooks">
       <div id="search">
         <input type="text" placeholder="Sök titel eller författare" id="search-textfield" v-model="searchText" >
         <font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/>
         <!-- <router-link to="/result"><font-awesome-icon icon="search" id="search-icon" v-on:click="searchBooks"/></router-link> -->
       </div>
-      <div class="advanced">
+      <div class="container advanced">
       <p id="advanced-search" v-on:click="showAdvanced">Avancerad sökning
         <span v-if="!advanced"><font-awesome-icon icon="angle-down"/></span>
         <span v-else><font-awesome-icon icon="angle-up"/></span>
       </p>
       <div v-show="advanced">
         <div>
-          <h2>Kategori</h2>
+          <h4>Kategori</h4>
             <ul>
               <li v-for="cat in cats">
                 <input type="radio" v-bind:value="cat" v-model="pickedCat">
@@ -22,7 +22,7 @@
             </ul>
         </div>
         <div>
-          <h2>Språk</h2>
+          <h4>Språk</h4>
             <ul>
               <li v-for="lang in langs">
                 <input type="radio" v-bind:value="lang" v-model="pickedLang">
@@ -55,7 +55,7 @@
     data() {
       return {
         searchText: '',
-        advanced: false,
+        advanced: true,
         counter: 0,
         cats: [],
         langs: [],
@@ -112,7 +112,7 @@
 
 <style scoped>
   .search-input {
-    padding-top: 40px;
+    padding-top: 50px;
   }
   #search-textfield {
     width: 98%;
@@ -129,31 +129,41 @@
     position: relative;
   }
   #search-icon {
-    width: 3%;
+    width: 28px;
+    /*  gör breakpoint för mobil */
     height: 28px;
-    font-size: 16px;
+    /* font-size: 16px; */
     cursor: pointer;
     position: absolute;
-    top: -10px;
+    top: -6px;
     left: 93%;
     color: #F3C954;
   }
   #advanced-search {
     cursor: pointer;
   }
-  h2 {
-    font-size: 18px;
-  }
+
   .advanced * {
+    padding-top: 5px;
     color: white;
     font-family: 'Work Sans', sans-serif;
   }
   .advanced ul {
+    float: none;
     padding-left: 0;
+    padding-bottom: 0;
   }
   .advanced li {
     list-style: none;
     display: inline;
+    text-transform: capitalize;
+  }
+
+  @media (max-width: 600px) {
+          #search-icon {
+          width: 18px;
+          top: -1px;
+      }
   }
 
 </style>
