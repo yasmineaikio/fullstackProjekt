@@ -315,7 +315,7 @@ app.get('/loans/:name', (request, response) => {
 
 //förlänger lån av en viss bok (Sara)
 app.post('/loans/extend', (request, response) => {
-  database.run('Update loans SET returnDate = ?, loanDate = ? WHERE bookId = ?', [request.body.returnDate, request.body.loanDate, request.body.bookId]).then(loan => {
+  database.run('Update loans SET returnDate = ?, loanDate = ? WHERE bookId = ? AND userId = ?', [request.body.returnDate, request.body.loanDate, request.body.bookId, request.body.userId]).then(loan => {
     response.status(201).send(loan);
   })
 })

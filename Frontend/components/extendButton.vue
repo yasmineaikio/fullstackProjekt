@@ -25,7 +25,7 @@ export default {
       this.newReturnDate = moment().add(30, 'days').format('YYYY/MM/DD')
 
         fetch ('http://localhost:3000/loans/extend', {
-        body: '{ "returnDate": "' + this.newReturnDate + '", "loanDate": "' + this.newLoanDate +'", "bookId": "' + this.bookId + '"}',
+        body: '{ "returnDate": "' + this.newReturnDate + '", "loanDate": "' + this.newLoanDate +'", "bookId": "' + this.bookId + '", "userId": "' + this.userId + '"}',
         headers: {
             'Content-Type': 'application/json'
         },
