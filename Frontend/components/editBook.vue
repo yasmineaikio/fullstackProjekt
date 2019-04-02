@@ -22,7 +22,8 @@
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
     <td>
-      <input v-if="!click" v-on:click="editBook(book.title)" type="button" value="Redigera">
+      <span v-if="click">Klicka på det fält du vill redigera</span>
+      <input v-if="!click" v-on:click="editBook(book.title)" type="submit" value="Spara">
     </td>
   </tr>
   </table>
