@@ -192,7 +192,12 @@ h2 {
 
 h3 {
   font-size: 1.4em;
-  font-family: 'Source serif pro', sans-serif;
+  font-family: 'Source serif pro', serif;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-family: 'Source serif pro', serif;
 }
 
 /*  från App.vues scoped-kod */
