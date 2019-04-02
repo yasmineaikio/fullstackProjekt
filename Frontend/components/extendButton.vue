@@ -40,7 +40,7 @@ export default {
         Dialog.alert({
           title: 'Klart!',
           message: 'Du har nu förlängt lånet av boken',
-          type: 'is-dark',
+          type: 'is-primary',
         })
     }
   }

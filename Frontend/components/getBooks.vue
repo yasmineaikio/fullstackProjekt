@@ -2,8 +2,9 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-
-  <table>
+  
+  <table class="table is-hoverable">
+  <thead>
   <tr>
     <th>Bokomslag</th>
     <th v-on:click = "sortBooks('title')">Titel</th>
@@ -12,8 +13,9 @@
     <th v-on:click = "sortBooks('year')">Utgivningår</th>
     <th v-on:click = "sortBooks('language')">Språk</th>
     <th v-if="!admin">Låna</th>
-    
   </tr>
+  </thead>
+  <tbody>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
     <td>{{book.title}}</td>
@@ -23,7 +25,9 @@
     <td>{{book.language}}</td>
     <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
   </tr>
+  </tbody>
   </table>
+  
   </div>
 </template>
 <script>
@@ -39,6 +43,8 @@
         language: '',
         admin: false,
         books: [],
+        sort: null,
+
       }
     },
 
@@ -48,7 +54,7 @@
         .then(result => {
         this.books = result
     })
-    
+
   },
     // sotera böcker (Elin)
     methods: {
@@ -60,7 +66,7 @@
       this.books = result
       })
     }
-  },    
+  },
 
     components: {
       'add-book': AddBook,
@@ -87,13 +93,16 @@
 .container {
  margin: 2em;
 }
+/* .table th {
+  background-color: #F5F5F5;
+} */
 h3  {
   width: 80%;
   margin: auto;
   padding: 20px
 }
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
   margin: auto;
@@ -103,4 +112,6 @@ td, th {
   text-align: left;
   padding: 8px;
 }
+
+
 </style>

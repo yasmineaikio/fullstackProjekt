@@ -1,12 +1,13 @@
 <template lang="html">
-  <div>
+  <div class="container">
     <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
     <p v-else>Visar resultat för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
     </p>
-    <table>
+    <table class="table is-hoverable">
+      <thead>
       <tr>
         <th>Bokomslag</th>
         <th>Titel</th>
@@ -16,6 +17,8 @@
         <th>Språk</th>
         <th>Låna</th>
       </tr>
+    </thead>
+    <tbody>
       <tr v-for="book in books">
         <td><img v-bind:src="book.image"/></td>
         <td>{{book.title}}</td>
@@ -27,6 +30,7 @@
           v-bind:book-id="book.id"
           ></loan-button></td>
       </tr>
+    </tbody>
     </table>
   </div>
 </template>
@@ -61,8 +65,8 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
-  table {
+<style scoped>
+  /* table {
     border-collapse: collapse;
     width: 80%;
     margin: auto;
@@ -71,6 +75,6 @@ export default {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-  }
+  } */
 
 </style>
