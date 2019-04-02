@@ -170,7 +170,7 @@
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { name: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },

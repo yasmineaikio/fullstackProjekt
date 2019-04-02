@@ -2,7 +2,7 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-  
+  <div class="table_wrap">
   <table class="table is-hoverable">
   <thead>
   <tr>
@@ -27,7 +27,7 @@
   </tr>
   </tbody>
   </table>
-  
+  </div>
   </div>
 </template>
 <script>
@@ -112,6 +112,7 @@ td, th {
   text-align: left;
   padding: 8px;
 }
+
 
 
 </style>
