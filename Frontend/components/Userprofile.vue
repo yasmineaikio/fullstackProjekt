@@ -78,6 +78,7 @@
     },
     methods: {
       getUpdatedLoans(loans){
+        //tar emot om något lån har förlängts (Sara)
         this.loans = loans
       },
       // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
