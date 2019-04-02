@@ -7,7 +7,7 @@
   <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
-   <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
+   <button class="button" style="float:right; margin:0 5px;" @click="removeAccountWarning()">Radera konto</button>
   </div>
 
   <div class="container is-fluid">
@@ -37,7 +37,7 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td @click="countDown()">3</td>
+        <td @click="countDown(loan.returnDate)">{{count}}</td>
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
@@ -55,6 +55,7 @@
   import ExtendButton from './extendButton.vue'
   import router from "../router"
   import moment from 'moment'
+  import { Dialog } from 'buefy/dist/components/dialog'
 
   export default {
   created() {
@@ -71,8 +72,12 @@
         address: '',
         inloggad: true,
         userId: '',
+<<<<<<< HEAD
         users: [],
         loans: [],
+=======
+        count: '',
+>>>>>>> 0947fca364dd9e3f0ff7386446ef47d5f04ea47f
       }
     },
     components: {
@@ -81,20 +86,16 @@
     },
     methods: {
       getUpdatedLoans(loans){
+        //tar emot om något lån har förlängts (Sara)
         this.loans = loans
       },
       // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
-      countDown()  {
+      countDown(a)  {
         fetch('http://localhost:3000/loans/')
           .then(response => response.json())
           .then (result => {
-            console.log(result)
-            const todaysDate = moment().format('YYYY/MM/DD')
-            let returnDate = moment('2019,04,08');
-
-            let countDown = returnDate.diff(todaysDate, 'days');
-
-            console.log(countDown)
+            let todaysDate = moment().format('YYYY/MM/DD')
+            this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
           })
         },
       fetchresult() {
@@ -123,6 +124,20 @@
                 })
             })
         },
+        // Låter user ta bort sitt konto. Får en varning först (Alex)
+        removeAccountWarning() {
+          this.$dialog.confirm({
+                title:  'Ta bort kontot',
+                message: 'Är du säker att du vill <b>ta bort</b> ditt konto? Du kan inte ångra detta.',
+                confirmText: 'Ta bort',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => {
+                    this.removeAccount()
+                    this.$toast.open('Ditt konto har tagits bort!')
+                    }
+            })
+        },
         removeAccount() {
           // Låter user ta bort sitt konto (Alex)
           let cookie = {'Cookie': this.$cookie.get('Cookie')}
@@ -137,11 +152,10 @@
                       body: JSON.stringify(cookie),
                       headers: {'Content-type': 'application/json'},
                   }).then(function(response) {
-                      alert("Ditt konto har raderats!")
                       router.push("/")
                   })
                 }else {
-                  alert('Något har gått fel, försök igen senare!')
+                  Dialog.alert('Något har gått fel, försök igen senare!')
                 }
             })
             .then(function(result){
