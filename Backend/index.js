@@ -202,7 +202,6 @@ app.get('/books', (request, response) => {
       })
     })
   })
-})
 
 // hämtar böcker utifrån sökord (Sara)
 app.get('/books/:word', (request, response) => {
