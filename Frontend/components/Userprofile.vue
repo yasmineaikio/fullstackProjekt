@@ -121,6 +121,7 @@
                 })
             })
         },
+        // Låter user ta bort sitt konto. Får en varning först (Alex)
         removeAccountWarning() {
           this.$dialog.confirm({
                 title:  'Ta bort kontot',
