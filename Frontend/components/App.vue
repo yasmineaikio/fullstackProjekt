@@ -2,7 +2,7 @@
 <div id="container">
   <header>
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
+      <div class="navbar-brand" style="position:relative;">
         <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
         <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
@@ -245,6 +245,17 @@ footer h3 {
   color:#3b5998;
 }
 
+@media (max-width:500px) {
+    #homelink {
+    font-size: 0.9em;
+    width: 50%;
+  }
+  .logo-subtitle {
+    bottom: -12px;
+    font-size: 11px;
+  }
+}
+
 </style>
 
 
@@ -357,4 +368,5 @@ input, td, th {
     right: 10px;
   }
 }
+
 </style>
