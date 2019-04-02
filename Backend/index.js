@@ -323,12 +323,12 @@ app.put('/users/', (request, response) => {
   })
 })
 
-// uppdaterar en användarens uppgifter (Maija)
-app.put('/users/:name', (request, response) => {
-  database.run('UPDATE users SET email=? WHERE name=?;', [name, password, email, realname, address]).then((user) => {
-    response.send(user)
-  })
-})
+// // uppdaterar en användarens uppgifter (Maija)
+// app.put('/users/:name', (request, response) => {
+//   database.run('UPDATE users SET email=? WHERE name=?;', [name, password, email, realname, address]).then((user) => {
+//     response.send(user)
+//   })
+// })
 
 
 
