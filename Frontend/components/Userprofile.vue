@@ -72,12 +72,9 @@
         address: '',
         inloggad: true,
         userId: '',
-<<<<<<< HEAD
         users: [],
         loans: [],
-=======
         count: '',
->>>>>>> 0947fca364dd9e3f0ff7386446ef47d5f04ea47f
       }
     },
     components: {

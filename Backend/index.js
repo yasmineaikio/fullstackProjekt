@@ -302,7 +302,7 @@ app.put('/loans/extend', (request, response) => {
 // hämtar en användarens uppgifter (Maija)
 app.get('/users/name', (request, response) => {
   database.all('SELECT * FROM users WHERE name = ?', ['NewTest']).then(user => {
-    response.send(user);
+    response.send(user)
   })
 })
 
@@ -311,19 +311,26 @@ app.get('/users/name', (request, response) => {
 //   response.send('Hej ' + request.params.name + '!')
 // })
 
-
+  // database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
+  // [title, author, category, year, language, image, request.params.title])
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/', (request, response) => {
   database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.name2, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.name]).then(() => {
 
     database.all('SELECT * FROM users WHERE name=?;', [request.body.name2]).then((user) => {
       response.send(user);
-      console.log(user);
+      console.log(user)
     })
+
+// uppdaterar en användarens uppgifter (Maija)
+app.put('/users/:name', (request, response) => {
+  database.run('UPDATE users SET email=? WHERE name=?;', [name, password, email, realname, address]).then((user) => {
+    response.send(user)
   })
 })
 
 
+
 app.listen(3000, function() {
   console.log('The server is running!')
-})
+});
