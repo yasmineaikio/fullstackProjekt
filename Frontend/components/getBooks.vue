@@ -2,7 +2,7 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-
+  <div class="table is-narrow">
   <table>
   <tr>
     <th>Bokomslag</th>
@@ -12,7 +12,6 @@
     <th v-on:click = "sortBooks('year')">Utgivningår</th>
     <th v-on:click = "sortBooks('language')">Språk</th>
     <th v-if="!admin">Låna</th>
-    
   </tr>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
@@ -24,6 +23,7 @@
     <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
   </tr>
   </table>
+  </div>
   </div>
 </template>
 <script>
@@ -39,6 +39,8 @@
         language: '',
         admin: false,
         books: [],
+        sort: null,
+        
       }
     },
 
@@ -87,13 +89,16 @@
 .container {
  margin: 2em;
 }
+.table th {
+  background-color: #F5F5F5;
+}
 h3  {
   width: 80%;
   margin: auto;
   padding: 20px
 }
 table {
-  font-family: arial, sans-serif;
+  font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
   margin: auto;
@@ -103,4 +108,6 @@ td, th {
   text-align: left;
   padding: 8px;
 }
+
+
 </style>

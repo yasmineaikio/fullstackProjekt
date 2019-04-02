@@ -2,6 +2,7 @@
 <div id="container">
   <header>
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
+
       <div class="navbar-brand" style="position:relative;">
         <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
         <span class="logo-subtitle">Read all about it</span>
@@ -23,7 +24,7 @@
                 <li v-if="this.$cookie.get('adminCookie')"><router-link to="/admin">Administration</router-link></li>
               </ul>
               <a v-if="this.$cookie.get('Cookie') || this.$cookie.get('adminCookie')"><logout class="logout-btn"></logout></a>
-              <a class="button is-warning" v-else><router-link class="login-btn" to="/login">Logga in</router-link></a>
+              <a class="button is-warning" style="background:#F3C954;" v-else><router-link class="login-btn" to="/login">Logga in</router-link></a>
             </div>
           </div>
         </div>
@@ -205,8 +206,9 @@ header {
   color: #fff;
 }
 .login-btn, button {
-  /* background-color: #F3C954; */
+  background-color: #F3C954;
   color: black !important;
+  border:0;
   /* border-top: 4px solid darkseagreen; */
 }
 .login-btn:hover:before {

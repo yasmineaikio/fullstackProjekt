@@ -147,7 +147,7 @@ app.get('/inbox', (req, res) => {
 })
 
 
-// sotering av böcker (Elin)
+// sortering av böcker (Elin)
 app.get('/books/sort/:sortBook', (request, response) => {
   console.log(request.params.sortBook)
   let book = request.params.sortBook
@@ -255,15 +255,15 @@ app.post('/books', (request, response) => {
 })
 
 //Ändra tillagd bok (Annika)
-app.put('/books/:title', (request, response) => {
+app.put('/books', (request, response) => {
   let title = request.body.title
   let author = request.body.author
   let category = request.body.category
   let year = request.body.year
   let language = request.body.language
-  let image = request.body.image
-  database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
-    [title, author, category, year, language, image, request.params.title]).then(books => {
+  let id = request.body.id
+  database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=? WHERE id=?',
+    [title, author, category, year, language, id]).then(books => {
     response.send(books)
   })
 })
@@ -302,14 +302,15 @@ app.put('/loans/extend', (request, response) => {
 // hämtar en användarens uppgifter (Maija)
 app.get('/users/name', (request, response) => {
   database.all('SELECT * FROM users WHERE name = ?', ['NewTest']).then(user => {
-    response.send(user);
+    response.send(user)
   })
 })
 
 // // hämtar info från adressen
 // app.get('/users/:name', (request, response) => {
-//   response.send('Hej ' + request.params.name + '!');
+//   response.send('Hej ' + request.params.name + '!')
 // })
+
 
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/', (request, response) => {
@@ -319,9 +320,17 @@ app.put('/users/', (request, response) => {
       response.send(user);
       console.log(user)
     })
-
   })
 })
+
+// // uppdaterar en användarens uppgifter (Maija)
+// app.put('/users/:name', (request, response) => {
+//   database.run('UPDATE users SET email=? WHERE name=?;', [name, password, email, realname, address]).then((user) => {
+//     response.send(user)
+//   })
+// })
+
+
 
 app.listen(3000, function() {
   console.log('The server is running!')
