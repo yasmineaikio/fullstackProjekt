@@ -27,7 +27,7 @@ export default {
         headers: {
             'Content-Type': 'application/json'
         },
-        method: 'POST'
+        method: 'PUT'
       })
         .then (response => {
           fetch('http://localhost:3000/loans/' + this.userId)
