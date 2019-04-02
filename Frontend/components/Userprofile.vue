@@ -29,12 +29,19 @@
         <th>Författare</th>
         <th>Lånedatum</th>
         <th>Utgångsdatum</th>
+        <th>Dagar kvar</th>
       </tr>
       <tr v-for="loan in loans">
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
+        <td @click="countDown()">3</td>
+        <td><extend-button
+          v-bind:book-id="loan.bookId"
+          v-bind:user-id="loan.userId"
+          v-on:added-to-loans="getUpdatedLoans"
+          ></extend-button></td>
       </tr>
     </table>
   </div>
@@ -44,7 +51,9 @@
 
 <script>
   import UpdateUserButton from './updateUserButton.vue'
+  import ExtendButton from './extendButton.vue'
   import router from "../router"
+  import moment from 'moment'
 
   export default {
   created() {
@@ -56,7 +65,6 @@
         name: '',
         name2: '',
         users: [],
-        books: [],
         loans: [],
         realname: '',
         address: '',
@@ -66,8 +74,26 @@
     },
     components: {
       'update-user-button': UpdateUserButton,
+      'extend-button': ExtendButton,
     },
     methods: {
+      getUpdatedLoans(loans){
+        this.loans = loans
+      },
+      // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
+      countDown()  {
+        fetch('http://localhost:3000/loans/')
+          .then(response => response.json())
+          .then (result => {
+            console.log(result)
+            const todaysDate = moment().format('YYYY/MM/DD')
+            let returnDate = moment('2019,04,08');
+
+            let countDown = returnDate.diff(todaysDate, 'days');
+
+            console.log(countDown)
+          })
+        },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -91,15 +117,8 @@
                 .then(response => response.json())
                 .then (result => {
                   this.loans = result
-                  console.log(this.loans)
                 })
             })
-
-        fetch('http://localhost:3000/books')
-          .then(response => response.json())
-          .then (result => {
-            this.books = result
-          })
         },
         removeAccount() {
           // Låter user ta bort sitt konto (Alex)
@@ -145,7 +164,6 @@
                     })
               })
             }
-
     }
   }
 </script>

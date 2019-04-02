@@ -5,33 +5,14 @@
 
   <table>
   <tr>
-    <!-- <th>Bokomslag</th>
-    <th>Titel</th>
-    <th>Författare</th>
-    <th>Kategori</th>
-    <th>Utgivningår</th>
-    <th>Språk</th> -->
-
+    <th>Bokomslag</th>
     <th v-on:click = "sortBooks('title')">Titel</th>
     <th v-on:click = "sortBooks('author')">Författare</th>
     <th v-on:click = "sortBooks('category')">Kategori</th>
     <th v-on:click = "sortBooks('year')">Utgivningår</th>
     <th v-on:click = "sortBooks('language')">Språk</th>
-  </tr>
     <th v-if="!admin">Låna</th>
-    <th v-if="admin">Ändra</th>
-    <th v-if="admin">Ta bort</th>
-    <th>Språk</th>
-    <th>Låna</th>
     
-
-    <!-- <th v-on"sortBooks('title')">Titel</th>
-    <th v-on"sortBooks('author')">Författare</th>
-    <th v-on"sortBooks('cate')">Kategori</th>
-    <th v-on"sortBooks('year')">Utgivningår</th>
-    <th v-on"sortBooks('lang')">Språk</th>
-  </tr> -->
-  
   </tr>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
@@ -61,7 +42,6 @@
       }
     },
 
-
     created() {
         fetch('http://localhost:3000/books')
         .then(response => response.json())
@@ -72,14 +52,13 @@
   },
     // sotera böcker (Elin)
     methods: {
-      sortBooks(katt) {
-        console.log(katt);
-      fetch('http://localhost:3000/books/sort/' + katt)
+      sortBooks(s) {
+        console.log(s);
+      fetch('http://localhost:3000/books/sort/' + s)
       .then(response => response.json())
       .then(result => {
       this.books = result
-    })
-    // console.log(Hej);
+      })
     }
   },    
 
@@ -87,26 +66,6 @@
       'add-book': AddBook,
       'loan-button': LoanButton
     },
-
-    // methods: {
-    //   getBooks() {
-    //     fetch('http://localhost:3000/books')
-    //     .then(function(response) {
-    //       return response.json()
-    //     })
-    //     .then(function(result){
-    //       console.log(result)
-    //     })
-    //   }
-    // },
-
-   //  created() {
-   //      fetch('http://localhost:3000/books')
-   //      .then(response => response.json())
-   //      .then(result => {
-   //      this.books = result
-   //  })
-   // },
 
     mounted() {
       // Kollar om inloggad user är ADMIN eller inte (Alex)

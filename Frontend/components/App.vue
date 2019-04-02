@@ -42,6 +42,7 @@
     import EventBus from '../eventbus.js'
     import Admin from './admin.vue'
     import EditBook from './editBook.vue'
+    import ExtendButton from './extendButton.vue'
 
   export default {
     data () {
@@ -67,6 +68,7 @@
       'result': Result,
       'admin': Admin,
       'edit-book': EditBook,
+      'extend-button': ExtendButton,
     },
     router,
     methods: {
