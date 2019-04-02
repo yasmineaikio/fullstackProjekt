@@ -11,7 +11,7 @@
     <div class="columns">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div>
-                <router-link class="button is-light is-outlined" to="/managebooks">Lägg till nya böcker</router-link>
+                <router-link class="button is-light is-outlined" to="/books">Lägg till / redigera böcker</router-link>
                 <a @click="isOpen = !isOpen" aria-controls="contentIdForA11y2" class="inbox-btn button is-warning">Inbox(<span>{{antal}}</span>)</a>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     <div class="column is-half has-text-centered">
                         <div class="holder left">
                             <h3 id="h3" class=" has-background-grey-dark has-text-white is-size-4 has-text-weight-bold">Alla medlemmar</h3>
-                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <span class="user-type"> ({{user.type}}) </span> <a @click="promote(user.name, user.id, user.type)" class="button is-dark is-outlined user-update">Promota</a><a class="button is-danger is-outlined user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
+                            <p v-for=" user in allUsers" class="is-size-5  has-text-left">&#9737; {{user.name}} <span class="user-type"> ({{user.type}}) </span> <a @click="promote(user.name, user.id, user.type)" class="button is-dark is-outlined user-update">Befordra</a><a class="button is-danger is-outlined user-delete" @click="confirmCustomDelete(user.name, user.id)">Ta bort</a></p>
                         </div>
                     </div>
                     <div class="column is-half has-text-centered">
@@ -242,7 +242,7 @@ export default {
             }
         },         
         getInfo() {
-            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays (Alex)
+            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays
             fetch('http://localhost:3000/login')
             .then(response => response.json())
             .then (result => {

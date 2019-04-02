@@ -24,6 +24,7 @@
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
+  <div class="table_wrap">
     <table class="table is-hoverable is-fullwidth">
       <thead>
       <tr>
@@ -32,6 +33,7 @@
         <th>Lånedatum</th>
         <th>Utgångsdatum</th>
         <th>Dagar kvar</th>
+        <th>Förläng lån</th>
       </tr>
     </thead>
     <tbody>
@@ -50,7 +52,8 @@
     </tbody>
     </table>
   </div>
-  </div>
+ </div>
+</div>
 </template>
 
 <script>
@@ -168,7 +171,7 @@
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { name: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -197,5 +200,7 @@
   overflow-x: scroll;
   width:80%;
 } */
+
+
 
 </style>
