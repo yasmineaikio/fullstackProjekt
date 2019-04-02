@@ -1,6 +1,7 @@
 <template>
 <div>
-    <table>
+    <table class="table is-hoverable">
+    <thead>
   <tr>
     <th>Bokomslag</th>
     <th>Titel</th>
@@ -10,7 +11,8 @@
     <th>Språk</th>
     <th>Redigera</th>
   </tr>
-
+  </thead>
+  <tbody>
   <tr v-for='book in books' v-bind:key="book">
     <td>
       <img v-bind:src="book.image"/>
@@ -43,6 +45,7 @@
         type="submit" value="Avbryt">
     </td>
   </tr>
+  </tbody>
   </table>
 <!--     <form>
     <div class="field">

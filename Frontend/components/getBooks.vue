@@ -2,8 +2,9 @@
   <div class="container">
   <add-book v-if="admin"></add-book>
   <search-field></search-field>
-  <div class="table is-narrow">
-  <table>
+  
+  <table class="table is-hoverable">
+  <thead>
   <tr>
     <th>Bokomslag</th>
     <th v-on:click = "sortBooks('title')">Titel</th>
@@ -13,6 +14,8 @@
     <th v-on:click = "sortBooks('language')">Språk</th>
     <th v-if="!admin">Låna</th>
   </tr>
+  </thead>
+  <tbody>
   <tr v-for='book in books'>
     <td><img v-bind:src="book.image"/></td>
     <td>{{book.title}}</td>
@@ -22,8 +25,9 @@
     <td>{{book.language}}</td>
     <td v-if="!admin"><loan-button v-bind:book-id="book.id"></loan-button></td>
   </tr>
+  </tbody>
   </table>
-  </div>
+  
   </div>
 </template>
 <script>
@@ -89,9 +93,9 @@
 .container {
  margin: 2em;
 }
-.table th {
+/* .table th {
   background-color: #F5F5F5;
-}
+} */
 h3  {
   width: 80%;
   margin: auto;
