@@ -23,12 +23,8 @@
 
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
-<<<<<<< HEAD
-    <table id="booktable">
-=======
 
     <table>
->>>>>>> 2a809753be6564bf5ed746681725f2f5f09fdda7
       <tr>
         <th>Titel</th>
         <th>Författare</th>
@@ -165,10 +161,9 @@
         },
         updateUserFunc() {
             // för att ändra den inloggade användares uppgifter (Maija):
-            let newInfo =  { 'name': this.name, 'newname': this.name2, 'password': this.password, 'email': this.email, 'realname': this.realname, 'address': this.address}
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify(newInfo),
+                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
