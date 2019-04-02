@@ -15,15 +15,15 @@
     <td><img v-bind:src="book.image"/></td>
     <td>
       <span v-if="click" v-on:click="editable">{{ book.title }}</span>
-    <input v-if="unClick" type="text" v-model="book.title">
-            
-            </td>
+      <input v-if="!click" type="text" v-model="book.title">
+    </td>
     <td>{{book.author}}</td>
     <td>{{book.category}}</td>
     <td>{{book.year}}</td>
     <td>{{book.language}}</td>
-    <td><input v-if="unClick" v-on:click="editBook(book.title)"
-              type="button" value="Redigera"></td>
+    <td>
+      <input v-if="!click" v-on:click="editBook(book.title)" type="button" value="Redigera">
+    </td>
   </tr>
   </table>
 <!--     <form>
@@ -47,7 +47,6 @@ export default {
         language: null,
         books: [],
         id: null,
-        unClick: false,
         click: true,
       }
     },
@@ -60,12 +59,10 @@ export default {
   },
   methods: {
     editable(){
-      this.unClick = true
       this.click = false
     },
     editBook(title){
       console.log(title)
-      this.unClick = false
       this.click = true
 
       fetch('http://localhost:3000/books/'+ title, {
