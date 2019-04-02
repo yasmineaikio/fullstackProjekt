@@ -4,6 +4,7 @@
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
+        <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span style="height:2px;" class="has-text-white" aria-hidden="true"></span>
           <span style="height:2px;" class="has-text-warning" aria-hidden="true"></span>
@@ -150,16 +151,56 @@ header {
   background-color: #7A7A7A;
   color: white;
 }
+#homelink {
+  position: relative;
+  height: 80%;
+}
+
 #homelink a {
   text-decoration: none;
   color: white;
-  /* padding: 10px 20px; */
+  padding: 0;
   margin: 2em 0;
   font-size: 1.5em;
   font-family: 'Source Serif Pro', sans-serif;
   text-transform: uppercase;
   /* border: inset #999 3px; */
 }
+#homelink:before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: 75%;
+  bottom: 50%;
+  border-top: 4px solid #F3C954;
+  border-left: 4px solid #F3C954;
+  border-color: #F3C954;
+  background-color: none !important;
+}
+#homelink:after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  right: -15px;
+  left: 75%;
+  top: 50%;
+  border-bottom: 4px solid #F3C954;
+  border-right: 4px solid #F3C954;
+  border-color: #F3C954;
+  background-color: none !important;
+}
+
+.logo-subtitle {
+  position: absolute;
+  bottom: 0;
+  font-style: italic;
+  margin: 0;
+  font-size: 16px;
+  text-shadow: 0px 0px 0.3px #F3C954;
+  font-family: 'Lobster Two', cursive;
+}
+
 #homelink:active {
   color: #fff;
 }
