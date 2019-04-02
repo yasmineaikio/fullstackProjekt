@@ -25,7 +25,7 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td @click="countDown()"></td>
+        <td @click="countDown()">3</td>
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
@@ -58,7 +58,6 @@
         address: '',
         inloggad: true,
         userId: '',
-        returnDate: ''
       }
     },
     components: {
@@ -69,6 +68,20 @@
       getUpdatedLoans(loans){
         this.loans = loans
       },
+      // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
+      countDown()  {
+        fetch('http://localhost:3000/loans/')
+          .then(response => response.json())
+          .then (result => {
+            console.log(result)
+            const todaysDate = moment().format('YYYY/MM/DD')
+            let returnDate = moment('2019,04,08');
+
+            let countDown = returnDate.diff(todaysDate, 'days');
+
+            console.log(countDown)
+          })
+        },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -121,11 +134,6 @@
             })
             this.$cookie.delete('Cookie')
         },
-        countDown()  {
-                const todaysDate = moment().format('YYYY/MM/DD')
-                const countDown = returnDate.diff(todaysDate, 'days');
-              console.log(countDown)
-          }
         updateUserFunc() {
             // // för att ändra den inloggade användares uppgifter (Maija):
             fetch('http://localhost:3000/users', {
