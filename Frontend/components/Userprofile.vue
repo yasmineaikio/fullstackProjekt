@@ -42,7 +42,7 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td @click="countDown(loan.returnDate)">{{count}}</td>
+        <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td>
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
@@ -62,7 +62,6 @@
   import router from "../router"
   import moment from 'moment'
   import { Dialog } from 'buefy/dist/components/dialog'
-  import { Table } from 'buefy/dist/components/table'
 
   export default {
   created() {
@@ -81,7 +80,7 @@
         userId: '',
         users: [],
         loans: [],
-        count: '',
+        count: 'Dagar kvar:',
       }
     },
     components: {
