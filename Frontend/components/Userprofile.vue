@@ -80,6 +80,7 @@
     },
     methods: {
       getUpdatedLoans(loans){
+        //tar emot om något lån har förlängts (Sara)
         this.loans = loans
       },
       // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
@@ -117,6 +118,7 @@
                 })
             })
         },
+        // Låter user ta bort sitt konto. Får en varning först (Alex)
         removeAccountWarning() {
           this.$dialog.confirm({
                 title:  'Ta bort kontot',
