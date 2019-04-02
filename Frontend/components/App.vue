@@ -171,7 +171,7 @@ header {
 #homelink:before {
   content: '';
   position: absolute;
-  top: -10px;
+  top: -3px;
   left: -10px;
   right: 75%;
   bottom: 50%;
