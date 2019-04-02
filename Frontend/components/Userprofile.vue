@@ -1,6 +1,6 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
-  <h1>Hej {{ this.name }}!</h1>
+  <h3>Hej {{ this.name }}!</h3>
 
 
   <div class="container is-fluid">
@@ -9,7 +9,18 @@
    <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
   </div>
 
-  <div id="profilepagebooks" class="container">
+  <div class="container is-fluid">
+  <h3>Ändra uppgifter</h3>
+  <input v-model="name2" type="text" placeholder="Användarnamn">
+  <input v-model="password" type="text" placeholder="Lösenord">
+  <input v-model="email" type="text" placeholder="E-mail">
+  <input v-model="realname" type="text" placeholder="Hela namn">
+  <input v-model="address" type="text" placeholder="Adress">
+
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
+  </div>
+
+  <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
     <table id="booktable">
@@ -43,6 +54,7 @@
       return {
         updateUser: 'Ändra uppgifter',
         name: '',
+        name2: '',
         users: [],
         books: [],
         loans: [],
@@ -116,10 +128,10 @@
             this.$cookie.delete('Cookie')
         },
         updateUserFunc() {
-            // // för att ändra den inloggade användares uppgifter (Maija):
+            // för att ändra den inloggade användares uppgifter (Maija):
+            console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { name: this.name, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
-                // body: JSON.stringify( { name: name, password: password, email: email, realname: realname, address: address} ),
+                body: JSON.stringify( { name: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -147,7 +159,6 @@
   overflow-x: scroll;
   width:80%;
 }
-
 
 
 </style>
