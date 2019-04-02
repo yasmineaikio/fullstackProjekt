@@ -311,8 +311,7 @@ app.get('/users/name', (request, response) => {
 //   response.send('Hej ' + request.params.name + '!')
 // })
 
-  // database.run('UPDATE books SET title=?, author=?, category=?, year=?, language=?, image=? WHERE title=?',
-  // [title, author, category, year, language, image, request.params.title])
+
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/', (request, response) => {
   database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.name2, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.name]).then(() => {
@@ -321,6 +320,8 @@ app.put('/users/', (request, response) => {
       response.send(user);
       console.log(user)
     })
+  })
+})
 
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/:name', (request, response) => {

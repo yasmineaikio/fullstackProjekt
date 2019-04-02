@@ -162,9 +162,10 @@
         },
         updateUserFunc() {
             // för att ändra den inloggade användares uppgifter (Maija):
+            let newInfo =  { 'name': this.name, 'newname': this.name2, 'password': this.password, 'email': this.email, 'realname': this.realname, 'address': this.address}
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify(newInfo),
                 headers: {
                   'Content-Type': 'application/json'
                 },
