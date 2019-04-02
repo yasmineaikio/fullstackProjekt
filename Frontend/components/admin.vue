@@ -11,7 +11,7 @@
     <div class="columns">
         <div class="column is-full has-background-grey-dark has-text-white-bis">
             <div>
-                <router-link class="button is-light is-outlined" to="/books">Lägg till / redigera böcker</router-link>
+                <router-link class="button is-light is-outlined" to="/managebooks">Lägg till / redigera böcker</router-link>
                 <a @click="isOpen = !isOpen" aria-controls="contentIdForA11y2" class="inbox-btn button is-warning">Inbox(<span>{{antal}}</span>)</a>
             </div>
         </div>
