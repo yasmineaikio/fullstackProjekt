@@ -242,7 +242,7 @@ export default {
             }
         },         
         getInfo() {
-            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays (Alex)
+            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays
             fetch('http://localhost:3000/login')
             .then(response => response.json())
             .then (result => {

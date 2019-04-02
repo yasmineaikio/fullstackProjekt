@@ -1,67 +1,69 @@
 <template>
-<div>
+  <div>
     <div class="box">
-  <h1 class="title is-4">
-    Nya böcker blir tillgängliga för utlåning genom att fylla i nedan formulär.
-    </h1>
-<form>
-    <div class="field">
-      <label class="label">Titel</label>
-      <div class="control">
-        <input v-model="title" class="input" type="text" placeholder="Titel" required>
+      <h1 class="title is-4">
+        Nya böcker blir tillgängliga för utlåning genom att fylla i nedan formulär.
+      </h1>
+    <form>
+      <div class="field">
+        <label class="label">Titel</label>
+        <div class="control">
+          <input v-model="title" class="input" type="text" placeholder="Titel" required>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label">Författare</label>
-      <div class="control">
-        <input v-model="author" class="input" type="text" placeholder="Författare" required>
+      <div class="field">
+        <label class="label">Författare</label>
+        <div class="control">
+          <input v-model="author" class="input" type="text" placeholder="Författare" required>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label">Kategori</label>
-      <div class="control">
-        <input v-model="category" class="input" type="text" placeholder="Kategori" required>
+      <div class="field">
+        <label class="label">Kategori</label>
+        <div class="control">
+          <input v-model="category" class="input" type="text" placeholder="Kategori" required>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label">Utgivningsår</label>
-      <div class="control">
-        <input v-model="year" class="input" type="number" placeholder="Utgivningsår" required>
+      <div class="field">
+        <label class="label">Utgivningsår</label>
+        <div class="control">
+          <input v-model="year" class="input" type="number" placeholder="Utgivningsår" required>
+        </div>
       </div>
-    </div>
 
-    <div class="field">
-      <label class="label">Språk</label>
-      <div class="control">
-        <input v-model="language" class="input" type="text" placeholder="Språk" required>
+      <div class="field">
+        <label class="label">Språk</label>
+        <div class="control">
+          <input v-model="language" class="input" type="text" placeholder="Språk" required>
+        </div>
       </div>
-    </div>
-  
-    <div class="field">
-      <label class="label">Bild</label>
-      <div class="control">
-        <input v-model="image" class="input" type="text" placeholder="Bild (ange url)" required>
-      </div>
-    </div>
 
-    <div class="field">
-      <div class="control">
-        <input :disabled="isDisabled" v-on:click="addBook" class="button" type="submit" value="Lägg till">
+      <div class="field">
+        <label class="label">Bild</label>
+        <div class="control">
+          <input v-model="image" class="input" type="text" placeholder="Bild (ange url)" required>
+        </div>
       </div>
-    </div>
 
-  </form>
-  <p id="addedText" v-if="message">&#x2714; Du har lagt till:
-  <span id="addedTitle">{{ addedTitle }}</span></p>
-</div>
-<edit-book></edit-book>
-</div>
+      <div class="field">
+        <div class="control">
+          <input :disabled="isDisabled" v-on:click="addBook" class="button" type="submit" value="Lägg till">
+        </div>
+      </div>
+    </form>
+      <p id="addedText" v-if="message">&#x2714; Du har lagt till:
+      <span id="addedTitle">{{ addedTitle }}</span></p>
+    </div>
+    <edit-book></edit-book>
+  </div>
 </template>
+
 <script>
+import router from "../router"
 import EditBook from './editBook.vue'
+
 export default {
   data() {
       return {
@@ -79,44 +81,40 @@ export default {
   components: {
       'edit-book': EditBook,
     },
-
   computed: {
   	  isDisabled() {
     	  return !this.title || !this.author || !this.category || !this.year || !this.language || !this.image
       }
   },
-
   methods: {
-      addBook() {
-          fetch('http://localhost:3000/books', {
-              body: '{ "title": "' + this.title + '", "author": "' + this.author +'", "category": "' 
-              + this.category + '", "year": "' + this.year + '","language": "' + this.language + '", "id": "' 
-              + this.id + '", "image": "' + this.image + '" }',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              method: 'POST'
-          })
-          .then(response => response.json())
-          .then(result => {
-            this.addedTitle = this.title
-            this.title = null
-            this.author = null
-            this.category = null
-            this.year = null
-            this.language = null
-            this.image = null
-            this.message = true
-            this.books = result
-          })
-      }
+    addBook() {
+      fetch('http://localhost:3000/books', {
+          body: '{ "title": "' + this.title + '", "author": "' + this.author +'", "category": "' 
+          + this.category + '", "year": "' + this.year + '","language": "' + this.language + '", "id": "' 
+          + this.id + '", "image": "' + this.image + '" }',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          method: 'POST'
+      })
+      .then(response => response.json())
+      .then(result => {
+        this.addedTitle = this.title
+        this.title = null
+        this.author = null
+        this.category = null
+        this.year = null
+        this.language = null
+        this.image = null
+        this.message = true
+        this.books = result
+      })
+    }
   }
 }
-
 </script>
 
 <style scoped>
-
 .label, .checkbox {
   height: 20px;
   font-family: 'Work Sans', sans-serif;
@@ -171,5 +169,4 @@ export default {
     opacity: 1;
   }
 }
-
 </style>

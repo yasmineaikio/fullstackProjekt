@@ -9,6 +9,7 @@ import Home from '../components/home.vue'
 import Result from '../components/result.vue'
 import Admin from '../components/admin.vue'
 import Contact from '../components/contact.vue'
+import Manage from '../components/addBook.vue'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -57,5 +58,10 @@ export default new Router({
       name: "contact",
       path: '/contact'
       },
+      {
+        component: Manage,
+        name: "managebooks",
+        path: '/managebooks'
+        },
   ]
 })

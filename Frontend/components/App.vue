@@ -2,6 +2,7 @@
 <div id="container">
   <header>
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
+
       <div class="navbar-brand" style="position:relative;">
         <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
         <span class="logo-subtitle">Read all about it</span>
@@ -138,6 +139,7 @@ header {
   background-color: #7A7A7A;
   color: white;
   padding: 40px;
+  padding-bottom: 20px;
   width: 100%;
 }
 
@@ -263,44 +265,49 @@ footer h3 {
 <style>
 /* från home.vue */
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
-  p, li, table, input, button, a {
-    font-family: 'Work sans', sans-serif;
-  }
+@import url('https://fonts.googleapis.com/css?family=Lobster+Two');
 
-  body {
+/* $primary-color: ##F3C954; */
+
+p, li, table, input, button, a {
+  font-family: 'Work sans', sans-serif;
+}
+body {
   margin: 0;
 }
-
+h1, h2, h3, h4 {
+  font-family: 'Source serif pro', sans-serif;
+}
+h1 {
+  font-size: 1.8em;
+}
+h2 {
+  font-size: 1.6em;
+}
+h3 {
+  font-size: 1.4em;
+}
+h4 {
+  font-size: 1.2em;
+}
 #title {
   /* position: relative; */
   text-align: center;
   margin-top: 40px;
 }
-
 #title h1 {
   color: #7A7A7A;
-  font-family: 'Source serif pro', sans-serif;
   font-size: 3.0em;
 }
 
-h1 {
-    font-size: 1.6em;
-    font-family: 'Source serif pro', serif;
+/* knappar */
+.button {
+  background-color: #F3C954;
+  border: 2px solid transparent;
+  border-radius: 2px;
 }
-
-h2 {
-  font-size: 1.6em;
-  font-family: 'Source serif pro', serif;
-}
-
-h3 {
-  font-size: 1.4em;
-  font-family: 'Source serif pro', serif;
-}
-
-h4 {
-  font-size: 1.2em;
-  font-family: 'Source serif pro', serif;
+.button:hover {
+  border: 2px solid grey;
 }
 
 /*  från App.vues scoped-kod */
@@ -312,7 +319,6 @@ ul {
 li {
   display: inline;
   padding: 1px;
-  font-family: 'Work sans', sans-serif;
   text-transform: uppercase;
 }
 li a {
@@ -373,6 +379,15 @@ input, td, th {
     top: 10px;
     right: 10px;
   }
+}
+
+/* table */
+.table_wrap {
+  overflow-x: auto;
+}
+
+.table td img {
+  height: 5rem;
 }
 
 </style>

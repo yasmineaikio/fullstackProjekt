@@ -1,7 +1,8 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
-  <h3>Hej {{ this.name }}!</h3>
-
+  <div class="container is-fluid">
+  <h2>Hej {{ this.name }}!</h2>
+  </div>
 
   <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
@@ -23,14 +24,19 @@
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
 
-    <table id="booktable">
+  <div class="table_wrap">
+    <table class="table is-hoverable is-fullwidth">
+      <thead>
       <tr>
         <th>Titel</th>
         <th>Författare</th>
         <th>Lånedatum</th>
         <th>Utgångsdatum</th>
         <th>Dagar kvar</th>
+        <th>Förläng lån</th>
       </tr>
+    </thead>
+    <tbody>
       <tr v-for="loan in loans">
         <td>{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
@@ -43,10 +49,11 @@
           v-on:added-to-loans="getUpdatedLoans"
           ></extend-button></td>
       </tr>
+    </tbody>
     </table>
   </div>
-
-  </div>
+ </div>
+</div>
 </template>
 
 <script>
@@ -55,6 +62,7 @@
   import router from "../router"
   import moment from 'moment'
   import { Dialog } from 'buefy/dist/components/dialog'
+  import { Table } from 'buefy/dist/components/table'
 
   export default {
   created() {
@@ -65,12 +73,14 @@
         updateUser: 'Ändra uppgifter',
         name: '',
         name2: '',
-        users: [],
-        loans: [],
+        password: '',
+        email: '',
         realname: '',
         address: '',
         inloggad: true,
         userId: '',
+        users: [],
+        loans: [],
         count: '',
       }
     },
@@ -161,18 +171,20 @@
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { name: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { name: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 method: 'PUT'
               })
-              .then(response => {
-                fetch('http://localhost:3000/users/')
-                  .then(response => response.json())
-                  .then (result => {
-                      console.log(result)
-                    })
+              .then(response => response.json())
+              .then (result => {
+                console.log(result)
+                // fetch('http://localhost:3000/users/' + this.name2)
+                //   .then(response => response.json())
+                //   .then (result => {
+                //       console.log(result)    // ??????????
+                //     })
               })
             }
     }
@@ -181,13 +193,14 @@
 
 
 <style scoped>
-#booktable {
+/* #booktable {
   margin:auto;
   border-collapse: collapse;
   font-family: arial, sans-serif;
   overflow-x: scroll;
   width:80%;
-}
+} */
+
 
 
 </style>
