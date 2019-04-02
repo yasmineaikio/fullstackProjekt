@@ -35,7 +35,7 @@
   <router-view></router-view>
   <footer>
     <br><br>
-    <h3>©2019 Falkenbergs bibliotek</h3>
+    <h3>©2019 BOOK IT</h3>
     <div class="footer-social">
        <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fab', iconName: 'twitter' }"/>
        <font-awesome-icon class="footer-icon facebook" :icon="{ prefix: 'fab', iconName: 'facebook' }"/>
