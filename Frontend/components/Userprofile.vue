@@ -36,7 +36,7 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td @click="countDown()">3</td>
+        <td @click="countDown(loan.returnDate)">{{count}}</td>
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
@@ -71,6 +71,7 @@
         address: '',
         inloggad: true,
         userId: '',
+        count: '',
       }
     },
     components: {
@@ -83,17 +84,12 @@
         this.loans = loans
       },
       // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
-      countDown()  {
+      countDown(a)  {
         fetch('http://localhost:3000/loans/')
           .then(response => response.json())
           .then (result => {
-            console.log(result)
-            const todaysDate = moment().format('YYYY/MM/DD')
-            let returnDate = moment('2019,04,08');
-
-            let countDown = returnDate.diff(todaysDate, 'days');
-
-            console.log(countDown)
+            let todaysDate = moment().format('YYYY/MM/DD')
+            this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
           })
         },
       fetchresult() {
@@ -122,6 +118,7 @@
                 })
             })
         },
+        // Låter user ta bort sitt konto. Får en varning först (Alex)
         removeAccountWarning() {
           this.$dialog.confirm({
                 title:  'Ta bort kontot',

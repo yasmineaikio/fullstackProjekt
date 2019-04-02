@@ -119,17 +119,22 @@
     height: 30px;
     padding: 6px;
     font-family: 'Work sans', sans-serif;
+    background: 0;
+    border: 0;
+    border-bottom: 2px solid white;
+    color: white;
+    font-size: 1em;
   }
   #search {
     position: relative;
   }
   #search-icon {
-    width: 5%;
-    height: 30px;
+    width: 3%;
+    height: 28px;
     font-size: 16px;
     cursor: pointer;
     position: absolute;
-    /* top: 7px; */
+    top: -10px;
     left: 93%;
     color: #F3C954;
   }

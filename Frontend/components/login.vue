@@ -95,5 +95,10 @@ button[type=submit] {
     cursor: pointer;
 }
 
+@media (max-width: 768px) {
+    form {
+        width: 100%;
+    }
+}
 
 </style>
