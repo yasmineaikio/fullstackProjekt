@@ -321,6 +321,8 @@ app.put('/users/', (request, response) => {
       response.send(user);
       console.log(user)
     })
+  })
+})
 
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/:name', (request, response) => {
