@@ -1,7 +1,8 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
   <div class="container is-fluid">
-  <h2>Hej {{ this.name }}!</h2>
+  <h2 v-if="!name2">Hej {{ this.name }}!</h2>
+  <h2 v-if="name2">Hej {{ this.name2 }}!</h2>
   </div>
 
   <div class="container is-fluid">
@@ -170,7 +171,7 @@
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { name: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { oldname: this.name, name: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -178,12 +179,8 @@
               })
               .then(response => response.json())
               .then (result => {
-                console.log(result)
-                // fetch('http://localhost:3000/users/' + this.name2)
-                //   .then(response => response.json())
-                //   .then (result => {
-                //       console.log(result)    // ??????????
-                //     })
+                console.log(result)   // ??????????
+                result.send   // ??????????
               })
             }
     }
