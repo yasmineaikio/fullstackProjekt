@@ -6,7 +6,7 @@
   <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
    {{ this.realname }} | <a v-bind:href="emaillink">{{ this.email }}</a> | {{ this.address }}
-   <button class="button" style="float:right; margin:0 5px;" @click="removeAccount()">Radera konto</button>
+   <button class="button" style="float:right; margin:0 5px;" @click="removeAccountWarning()">Radera konto</button>
   </div>
 
   <div class="container is-fluid">
@@ -54,6 +54,7 @@
   import ExtendButton from './extendButton.vue'
   import router from "../router"
   import moment from 'moment'
+  import { Dialog } from 'buefy/dist/components/dialog'
 
   export default {
   created() {
@@ -120,6 +121,19 @@
                 })
             })
         },
+        removeAccountWarning() {
+          this.$dialog.confirm({
+                title:  'Ta bort kontot',
+                message: 'Är du säker att du vill <b>ta bort</b> ditt konto? Du kan inte ångra detta.',
+                confirmText: 'Ta bort',
+                type: 'is-danger',
+                hasIcon: true,
+                onConfirm: () => {
+                    this.removeAccount()
+                    this.$toast.open('Ditt konto har tagits bort!')
+                    }
+            })
+        },
         removeAccount() {
           // Låter user ta bort sitt konto (Alex)
           let cookie = {'Cookie': this.$cookie.get('Cookie')}
@@ -134,11 +148,10 @@
                       body: JSON.stringify(cookie),
                       headers: {'Content-type': 'application/json'},
                   }).then(function(response) {
-                      alert("Ditt konto har raderats!")
                       router.push("/")
                   })
                 }else {
-                  alert('Något har gått fel, försök igen senare!')
+                  Dialog.alert('Något har gått fel, försök igen senare!')
                 }
             })
             .then(function(result){
