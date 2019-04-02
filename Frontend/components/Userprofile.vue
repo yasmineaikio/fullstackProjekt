@@ -23,8 +23,12 @@
 
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
+<<<<<<< HEAD
+    <table id="booktable">
+=======
 
     <table>
+>>>>>>> 2a809753be6564bf5ed746681725f2f5f09fdda7
       <tr>
         <th>Titel</th>
         <th>Författare</th>
@@ -46,7 +50,6 @@
       </tr>
     </table>
   </div>
-
   </div>
 </template>
 

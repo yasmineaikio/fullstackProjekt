@@ -2,8 +2,13 @@
 <div id="container">
   <header>
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
+<<<<<<< HEAD
+      <div class="navbar-brand">
+        <a  id="homelink"><router-link to="/">Falkenbergs Bibliotek</router-link></a>
+=======
       <div class="navbar-brand" style="position:relative;">
         <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
+>>>>>>> 2a809753be6564bf5ed746681725f2f5f09fdda7
         <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span style="height:2px;" class="has-text-white" aria-hidden="true"></span>
