@@ -191,38 +191,17 @@ app.get('/books', (request, response) => {
   }
 })
 
-
-// // sotering av böcker - ej klar, låt stå (Elin)
-// app.get('/books', (request, response) => {
-//   database.all('SELECT * FROM books ORDER BY title').then(books => {
-//       response.send(books);
-//     })
-//   })
-
-//hämtar kategorier och språk (Sara)
-app.get('/books/catsandlangs', (request, response) => {
-  database.all('select distinct category from books order by category').then(books => {
-    let categories = books.map(row => row.category)
-    database.all('select distinct language from books order by language').then(books => {
-      let languages = books.map(row => row.language)
-      let all = [categories, languages]
-      response.send(all)
+  //hämtar kategorier och språk (Sara)
+  app.get('/books/catsandlangs', (request, response) => {
+    database.all('select distinct category from books order by category').then(books => {
+      let categories = books.map(row => row.category)
+      database.all('select distinct language from books order by language').then(books => {
+        let languages = books.map(row => row.language)
+        let all = [categories, languages]
+        response.send(all)
+      })
     })
   })
-})
-
-
-//hämtar kategorier och språk (Sara)
-app.get('/books/catsandlangs', (request, response) => {
-  database.all('select distinct category from books order by category').then(books => {
-    let categories = books.map(row => row.category)
-    database.all('select distinct language from books order by language').then(books => {
-      let languages = books.map(row => row.language)
-      let all = [categories, languages]
-      response.send(all)
-    })
-  })
-})
 
 // hämtar böcker utifrån sökord (Sara)
 app.get('/books/:word', (request, response) => {
@@ -313,8 +292,8 @@ app.get('/loans/:name', (request, response) => {
 })
 
 //förlänger lån av en viss bok (Sara)
-app.post('/loans/extend', (request, response) => {
-  database.run('Update loans SET returnDate = ?, loanDate = ? WHERE bookId = ?', [request.body.returnDate, request.body.loanDate, request.body.bookId]).then(loan => {
+app.put('/loans/extend', (request, response) => {
+  database.run('Update loans SET returnDate = ?, loanDate = ? WHERE bookId = ? AND userId = ?', [request.body.returnDate, request.body.loanDate, request.body.bookId, request.body.userId]).then(loan => {
     response.status(201).send(loan);
   })
 })
