@@ -1,7 +1,8 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
-  <h3>Hej {{ this.name }}!</h3>
-
+  <div class="container is-fluid">
+  <h2>Hej {{ this.name }}!</h2>
+  </div>
 
   <div class="container is-fluid">
   <h3>Kontaktinformation</h3>
@@ -22,7 +23,12 @@
 
   <div class="container is-fluid">
     <h3>Lånade böcker</h3>
+<<<<<<< HEAD
     <table id="booktable">
+=======
+
+    <table>
+>>>>>>> 2a809753be6564bf5ed746681725f2f5f09fdda7
       <tr>
         <th>Titel</th>
         <th>Författare</th>
@@ -63,12 +69,14 @@
         updateUser: 'Ändra uppgifter',
         name: '',
         name2: '',
-        users: [],
-        loans: [],
+        password: '',
+        email: '',
         realname: '',
         address: '',
         inloggad: true,
         userId: '',
+        users: [],
+        loans: [],
         count: '',
       }
     },
@@ -159,18 +167,20 @@
             // för att ändra den inloggade användares uppgifter (Maija):
             console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { name: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 method: 'PUT'
               })
-              .then(response => {
-                fetch('http://localhost:3000/users/')
-                  .then(response => response.json())
-                  .then (result => {
-                      console.log(result)
-                    })
+              .then(response => response.json())
+              .then (result => {
+                console.log(result)
+                // fetch('http://localhost:3000/users/' + this.name2)
+                //   .then(response => response.json())
+                //   .then (result => {
+                //       console.log(result)    // ??????????
+                //     })
               })
             }
     }
@@ -179,13 +189,12 @@
 
 
 <style scoped>
-#booktable {
+/* #booktable {
   margin:auto;
   border-collapse: collapse;
   font-family: arial, sans-serif;
   overflow-x: scroll;
   width:80%;
-}
-
+} */
 
 </style>

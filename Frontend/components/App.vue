@@ -2,8 +2,13 @@
 <div id="container">
   <header>
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
+<<<<<<< HEAD
       <div class="navbar-brand">
         <a  id="homelink"><router-link to="/">Falkenbergs Bibliotek</router-link></a>
+=======
+      <div class="navbar-brand" style="position:relative;">
+        <a  id="homelink"><router-link to="/">Falkenbergs bibliotek</router-link></a>
+>>>>>>> 2a809753be6564bf5ed746681725f2f5f09fdda7
         <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span style="height:2px;" class="has-text-white" aria-hidden="true"></span>
@@ -23,7 +28,7 @@
                 <li v-if="this.$cookie.get('adminCookie')"><router-link to="/admin">Administration</router-link></li>
               </ul>
               <a v-if="this.$cookie.get('Cookie') || this.$cookie.get('adminCookie')"><logout class="logout-btn"></logout></a>
-              <a class="button is-warning" v-else><router-link class="login-btn" to="/login">Logga in</router-link></a>
+              <a class="button is-warning" style="background:#F3C954;" v-else><router-link class="login-btn" to="/login">Logga in</router-link></a>
             </div>
           </div>
         </div>
@@ -205,8 +210,9 @@ header {
   color: #fff;
 }
 .login-btn, button {
-  /* background-color: #F3C954; */
+  background-color: #F3C954;
   color: black !important;
+  border:0;
   /* border-top: 4px solid darkseagreen; */
 }
 .login-btn:hover:before {
@@ -243,6 +249,17 @@ footer h3 {
 }
 .footer-icon.facebook {
   color:#3b5998;
+}
+
+@media (max-width:500px) {
+    #homelink {
+    font-size: 0.9em;
+    width: 50%;
+  }
+  .logo-subtitle {
+    bottom: -12px;
+    font-size: 11px;
+  }
 }
 
 </style>
@@ -283,7 +300,12 @@ h2 {
 
 h3 {
   font-size: 1.4em;
-  font-family: 'Source serif pro', sans-serif;
+  font-family: 'Source serif pro', serif;
+}
+
+h4 {
+  font-size: 1.2em;
+  font-family: 'Source serif pro', serif;
 }
 
 /*  från App.vues scoped-kod */
@@ -357,4 +379,5 @@ input, td, th {
     right: 10px;
   }
 }
+
 </style>

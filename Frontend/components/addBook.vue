@@ -1,11 +1,5 @@
 <template>
-<!--     <input class="addBookTextfields" v-model="title" placeholder="Titel" required><br>
-    <input class="addBookTextfields" v-model="author" placeholder="Författare" required><br>
-    <input class="addBookTextfields" v-model="category" placeholder="Kategori" required><br>
-    <input class="addBookTextfields" v-model="year" placeholder="Utgivningsår" required><br>
-    <input class="addBookTextfields" v-model="language" placeholder="Språk" required><br>
-    <input class="addBookTextfields" v-model="image" placeholder="Bild" required><br>
-    <input class="addBookButton" :disabled="isDisabled" v-on:click="addBook" type="submit" value="Lägg till"><br> -->
+<div>
     <div class="box">
   <h1 class="title is-4">
     Nya böcker blir tillgängliga för utlåning genom att fylla i nedan formulär.
@@ -63,8 +57,11 @@
   <p id="addedText" v-if="message">&#x2714; Du har lagt till:
   <span id="addedTitle">{{ addedTitle }}</span></p>
 </div>
+<edit-book></edit-book>
+</div>
 </template>
 <script>
+import EditBook from './editBook.vue'
 export default {
   data() {
       return {
@@ -79,6 +76,10 @@ export default {
           addedTitle: null
       }
     },
+  components: {
+      'edit-book': EditBook,
+    },
+
   computed: {
   	  isDisabled() {
     	  return !this.title || !this.author || !this.category || !this.year || !this.language || !this.image

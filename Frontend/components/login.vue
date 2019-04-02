@@ -93,6 +93,9 @@ button[type=submit] {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 1em;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 @media (max-width: 768px) {

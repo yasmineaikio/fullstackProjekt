@@ -52,15 +52,6 @@ import LoanButton from './loanButton.vue'
 </script>
 
 <style>
-/* stilregler som gäller för alla filer */
-@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
-  p, li, table, input, button, a {
-    font-family: 'Work sans', sans-serif;
-  }
-  h1, h2 {
-    font-family: 'Source serif pro', serif;
-
-  }
   .arrow {
     position: relative;
     bottom: 1px;
@@ -109,5 +100,11 @@ import LoanButton from './loanButton.vue'
 
 .card {
   height: 100%;
+}
+
+@media (max-width: 500px) {
+   #title h1 {
+    font-size: 2em;
+  }
 }
 </style>
