@@ -40,7 +40,7 @@
     </thead>
     <tbody>
       <tr v-for="loan in loans">
-        <td>{{ loan.title }}</td>
+        <td id="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
@@ -202,15 +202,19 @@
                       type: 'is-dark',
                     })
                 }
-
                 console.log('Uppdaterat!')
                 result.send
               })
-
-
-
-
-            }  // end of updateUserFunc()
+            },  // end of updateUserFunc()
+        openBook(){
+          Dialog.alert({
+            message: 'Ladda ner boken för att kunna läsa den',
+            confirmText: 'Ladda ner boken',
+            type: 'is-primary',
+            canCancel: true,
+            cancelText: 'Abryt'
+          })
+        },
     }
   }
 </script>
@@ -223,6 +227,9 @@
 
 .minifont {
   font-size:0.6em;
+}
+#chosenBook {
+  cursor: pointer;
 }
 
 </style>
