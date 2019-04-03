@@ -100,8 +100,8 @@ h3  {
   width: 80%;
   margin: auto;
   padding: 20px
-}
-table {
+ }
+/*table {
   font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
@@ -111,7 +111,7 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-}
+} */
 
 
 
