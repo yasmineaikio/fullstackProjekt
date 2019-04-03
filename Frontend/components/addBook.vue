@@ -116,19 +116,12 @@ export default {
 
 <style scoped>
 .box {
-  margin-left: 4em;
-  margin-right: 4em;
+  width: 80%;
+  margin: auto;
+  margin-top: 4em;
 }
 .label, .checkbox {
   height: 20px;
-  font-family: 'Work Sans', sans-serif;
-}
-
-.button {
-  height: 30px;
-  background-color: #F3C954;
-  border: none;
-  border-radius: 2px;
   font-family: 'Work Sans', sans-serif;
 }
 
@@ -142,15 +135,6 @@ export default {
   animation-duration: 1.5s;
   font-family: 'Work Sans', sans-serif;
   margin-top: 0.75rem;
-}
-
-#check {
-  color: green;
-}
-
-.title {
-  font-family: 'Work Sans', sans-serif;
-  margin-bottom: 20px;
 }
 
 .input:focus, .taginput .taginput-container.is-focusable:focus, .input.is-focused, .taginput 

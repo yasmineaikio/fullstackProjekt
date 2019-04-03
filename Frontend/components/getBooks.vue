@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-  <add-book v-if="admin"></add-book>
   <search-field></search-field>
   <div class="table_wrap">
   <table class="table is-hoverable">
