@@ -87,7 +87,6 @@
         userId: '',
         users: [],
         loans: [],
-        count: 'Dagar kvar:',
       }
     },
     components: {
@@ -100,15 +99,6 @@
         //tar emot om något lån har förlängts (Sara)
         this.loans = loans
       },
-      // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
-      // countDown(a)  {
-      //   fetch('http://localhost:3000/loans/')
-      //     .then(response => response.json())
-      //     .then (result => {
-      //       let todaysDate = moment().format('YYYY/MM/DD')
-      //       this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
-      //     })
-      //   },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -209,7 +199,7 @@
         openBook(){
           Dialog.alert({
             message: 'Ladda ner boken för att kunna läsa den',
-            confirmText: 'Ladda ner boken',
+            confirmText: 'Ladda ner',
             type: 'is-primary',
             canCancel: true,
             cancelText: 'Abryt'

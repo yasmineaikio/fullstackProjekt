@@ -2,9 +2,13 @@
   <div class="container">
     <p v-if="this.books.length == 0">Ingen träff för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
+      <span v-if="pickedCat && !pickedLang"> i kategorin "{{pickedCat}}"</span>
+      <span v-if="pickedLang && !pickedCat"> på "{{pickedLang}}"</span>
     </p>
     <p v-else>Visar resultat för "{{ searchText }}"
       <span v-if="pickedCat && pickedLang"> i kategorin "{{pickedCat}}" på "{{pickedLang}}"</span>
+      <span v-if="pickedCat && !pickedLang"> i kategorin "{{pickedCat}}"</span>
+      <span v-if="pickedLang && !pickedCat"> på "{{pickedLang}}"</span>
     </p>
     <div class="table_wrap">
     <table class="table is-hoverable">
