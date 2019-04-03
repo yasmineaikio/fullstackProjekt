@@ -277,6 +277,7 @@ body {
 }
 h1, h2, h3, h4 {
   font-family: 'Source serif pro', sans-serif;
+  color:#4a4a4a;
 }
 h1 {
   font-size: 1.8em;
