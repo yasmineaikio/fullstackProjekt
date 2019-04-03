@@ -314,11 +314,12 @@ app.get('/users/name', (request, response) => {
 
 // uppdaterar en användarens uppgifter (Maija)
 app.put('/users/', (request, response) => {
-  database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.name2, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.name]).then(() => {
-
-    database.all('SELECT * FROM users WHERE name=?;', [request.body.name2]).then((user) => {
+  database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.newname, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.oldname]).then(() => {
+    database.all('SELECT * FROM users WHERE name=?;', [request.body.newname]).then((user) => {
       response.send(user);
-      console.log(user)
+      // console.log(request.body)
+      // console.log(request.body.newname)
+      // console.log(request.body.oldname)
     })
   })
 })
