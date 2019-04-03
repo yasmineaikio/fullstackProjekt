@@ -7,6 +7,7 @@
 <script>
 import moment from 'moment'
 import { Dialog } from 'buefy/dist/components/dialog'
+// import EventBus from '../eventbus'
 export default {
   props: ['bookId', 'userId', 'loanDate'],
   data(){
@@ -44,6 +45,7 @@ export default {
             .then (result => {
               let updatedLoans = result
               this.$emit('added-to-loans', updatedLoans)
+              // EventBus.$emit('extended', {returnDate: this.newReturnDate})
             })
         })
         Dialog.alert({

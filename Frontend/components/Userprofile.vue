@@ -44,7 +44,10 @@
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td>
+        <td><countdown
+          v-bind:return-date="loan.returnDate"
+          ></countdown></td>
+        <!-- <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td> -->
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
@@ -62,6 +65,7 @@
 <script>
   // import UpdateUserButton from './updateUserButton.vue'
   import ExtendButton from './extendButton.vue'
+  import Countdown from './countdown.vue'
   import router from "../router"
   import moment from 'moment'
   import { Dialog } from 'buefy/dist/components/dialog'
@@ -89,6 +93,7 @@
     components: {
       // 'update-user-button': UpdateUserButton,
       'extend-button': ExtendButton,
+      'countdown': Countdown,
     },
     methods: {
       getUpdatedLoans(loans){
@@ -96,14 +101,14 @@
         this.loans = loans
       },
       // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
-      countDown(a)  {
-        fetch('http://localhost:3000/loans/')
-          .then(response => response.json())
-          .then (result => {
-            let todaysDate = moment().format('YYYY/MM/DD')
-            this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
-          })
-        },
+      // countDown(a)  {
+      //   fetch('http://localhost:3000/loans/')
+      //     .then(response => response.json())
+      //     .then (result => {
+      //       let todaysDate = moment().format('YYYY/MM/DD')
+      //       this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
+      //     })
+      //   },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
