@@ -43,8 +43,6 @@
         language: '',
         admin: false,
         books: [],
-        sort: null,
-
       }
     },
 
@@ -90,17 +88,17 @@
 </script>
 
 <style scoped>
-.container {
+/* .container {
  margin: 2em;
-}
+} */
 /* .table th {
   background-color: #F5F5F5;
 } */
-h3  {
+/* h3  {
   width: 80%;
   margin: auto;
   padding: 20px
- }
+ } */
 /*table {
   font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
@@ -112,7 +110,5 @@ td, th {
   text-align: left;
   padding: 8px;
 } */
-
-
 
 </style>
