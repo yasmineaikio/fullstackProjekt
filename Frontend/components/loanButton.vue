@@ -63,10 +63,10 @@ export default {
       }
       else {
         Dialog.alert({
-          title: 'Ops..',
-          message: 'Du måste logga in först!',
+          // title: 'Ops..',
+          message: 'Du måste logga in för att kunna låna!',
           confirmText: 'Logga in',
-          type: 'is-dark',
+          type: 'is-primary',
         })
         router.push("/login")
       }

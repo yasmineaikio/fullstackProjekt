@@ -47,6 +47,7 @@
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
+          v-bind:loan-date="loan.loanDate"
           v-on:added-to-loans="getUpdatedLoans"
           ></extend-button></td>
       </tr>

@@ -8,19 +8,28 @@
 import moment from 'moment'
 import { Dialog } from 'buefy/dist/components/dialog'
 export default {
-  props: ['bookId', 'userId'],
+  props: ['bookId', 'userId', 'loanDate'],
   data(){
     return {
       userId: this.userId,
       bookId: this.bookId,
+      oldLoanDate: this.loanDate,
       newLoanDate: '',
       newReturnDate: ''
     }
   },
   methods: {
     extendLoan(){
-      this.newLoanDate = moment().format('YYYY/MM/DD')
-      this.newReturnDate = moment().add(30, 'days').format('YYYY/MM/DD')
+      if (this.oldLoanDate === moment().format('YYYY/MM/DD')){
+        Dialog.alert({
+          title: 'Tyvärr',
+          message: 'Det går inte att förlänga det här lånet',
+          type: 'is-primary',
+        })
+      }
+      else {
+        this.newLoanDate = moment().format('YYYY/MM/DD')
+        this.newReturnDate = moment().add(30, 'days').format('YYYY/MM/DD')
 
         fetch ('http://localhost:3000/loans/extend', {
         body: '{ "returnDate": "' + this.newReturnDate + '", "loanDate": "' + this.newLoanDate +'", "bookId": "' + this.bookId + '", "userId": "' + this.userId + '"}',
@@ -42,6 +51,7 @@ export default {
           message: 'Du har nu förlängt lånet av boken',
           type: 'is-primary',
         })
+      }
     }
   }
 }
