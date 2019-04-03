@@ -267,8 +267,7 @@ footer h3 {
 @import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro|Work+Sans');
 @import url('https://fonts.googleapis.com/css?family=Lobster+Two');
 
-/* $primary-color: ##F3C954; */
-
+/* fonter */
 p, li, table, input, button, a {
   font-family: 'Work sans', sans-serif;
 }
@@ -277,6 +276,7 @@ body {
 }
 h1, h2, h3, h4 {
   font-family: 'Source serif pro', sans-serif;
+  color:#4a4a4a;
 }
 h1 {
   font-size: 1.8em;
@@ -307,6 +307,21 @@ h4 {
   border-radius: 2px;
 }
 .button:hover {
+  border: 2px solid grey;
+}
+.button.is-primary {
+    background-color: #F3C954;
+    color: #363636;
+    border-radius: 2px;
+    font-weight: normal;
+}
+.button.is-primary:focus {
+    background-color: #F3C954;
+    color: #363636;
+}
+.button.is-primary:hover {
+  background-color: #F3C954;
+  color: #363636;
   border: 2px solid grey;
 }
 

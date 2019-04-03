@@ -38,11 +38,11 @@
           <input v-if="click" type="text" v-model="book.language">
         </td>
         <td>
-          <input type="submit" value="Redigera" v-if="!click" v-on:click="editable">
+          <input  v-if="!click" v-on:click="editable" class="button" type="submit" value="Redigera">
           <input v-if="click" v-on:click="editBook(book.id, book.title, book.author, book.category, book.year, book.language)" 
-            type="submit" value="Spara">
+            class="button" type="submit" value="Spara">
           <input v-if="click" v-on:click="click=false"
-            type="submit" value="Avbryt">
+            class="button" type="submit" value="Avbryt">
         </td>
       </tr>
     </tbody>
@@ -103,21 +103,10 @@ export default {
 
 
 <style scoped>
-
-h3  {
-  width: 80%;
-  margin: auto;
-  padding: 20px
-}
 table {
   font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
   margin: auto;
-}
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
 }
 </style>
