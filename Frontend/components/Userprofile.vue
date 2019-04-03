@@ -108,9 +108,7 @@
           .then (result => {
             //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
-          })/*.then(() => {
-            this.name...
-          })*/
+          })
 
           fetch('http://localhost:3000/users')
             .then(response => response.json())
