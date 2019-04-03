@@ -1,8 +1,9 @@
 <template>
   <div class="container is-fluid" v-if="this.$cookie.get('Cookie')">
+
   <div class="container is-fluid">
-  <h2 v-if="!name2">Hej {{ this.name }}!</h2>
-  <h2 v-if="name2">Hej {{ this.name2 }}!</h2>
+  <h1 class="has-text-centered" v-if="!newname">Hej {{ this.name }}!</h1>
+  <h1 class="has-text-centered" v-if="newname">Hej {{ this.newname }}!</h1>
   </div>
 
   <div class="container is-fluid">
@@ -12,8 +13,8 @@
   </div>
 
   <div class="container is-fluid">
-  <h3>Ändra uppgifter</h3>
-  <input v-model="name2" type="text" placeholder="Användarnamn">
+  <h3>Ändra uppgifter <span class="minifont">(alla fält ska vara ifyllda! Logga ut efter sparade ändringar för att kunna låna!)</span></h3>
+  <input v-model="newname" type="text" placeholder="Användarnamn">
   <input v-model="password" type="text" placeholder="Lösenord">
   <input v-model="email" type="text" placeholder="E-mail">
   <input v-model="realname" type="text" placeholder="Hela namn">
@@ -59,7 +60,7 @@
 </template>
 
 <script>
-  import UpdateUserButton from './updateUserButton.vue'
+  // import UpdateUserButton from './updateUserButton.vue'
   import ExtendButton from './extendButton.vue'
   import router from "../router"
   import moment from 'moment'
@@ -73,7 +74,7 @@
       return {
         updateUser: 'Ändra uppgifter',
         name: '',
-        name2: '',
+        newname: '',
         password: '',
         email: '',
         realname: '',
@@ -86,7 +87,7 @@
       }
     },
     components: {
-      'update-user-button': UpdateUserButton,
+      // 'update-user-button': UpdateUserButton,
       'extend-button': ExtendButton,
     },
     methods: {
@@ -109,11 +110,10 @@
           .then (result => {
             //Hämtar namnet på usern som är inloggad utifrån userns cookie (Alex)
             this.name = result.find(value => value.token === this.$cookie.get('Cookie')).user
-          })/*.then(() => {
-            this.name...
-          })*/
+          })
 
           fetch('http://localhost:3000/users')
+            // Hämtar kontaktinformation till den inloggade användaren (Maija/Alex)
             .then(response => response.json())
             .then (result => {
               this.realname = result.find(value => value.name === this.name ).realname
@@ -170,9 +170,8 @@
         },
         updateUserFunc() {
             // för att ändra den inloggade användares uppgifter (Maija):
-            console.log(this.name)
             fetch('http://localhost:3000/users', {
-                body: JSON.stringify( { oldname: this.name, newname: this.name2, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
+                body: JSON.stringify( { oldname: this.name, newname: this.newname, password: this.password, email: this.email, realname: this.realname, address: this.address} ),
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -180,24 +179,45 @@
               })
               .then(response => response.json())
               .then (result => {
-                console.log(result)   // ??????????
-                result.send   // ??????????
+
+                if(this.newname === "" || this.password === "") {
+                    Dialog.alert({
+                      title: 'Oops..',
+                      message: 'Du måste fylla i användarnamn och lösenord!',
+                      confirmText: 'OK',
+                      type: 'is-dark',
+                    })
+                    // ovanstående funkar ej i praktiken: uppgifter som användaren skickade från början sparas, ej de nya uppgifter ^^
+
+                } else {
+                    Dialog.alert({
+                      title: 'Yay!',
+                      message: 'Kontaktuppgifter är nu uppdaterade!',
+                      confirmText: 'OK',
+                      type: 'is-dark',
+                    })
+                }
+
+                console.log('Uppdaterat!')
+                result.send
               })
-            }
+
+
+
+
+            }  // end of updateUserFunc()
     }
   }
 </script>
 
 
 <style scoped>
-/* #booktable {
-  margin:auto;
-  border-collapse: collapse;
-  font-family: arial, sans-serif;
-  overflow-x: scroll;
-  width:80%;
-} */
+.container {
+  margin-top:20px;
+}
 
-
+.minifont {
+  font-size:0.6em;
+}
 
 </style>
