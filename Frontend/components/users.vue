@@ -71,6 +71,11 @@ export default {
     box-sizing: border-box;
 }
 
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+    border-color: #F3C954;
+    box-shadow: 0 0 0 0.125em rgba(179, 153, 8, 0.464);
+}
+
 button[type=submit] {
     width: 100%;
     background-color: #F3C954;
