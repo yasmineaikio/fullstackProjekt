@@ -120,6 +120,7 @@ export default {
   margin: auto;
   margin-top: 4em;
 }
+
 .label, .checkbox {
   height: 20px;
   font-family: 'Work Sans', sans-serif;

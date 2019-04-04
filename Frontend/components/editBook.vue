@@ -103,6 +103,9 @@ export default {
 
 
 <style scoped>
+.button {
+  margin-bottom: 1em;
+}
 table {
   font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;

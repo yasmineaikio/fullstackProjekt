@@ -40,11 +40,11 @@
     </thead>
     <tbody>
       <tr v-for="loan in loans">
-        <td id="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
-        <td>{{ loan.author }}</td>
-        <td>{{ loan.loanDate }}</td>
-        <td>{{ loan.returnDate }}</td>
-        <td><countdown
+        <td class="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.author }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.loanDate }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.returnDate }}</td>
+        <td class="chosenBook" v-on:click="openBook"><countdown
           v-bind:return-date="loan.returnDate"
           ></countdown></td>
         <!-- <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td> -->
@@ -217,8 +217,7 @@
 .minifont {
   font-size:0.6em;
 }
-
-#chosenBook {
+.chosenBook {
   cursor: pointer;
 }
 

@@ -7,7 +7,7 @@
           <input type="text" placeholder="För-och efternamn" v-model="userName" required><br>
           <input type="text" placeholder="Address" v-model="address" required><br>
           <input type="email" placeholder="e-postadress" v-model="email" required><br>
-          <button type="submit">Skapa</button>
+          <button class="button" type="submit">Skapa</button>
       </form>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
 <style scoped>
  h4 {
      color:#666;
-     font-family: cursive;
+     /* font-family: cursive; */
      font-weight: 900;
      font-size: 1.5em;
      text-align: center;
@@ -71,10 +71,15 @@ export default {
     box-sizing: border-box;
 }
 
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+    border-color: #F3C954;
+    box-shadow: 0 0 0 0.125em rgba(179, 153, 8, 0.464);
+}
+
 button[type=submit] {
     width: 100%;
-    background-color: #666;
-    color: white;
+    background-color: #F3C954;
+    color: #000;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -86,7 +91,7 @@ button[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #000;
+    background-color: #F3C954;
 }
 
 

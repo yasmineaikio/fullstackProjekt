@@ -1,10 +1,24 @@
 <template>
     <div>
         <form @submit.prevent="login()">
-            <h4>Logga in</h4>
-            <input type="text" placeholder="Användernamn" v-model="name" required><br>
-            <input type="password" placeholder="Lösenord" v-model="password" required><br>
-            <button type="submit">Logga in</button>
+            <h4>Inloggning</h4>
+            <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Användernamn" v-model="name" required>
+                <span class="icon is-small is-left">
+                    <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fa', iconName: 'user' }"/>
+                </span>
+            </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" placeholder="Lösenord" v-model="password" required>
+                    <span class="icon is-small is-left">
+                        <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fa', iconName: 'lock' }"/>
+                    </span>
+                </p>
+            </div>
+            <button class="button" type="submit">Logga in</button>
         </form>
     </div>
 </template>
@@ -61,7 +75,7 @@ export default {
 <style scoped>
  h4 {
      color:#666;
-     font-family: cursive;
+     /* font-family: cursive; */
      font-weight: 900;
      font-size: 1.5em;
      text-align: center;
@@ -74,7 +88,7 @@ export default {
      margin: 2em auto;
      width: 50%;
  }
- input[type=text],input[type=password], input[type=email] {
+ /* input[type=text],input[type=password], input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -82,12 +96,17 @@ export default {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+} */
+
+.input:focus {
+    border-color: #F3C954;
+    box-shadow: 0 0 0 0.125em rgba(179, 153, 8, 0.464);
 }
 
 button[type=submit] {
     width: 100%;
-    background-color: #666;
-    color: white;
+    background-color: #F3C954;
+    color: #000;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
