@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-  <add-book v-if="admin"></add-book>
   <search-field></search-field>
   <div class="table_wrap">
   <table class="table is-hoverable">
@@ -43,8 +42,6 @@
         language: '',
         admin: false,
         books: [],
-        sort: null,
-
       }
     },
 
@@ -90,18 +87,18 @@
 </script>
 
 <style scoped>
-.container {
+/* .container {
  margin: 2em;
-}
+} */
 /* .table th {
   background-color: #F5F5F5;
 } */
-h3  {
+/* h3  {
   width: 80%;
   margin: auto;
   padding: 20px
-}
-table {
+ } */
+/*table {
   font-family: 'Work Sans', sans-serif;
   border-collapse: collapse;
   width: 80%;
@@ -111,8 +108,6 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
-}
-
-
+} */
 
 </style>

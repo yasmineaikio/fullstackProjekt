@@ -317,19 +317,9 @@ app.put('/users/', (request, response) => {
   database.run('UPDATE users SET name=?, password=?, email=?, realname=?, address=? WHERE name=?;', [request.body.newname, request.body.password, request.body.email, request.body.realname, request.body.address, request.body.oldname]).then(() => {
     database.all('SELECT * FROM users WHERE name=?;', [request.body.newname]).then((user) => {
       response.send(user);
-      // console.log(request.body)
-      // console.log(request.body.newname)
-      // console.log(request.body.oldname)
     })
   })
 })
-
-// // uppdaterar en användarens uppgifter (Maija)
-// app.put('/users/:name', (request, response) => {
-//   database.run('UPDATE users SET email=? WHERE name=?;', [name, password, email, realname, address]).then((user) => {
-//     response.send(user)
-//   })
-// })
 
 
 
