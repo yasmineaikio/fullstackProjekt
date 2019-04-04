@@ -20,7 +20,7 @@
   <input v-model="realname" type="text" placeholder="Hela namn">
   <input v-model="address" type="text" placeholder="Adress">
 
-  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit">
   </div>
 
   <div class="container is-fluid">
@@ -180,17 +180,15 @@
                       title: 'Oops..',
                       message: 'Du måste fylla i användarnamn och lösenord!',
                       confirmText: 'OK',
-                      type: 'is-dark',
+                      type: 'is-primary',
                     })
-
-                    // ovanstående funkar ej i praktiken: uppgifter som användaren skickade från början sparas, ej de nya uppgifter ^^
 
                 } else {
                     Dialog.alert({
                       title: 'Yay!',
                       message: 'Kontaktuppgifter är nu uppdaterade!',
                       confirmText: 'OK',
-                      type: 'is-dark',
+                      type: 'is-primary',
                     })
                 }
                 console.log('Uppdaterat!')
@@ -219,6 +217,7 @@
 .minifont {
   font-size:0.6em;
 }
+
 #chosenBook {
   cursor: pointer;
 }
