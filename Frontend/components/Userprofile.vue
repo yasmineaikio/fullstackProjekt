@@ -186,6 +186,7 @@
                       confirmText: 'OK',
                       type: 'is-dark',
                     })
+
                     // ovanstående funkar ej i praktiken: uppgifter som användaren skickade från början sparas, ej de nya uppgifter ^^
 
                 } else {
