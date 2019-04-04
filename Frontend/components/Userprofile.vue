@@ -40,14 +40,18 @@
     </thead>
     <tbody>
       <tr v-for="loan in loans">
-        <td>{{ loan.title }}</td>
+        <td id="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
         <td>{{ loan.author }}</td>
         <td>{{ loan.loanDate }}</td>
         <td>{{ loan.returnDate }}</td>
-        <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td>
+        <td><countdown
+          v-bind:return-date="loan.returnDate"
+          ></countdown></td>
+        <!-- <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td> -->
         <td><extend-button
           v-bind:book-id="loan.bookId"
           v-bind:user-id="loan.userId"
+          v-bind:loan-date="loan.loanDate"
           v-on:added-to-loans="getUpdatedLoans"
           ></extend-button></td>
       </tr>
@@ -61,6 +65,7 @@
 <script>
   // import UpdateUserButton from './updateUserButton.vue'
   import ExtendButton from './extendButton.vue'
+  import Countdown from './countdown.vue'
   import router from "../router"
   import moment from 'moment'
   import { Dialog } from 'buefy/dist/components/dialog'
@@ -82,27 +87,18 @@
         userId: '',
         users: [],
         loans: [],
-        count: 'Dagar kvar:',
       }
     },
     components: {
       // 'update-user-button': UpdateUserButton,
       'extend-button': ExtendButton,
+      'countdown': Countdown,
     },
     methods: {
       getUpdatedLoans(loans){
         //tar emot om något lån har förlängts (Sara)
         this.loans = loans
       },
-      // skapa nedräkningsfunktion, Yasmine. nedräkning funkar, hämtar ej
-      countDown(a)  {
-        fetch('http://localhost:3000/loans/')
-          .then(response => response.json())
-          .then (result => {
-            let todaysDate = moment().format('YYYY/MM/DD')
-            this.count = moment(a, 'YYYY/MM/DD').diff(todaysDate, 'days')
-          })
-        },
       fetchresult() {
         fetch('http://localhost:3000/login')
         .then(response => response.json())
@@ -197,15 +193,19 @@
                       type: 'is-dark',
                     })
                 }
-
                 console.log('Uppdaterat!')
                 result.send
               })
-
-
-
-
-            }  // end of updateUserFunc()
+            },  // end of updateUserFunc()
+        openBook(){
+          Dialog.alert({
+            message: 'Ladda ner boken för att kunna läsa den',
+            confirmText: 'Ladda ner',
+            type: 'is-primary',
+            canCancel: true,
+            cancelText: 'Abryt'
+          })
+        },
     }
   }
 </script>
@@ -218,6 +218,9 @@
 
 .minifont {
   font-size:0.6em;
+}
+#chosenBook {
+  cursor: pointer;
 }
 
 </style>
