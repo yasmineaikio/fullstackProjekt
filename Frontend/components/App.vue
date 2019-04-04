@@ -4,7 +4,7 @@
     <nav class="navbar is-light is-fluid" role="navigation" aria-label="main navigation">
 
       <div class="navbar-brand" style="position:relative;">
-        <a  id="homelink"><router-link to="/">BOOK IT</router-link></a>
+        <a id="homelink"><router-link to="/">BOOK IT</router-link></a>
         <span class="logo-subtitle">Read all about it</span>
         <a style="height:2.25rem;" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span style="height:2px;" class="has-text-white" aria-hidden="true"></span>

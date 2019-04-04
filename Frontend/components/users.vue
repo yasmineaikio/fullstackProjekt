@@ -73,8 +73,8 @@ export default {
 
 button[type=submit] {
     width: 100%;
-    background-color: #666;
-    color: white;
+    background-color: #F3C954;
+    color: #000;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -86,7 +86,7 @@ button[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #000;
+    background-color: #F3C954;
 }
 
 

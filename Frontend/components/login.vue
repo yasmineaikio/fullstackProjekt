@@ -1,9 +1,23 @@
 <template>
     <div>
         <form @submit.prevent="login()">
-            <h4>Logga in</h4>
-            <input type="text" placeholder="Användernamn" v-model="name" required><br>
-            <input type="password" placeholder="Lösenord" v-model="password" required><br>
+            <h4>Inloggning</h4>
+            <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Användernamn" v-model="name" required>
+                <span class="icon is-small is-left">
+                    <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fa', iconName: 'user' }"/>
+                </span>
+            </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                    <input class="input" type="password" placeholder="Lösenord" v-model="password" required>
+                    <span class="icon is-small is-left">
+                        <font-awesome-icon class="footer-icon twitter" :icon="{ prefix: 'fa', iconName: 'lock' }"/>
+                    </span>
+                </p>
+            </div>
             <button class="button" type="submit">Logga in</button>
         </form>
     </div>
@@ -74,7 +88,7 @@ export default {
      margin: 2em auto;
      width: 50%;
  }
- input[type=text],input[type=password], input[type=email] {
+ /* input[type=text],input[type=password], input[type=email] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -82,12 +96,12 @@ export default {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
+} */
 
 button[type=submit] {
     width: 100%;
-    background-color: #666;
-    color: white;
+    background-color: #F3C954;
+    color: #000;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
