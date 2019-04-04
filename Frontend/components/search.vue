@@ -88,22 +88,12 @@
         let word = this.searchText
         let cat = this.pickedCat
         let lang = this.pickedLang
-        if (cat === '' && lang === ''){
-          fetch('http://localhost:3000/books/' + word)
-          .then (response => response.json())
-          .then (result => {
-            let allBooks = result
-            EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
-          })
-        }
-        else {
-          fetch('http://localhost:3000/books/' + word + '?cat=' + cat + '&lang=' + lang)
-          .then (response => response.json())
-          .then (result => {
-            let allBooks = result
-            EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
-          })
-        }
+        fetch('http://localhost:3000/books/' + word + '?cat=' + cat + '&lang=' + lang)
+        .then (response => response.json())
+        .then (result => {
+          let allBooks = result
+          EventBus.$emit('result', {books: allBooks, word: this.searchText, cat: this.pickedCat, lang: this.pickedLang})
+        })
         router.push("/result")
       },
     }
