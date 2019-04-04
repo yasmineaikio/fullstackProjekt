@@ -7,7 +7,7 @@
           <input type="text" placeholder="För-och efternamn" v-model="userName" required><br>
           <input type="text" placeholder="Address" v-model="address" required><br>
           <input type="email" placeholder="e-postadress" v-model="email" required><br>
-          <button type="submit">Skapa</button>
+          <button class="button" type="submit">Skapa</button>
       </form>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
 <style scoped>
  h4 {
      color:#666;
-     font-family: cursive;
+     /* font-family: cursive; */
      font-weight: 900;
      font-size: 1.5em;
      text-align: center;

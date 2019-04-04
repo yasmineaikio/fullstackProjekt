@@ -4,7 +4,7 @@
             <h4>Logga in</h4>
             <input type="text" placeholder="Användernamn" v-model="name" required><br>
             <input type="password" placeholder="Lösenord" v-model="password" required><br>
-            <button type="submit">Logga in</button>
+            <button class="button" type="submit">Logga in</button>
         </form>
     </div>
 </template>
@@ -61,7 +61,7 @@ export default {
 <style scoped>
  h4 {
      color:#666;
-     font-family: cursive;
+     /* font-family: cursive; */
      font-weight: 900;
      font-size: 1.5em;
      text-align: center;
