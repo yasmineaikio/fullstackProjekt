@@ -11,7 +11,7 @@
       <span v-if="pickedLang && !pickedCat"> på "{{pickedLang}}"</span>
     </p>
     <div class="table_wrap">
-    <table class="table is-hoverable">
+    <table class="table is-hoverable is-fullwidth">
       <thead>
       <tr>
         <th>Bokomslag</th>

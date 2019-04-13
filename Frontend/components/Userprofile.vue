@@ -20,7 +20,7 @@
   <input v-model="realname" type="text" placeholder="Hela namn">
   <input v-model="address" type="text" placeholder="Adress">
 
-  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit" >
+  <input v-bind:value="updateUser" v-on:click="updateUserFunc" class="button" type="submit">
   </div>
 
   <div class="container is-fluid">
@@ -40,11 +40,11 @@
     </thead>
     <tbody>
       <tr v-for="loan in loans">
-        <td id="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
-        <td>{{ loan.author }}</td>
-        <td>{{ loan.loanDate }}</td>
-        <td>{{ loan.returnDate }}</td>
-        <td><countdown
+        <td class="chosenBook" v-on:click="openBook">{{ loan.title }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.author }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.loanDate }}</td>
+        <td class="chosenBook" v-on:click="openBook">{{ loan.returnDate }}</td>
+        <td class="chosenBook" v-on:click="openBook"><countdown
           v-bind:return-date="loan.returnDate"
           ></countdown></td>
         <!-- <td><button class="button" @click="countDown(loan.returnDate)">{{count}}</button></td> -->
@@ -180,17 +180,15 @@
                       title: 'Oops..',
                       message: 'Du måste fylla i användarnamn och lösenord!',
                       confirmText: 'OK',
-                      type: 'is-dark',
+                      type: 'is-primary',
                     })
-
-                    // ovanstående funkar ej i praktiken: uppgifter som användaren skickade från början sparas, ej de nya uppgifter ^^
 
                 } else {
                     Dialog.alert({
                       title: 'Yay!',
                       message: 'Kontaktuppgifter är nu uppdaterade!',
                       confirmText: 'OK',
-                      type: 'is-dark',
+                      type: 'is-primary',
                     })
                 }
                 console.log('Uppdaterat!')
@@ -219,7 +217,7 @@
 .minifont {
   font-size:0.6em;
 }
-#chosenBook {
+.chosenBook {
   cursor: pointer;
 }
 

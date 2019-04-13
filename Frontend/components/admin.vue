@@ -103,6 +103,7 @@ import { Snackbar } from 'buefy/dist/components/snackbar'
 import { Dialog } from 'buefy/dist/components/dialog'
 export default {
     created() {
+        // hämtar utlånade böcker och deras uppgifter och pushar rätt info i rätt array
          fetch('http://localhost:3000/loans')
             .then(response => response.json())
             .then (result => {
@@ -111,13 +112,15 @@ export default {
                     this.loanUser.push(result[index].userId)
                     this.ReturnDate.push(result[index].returnDate)
                     this.LoanDate.push(result[index].loanDate)
+                    //skapar ett loan objekt och lägger till den user id för låntagaren och book id för utlånad bok
                     let loan = {'user':result[index].userId, 'book':result[index].bookId}
+                    // pushar loan objektet i loans array
                     this.loans.push(loan)
                 }                  
             }).then(() => {
                 this.fetchLoans()
             })
-        
+        // hämtar all data när komponenten skapas  
         this.getInfo()
     },
     data() {
@@ -139,6 +142,7 @@ export default {
     },
     router,
     methods: {
+        // Tar bort en användare efter bekräftelse genom att köra removeUser funktionen 
         confirmCustomDelete(name, id) {
             this.$dialog.confirm({
                 title:  name + ' ska tas bort',
@@ -152,6 +156,7 @@ export default {
                     }
             })
         },
+        //Tar emot den valda använderns data och skickar den till updateUser funktionen för att befordra till admin eller tvärtom
         promote(name, id) {
         this.$dialog.prompt({
             title: 'Redigera ' + name,
@@ -179,12 +184,14 @@ export default {
                 }
             })
         },
+        // Hämtar meddelanden från inbox (som skickas in från kontaktsidan), uppdaterar inbox arrayen samt skriver ut antal meddelanden
         fetchMessages() {
             fetch('http://localhost:3000/inbox').then(response => response.json()).then(result => {
                 this.inbox = result
                 this.antal = result.length
             })
         },
+        //Hämtar alla användare i databasen och uppdaterar allUsers arrayen
         fetchUsers() {
             fetch('http://localhost:3000/users')
             .then(response => response.json())
@@ -192,6 +199,7 @@ export default {
                 this.allUsers = result
             })
         },
+        // Tar bort ett meddelande från inbox via ett id och sen uppdaterar inbox arrayen så att man inte behöver ladda om sidan
         removeMsg(id) {
            let msgId = {'id':id} 
            fetch('http://localhost:3000/inbox', {
@@ -205,6 +213,7 @@ export default {
            }) 
             
         },
+        // tar bort den valda användaren från databasen och sen uppdaterar allUsers arrayen så att man inte behöver ladda om sidan
         removeUser(arg) {
             let toBeDelete = {'userName': arg} 
             fetch('http://localhost:3000/admin', {
@@ -215,10 +224,9 @@ export default {
                    this.fetchUsers()
                 })
         },
+        //Updaterar användarens type och sen uppdaterar allUsers
         updateUser(id, value) {
             let user = {'id': id, 'type': value} 
-            console.log(user);
-            
             fetch('http://localhost:3000/admin', {
                 method: 'PUT',
                 body: JSON.stringify(user),
@@ -227,6 +235,7 @@ export default {
                    this.fetchUsers()
                 })
         },
+        // hämtar alla utlånade böcker samt user som lånar och pushar dem i arrays 
         fetchLoans() {
             for (let i = 0; i < this.loanBook.length; i++) {
                 let loan = {'user':this.loanUser[i], 'book':this.loanBook[i]}   
@@ -240,9 +249,9 @@ export default {
                         this.UserInfo.push(result.name)
                     })
             }
-        },         
+        },    
+        // Hämtar inloggade users samt andra relevanta uppgifter från databasen och pushar dem i arrays     
         getInfo() {
-            // Hämtar relevanta uppgifter från databasen och pushar dem i arrays
             fetch('http://localhost:3000/login')
             .then(response => response.json())
             .then (result => {
