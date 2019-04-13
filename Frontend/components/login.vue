@@ -62,8 +62,7 @@ export default {
                     message: 'Fel användernamn eller lösenord!',
                     confirmText: 'Försök igen',
                     type: 'is-dark',
-                })
-                    //eller skapa nytt konto   
+                }) 
                     router.push("/login")
                 }
             })
